@@ -7,15 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ArticleController
 {
     /**
-     * @Route("/")
-     */
-    public function homepage()
-    {
-        return new Response('OMG! My first page already! WOOO!');
-    }
-
-    /**
-     * @Route("/news/{slug}")
+     * @Route("/article/{slug}")
      */
     public function show($slug)
     {
