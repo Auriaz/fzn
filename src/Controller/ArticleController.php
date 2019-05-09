@@ -15,7 +15,6 @@ class ArticleController extends AbstractController
      */
     public function show($slug, MarkdownHelper $markdownHelper,  bool $isDebug)
     {
-        dd( $isDebug);
         $comments = [
             'I ate a normal rock once. It did NOT taste like bacon!',
             'Woohoo! I\'m going on an all-asteroid diet!',
