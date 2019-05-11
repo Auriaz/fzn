@@ -3,14 +3,19 @@ namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\ArticleRepository;
 
 class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="app_homepage")
      */
-    public function homepage()
+    public function homepage(ArticleRepository $repository)
     {
-        return $this->render('home/homepage.html.twig');
+        $articles = $repository->findAllPublishedOrderedByArticles();
+
+        return $this->render('home/homepage.html.twig', [
+            'articles' => $articles,
+        ]);
     }
 }

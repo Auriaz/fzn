@@ -25,13 +25,9 @@ class ArticleController extends AbstractController
     /**
      * @Route("/article/{slug}", name="article_show")
      */
-    public function show($slug, MarkdownHelper $markdownHelper,  bool $isDebug, EntityManagerInterface $em)
+    public function show(Article $article )
     {
-        $repository = $em->getRepository(Article::class);
-        $article = $repository->findOneBy(['slug' => $slug]);
-        if (!$article) {
-            throw $this->createNotFoundException(sprintf('No article for slug "%s"', $slug));
-        }
+   
 
         $comments = [
             'I ate a normal rock once. It did NOT taste like bacon!',
@@ -49,11 +45,13 @@ class ArticleController extends AbstractController
     /**
      * @Route("/article/{slug}/heart", name="article_toggle_heart", methods={"POST"})
      */
-    public function toggleArticleHeart($slug, LoggerInterface $logger)
+    public function toggleArticleHeart(Article $article, LoggerInterface $logger, EntityManagerInterface $em)
     {
+        $article->incrementHeartCount();
+        $em->flush();
         // TODO - actually heart/unheart the article!
 
         $logger->info('Article is being hearted');
-        return new JsonResponse(['hearts' => rand(5, 100)]);
+        return new JsonResponse(['hearts' => $article->getHeartCount()]);
     }
 }
