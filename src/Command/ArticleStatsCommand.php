@@ -18,6 +18,7 @@ class ArticleStatsCommand extends Command
             ->addArgument('slug', InputArgument::OPTIONAL, 'The article\'s slug')
             ->addOption('format', null, InputOption::VALUE_REQUIRED, 'The output format', 'text');
     }
+    
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);

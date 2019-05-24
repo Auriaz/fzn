@@ -6,6 +6,7 @@ use App\Entity\Article;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Doctrine\DBAL\Query\QueryBuilder;
+use Doctrine\Common\Collections\Criteria;
 
 /**
  * @method Article|null find($id, $lockMode = null, $lockVersion = null)
@@ -27,6 +28,8 @@ class ArticleRepository extends ServiceEntityRepository
     public function findAllPublishedOrderedByArticles()
     {
         return $this->addIsPublishedQueryBuilder()
+            ->leftJoin('a.tags', 't')
+            ->addSelect('t')
             ->orderBy('a.publishedAt', 'DESC')
             ->setMaxResults(5)
             ->getQuery()
@@ -34,6 +37,12 @@ class ArticleRepository extends ServiceEntityRepository
         ;
     }
 
+    public function createNonDeletedCriteria(): Criteria
+    {
+        return Criteria::create()
+            ->andWhere(Criteria::expr()->eq('isDeleted', false))
+            ->orderBy(['createdAt' => 'DESC']);
+    }
 
     /*
     public function findOneBySomeField($value): ?Article
