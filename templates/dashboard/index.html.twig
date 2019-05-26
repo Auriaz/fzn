@@ -1,0 +1,17 @@
+{% extends 'content_base.html.twig' %}
+
+{% block title %}Manage Comments {% endblock %}
+
+{% block content_body %}
+    {% if is_granted('ROLE_ADMIN') %}
+    <form action="{{ path('app_homepage') }}" method="GET">
+        <div class="form-group">
+            <label class=""><b>Switch user</b>
+                <input class="form-control" type="text" name="_switch_user" placeholder="Enter email">
+            </label>
+            
+            <button type="submit" class="btn btn-outline-primary">action</button> 
+        </div>
+    </form>
+    {% endif %}
+{% endblock %}
