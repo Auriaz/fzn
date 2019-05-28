@@ -1,0 +1,35 @@
+{% extends 'content_base.html.twig' %}
+
+{% block content_body %}
+
+<a href="{{ path('admin_article_new') }}" class="btn btn-outline-secondary pull-right">
+    <i class="fas fa-plus-circle"></i>
+</a>
+<h1>Wszystkie artykuły</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tytuł</th>
+            <th>Autor</th>
+            <th>Data publikacji</th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for article in articles %}
+        <tr>
+            <td>{{ article.title }}</td>
+            <td>{{ article.author.email }}</td>
+            <td>
+                <i class="fa fa-{{ article.isPublished ? 'check' : 'times' }}"></i>
+            </td>
+            <td>
+                <a href="{{ path('admin_article_edit', { id: article.id }) }}">
+                    <i class="fa fa-pencil-alt"></i>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

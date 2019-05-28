@@ -53,9 +53,25 @@ class User implements UserInterface
      */
     private $apiTokens;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="author")
+     */
+    private $articles;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $secondName;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $familyName;
+
     public function __construct()
     {
         $this->apiTokens = new ArrayCollection();
+        $this->articles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -198,6 +214,66 @@ class User implements UserInterface
                 $apiToken->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Article[]
+     */
+    public function getArticles(): Collection
+    {
+        return $this->articles;
+    }
+
+    public function addArticle(Article $article): self
+    {
+        if (!$this->articles->contains($article)) {
+            $this->articles[] = $article;
+            $article->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticle(Article $article): self
+    {
+        if ($this->articles->contains($article)) {
+            $this->articles->removeElement($article);
+            // set the owning side to null (unless already changed)
+            if ($article->getAuthor() === $this) {
+                $article->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getFirstName();
+    }
+
+    public function getSecondName(): ?string
+    {
+        return $this->secondName;
+    }
+
+    public function setSecondName(?string $secondName): self
+    {
+        $this->secondName = $secondName;
+
+        return $this;
+    }
+
+    public function getFamilyName(): ?string
+    {
+        return $this->familyName;
+    }
+
+    public function setFamilyName(string $familyName): self
+    {
+        $this->familyName = $familyName;
 
         return $this;
     }

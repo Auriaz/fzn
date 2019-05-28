@@ -9,8 +9,10 @@
     {% block stylesheets %}
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
         integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-        <link rel="stylesheet" href="{{ asset('css/font-awesome.css') }}">
         <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/font-awesome.css') }}">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+            integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     {% endblock %}
 </head>
 
@@ -22,7 +24,7 @@
         </div>
     {% endif %}
 
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-bg mb-5">
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-bg {{ app.session.flashbag.peekAll()|length > 0 ? "" : 'mb-5' }}">
         <a style="margin-left: 75px;" class="navbar-brand space-brand" href="{{ path('app_homepage') }}">The Space Bar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,7 +54,7 @@
                             <a class="dropdown-item" href="{{ path('app_dashboard') }}">Dashboard</a>
                             <a class="dropdown-item" href="{{ path('app_account') }}">Profile</a>
                             {% if is_granted('ROLE_ADMIN_ARTICLE') %}
-                                <a class="dropdown-item" href="{{ path('admin_article_new') }}">Create Post</a>
+                                <a class="dropdown-item" href="{{ path('admin_article_list') }}">Artykuły</a>
                             {% endif %}
 
                             <a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a>
@@ -62,16 +64,28 @@
                     <li class="nav-item">
                         <a style="color: #fff;" class="nav-link" href="{{ path('app_login') }}">Login</a>
                     </li>
+
+                    <li class="nav-item">
+                        <a style="color: #fff;" class="nav-link" href="{{ path('app_register') }}">Rejestracja</a>
+                    </li>
                 {% endif %}
             </ul>
         </div>
     </nav>
 
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
     {% block body %}{% endblock %}
 
     <footer class="footer">
         <div class="container text-center">
-            <span class="text-muted">Made with <i class="fa fa-heart" style="color: red;"></i> by the guys and gals at
+            <span class="text-muted">Made with <i class="fas fa-thumbs-up" style="color: red;"></i> by the guys and gals at
                 <a href="https://knpuniversity.com">KnpUniversity</a></span>
         </div>
     </footer>

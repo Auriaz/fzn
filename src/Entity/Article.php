@@ -6,6 +6,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\Common\Collections\Criteria;
 use App\Repository\ArticleRepository;
@@ -25,6 +27,7 @@ class Article
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Wpisz tytuł artykułu!")
      */
     private $title;
 
@@ -43,11 +46,6 @@ class Article
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $publishedAt;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $author;
 
     /**
      * @ORM\Column(type="integer")
@@ -69,6 +67,12 @@ class Article
      * @ORM\ManyToMany(targetEntity="App\Entity\Tag", inversedBy="articles")
      */
     private $tags;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="articles")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $author;
 
     public function __construct()
     {
@@ -129,16 +133,9 @@ class Article
         return $this;
     }
 
-    public function getAuthor(): ?string
+    public function isPublished(): bool
     {
-        return $this->author;
-    }
-
-    public function setAuthor(string $author): self
-    {
-        $this->author = $author;
-
-        return $this;
+        return $this->publishedAt !== null;
     }
 
     public function getHeartCount(): ?int
@@ -241,5 +238,31 @@ class Article
         }
 
         return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @Assert\Callback
+     */
+    public function validate(ExecutionContextInterface $context, $payload)
+    {
+        //TODO -validate to work
+
+        if (stripos($this->getTitle(), 'Edyta jest Fantastyczna') !== false) {
+            $context->buildViolation('Tytuł wymaga, żeby były podane słowa: Edyta jest Fantastyczna')
+                ->atPath('title')
+                ->addViolation();
+        }
     }
 }
