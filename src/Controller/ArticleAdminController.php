@@ -63,6 +63,14 @@ class ArticleAdminController extends BaseController
     }
 
     /**
+     * @Route("/admin/upload/test", name="upload_test")
+     */ 
+    public function temporaryUpAction(Request $request)
+    {
+        dd($request->files->get('image'));
+    }
+
+    /**
      * @Route("/admin/article", name="admin_article_list")
      */
     public function list(ArticleRepository $articleRepository)
