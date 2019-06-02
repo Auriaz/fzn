@@ -10,37 +10,51 @@
 {% endblock %}
 
 {% block body %}
-    {{ form_start(registrationForm) }}
-        {{ form_widget(registrationForm) }}
-
-        <button class="btn btn-lg btn-primary" type="submit">
-            Zarejestruj się
-        </button>
-    {{ form_end(registrationForm) }}
-{# <form class="form-signin" method="post">
-
-    <h1 class="h3 mb-3 font-weight-normal">Rejestracja</h1>
-    <label for="inputEmail" class="sr-only">Email address</label>
-    <input type="email" name="email" id="inputEmail" class="form-control"
-        placeholder="Email" required autofocus>
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-    <div class="checkbox mb-3">
-        <label>
-            <input type="checkbox" name="_terms"> Zgadzam się na coś tam 
-        </label>
-    </div>
-
-    {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
-
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
+    <div class="row">
+        <div class="col">
+            <h1 class="">Tworzenie konta</h1>
+            <div class="">
+                <img src="https://robohash.org/admin2@example.com" class="img-responsive thumbnail">
+            </div>
         </div>
-    </form> #}
-    
+
+        <div class="form-regrister col-md-5 float-right mt-5 mr-5">
+            {{ form_start(registrationForm) }}
+                <div class="form-row ">
+                    <div class="col-md-6 mb-4">
+                        {{ form_row(registrationForm.firstName) }}
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        {{ form_row(registrationForm.lastName) }}
+                    </div>
+                </div>
+        
+                <div class="form-row">
+                    <div class="col-md-12 mb-4">
+                        {{ form_row(registrationForm.email) }}
+                    </div>
+                </div>
+        
+                <div class="form-row">
+                    <div class="col-md-6 mb-4">
+                        {{ form_row(registrationForm.plainPassword) }}
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        {{ form_row(registrationForm.secondPassword) }}
+                    </div>
+                </div>
+        
+                <div class="form-row">
+                    <div class="col-md-8 mb-3 ml-4">
+                        {{ form_row(registrationForm.agreeTerms) }}
+                    </div>
+            
+                    <button class="btn btn-outline-secondary col pull-right" type="submit">
+                        Zarejestruj się
+                    </button>
+                </div>
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
 {% endblock %}
 

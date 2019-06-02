@@ -1,12 +1,30 @@
 {{ form_start(articleForm) }}
-{{ form_row(articleForm.title, {
-        label: 'Tytuł artykułu'
-    }) }}
-{{ form_row(articleForm.author) }}
-{{ form_row(articleForm.content) }}
-{{ form_row(articleForm.publishedAt) }}
-<button type="submit" class="btn btn-outline-secondary">{{ button_text }}</button>
-<a href="{{ path('admin_article_list') }}" class="btn btn-outline-secondary">
-    <i class="fa fa-share"></i>
-</a>
+    {{ form_row(articleForm.title, {
+            label: 'Tytuł artykułu'
+        }) 
+    }}
+
+    {{ form_row(articleForm.author) }}
+
+    {{ form_row(articleForm.location) }}
+
+    <div class="specific-location-target">
+        {% if articleForm.specificLocationName is defined %}
+            {{ form_row(articleForm.specificLocationName) }}
+        {% endif %}
+    </div>
+
+    {{ form_row(articleForm.content) }}
+
+    {% if articleForm.publishedAt is defined %}
+        {{ form_row(articleForm.publishedAt) }}
+    {% endif %}
+
+    <button type="submit" class="btn btn-outline-secondary">
+        {{ button_text }}
+    </button>
+
+    <a href="{{ path('admin_article_list') }}" class="btn btn-outline-secondary">
+        <i class="fa fa-share"></i>
+    </a>
 {{ form_end(articleForm) }}

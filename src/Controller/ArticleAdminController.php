@@ -3,7 +3,6 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -11,7 +10,7 @@ use App\Form\ArticleFormType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\ArticleRepository;
 
-class ArticleAdminController extends AbstractController
+class ArticleAdminController extends BaseController
 {
     /**
      * @Route("/admin/article/new", name="admin_article_new")
@@ -43,14 +42,16 @@ class ArticleAdminController extends AbstractController
      */
     public function edit(Article $article, EntityManagerInterface $em, Request $request)
     {
-        $form = $this->createForm(ArticleFormType::class, $article);
+        $form = $this->createForm(ArticleFormType::class, $article, [
+            'include_published_at' => true
+        ]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($article);
             $em->flush();
 
-            $this->addFlash('success', 'Artykuł został uaktualniony!');
+            $this->addFlash('success', 'Artykuł został zaktualizowany!');
             return $this->redirectToRoute( 'admin_article_edit', [
                 'id' => $article->getId(),
             ]);
@@ -70,6 +71,27 @@ class ArticleAdminController extends AbstractController
 
         return $this->render('article_admin/list.html.twig', [
             'articles' => $articles,
+        ]);
+    }
+
+    /**
+     * @Route("/admin/article/location-select", name="admin_article_location_select")
+     */
+    public function getSpecificLocationSelect(Request $request)
+    {
+        if (!$this->isGranted('ROLE_ADMIN_ARTICLE') && $this->getUser()->getArticles()->isEmpty()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $article = new Article();
+        $article->setLocation($request->query->get('location'));
+        $form = $this->createForm(ArticleFormType::class, $article);
+        // no field? Return an empty response
+        if (!$form->has('specificLocationName')) {
+            return new Response(null, 204);
+        }
+        return $this->render('article_admin/_specific_location_name.html.twig', [
+            'articleForm' => $form->createView(),
         ]);
     }
 }

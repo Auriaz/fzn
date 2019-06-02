@@ -5,11 +5,17 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(
+ *     fields={"email"},
+ *     message="Podany e-mail już istnieje!"
+ * )
  */
 class User implements UserInterface
 {
@@ -23,6 +29,8 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Groups("main")
+     * @Assert\NotBlank(message="Wpisz e-maila!")
+     * @Assert\Email()
      */
     private $email;
 
@@ -36,6 +44,12 @@ class User implements UserInterface
      * @Groups("main")
      */
     private $firstName;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Groups("main")
+     */
+    private $lastName;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -54,19 +68,20 @@ class User implements UserInterface
     private $apiTokens;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="author")
+     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="author", fetch="EXTRA_LAZY")
      */
     private $articles;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="datetime")
      */
-    private $secondName;
+    private $agreedTermsAt;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups("main")
      */
-    private $familyName;
+    private $nick;
 
     public function __construct()
     {
@@ -254,26 +269,38 @@ class User implements UserInterface
         return $this->getFirstName();
     }
 
-    public function getSecondName(): ?string
+    public function getLastName(): ?string
     {
-        return $this->secondName;
+        return $this->lastName;
     }
 
-    public function setSecondName(?string $secondName): self
+    public function setlastName(?string $lastName): self
     {
-        $this->secondName = $secondName;
+        $this->lastName = $lastName;
 
         return $this;
     }
 
-    public function getFamilyName(): ?string
+    public function getAgreedTermsAt(): ?\DateTimeInterface
     {
-        return $this->familyName;
+        return $this->agreedTermsAt;
     }
 
-    public function setFamilyName(string $familyName): self
+    public function agreeToTerms(): self
     {
-        $this->familyName = $familyName;
+        $this->agreedTermsAt = new \DateTime();
+        
+        return $this;
+    }
+
+    public function getNick(): ?string
+    {
+        return $this->nick;
+    }
+
+    public function setNick(string $nick): self
+    {
+        $this->nick = $nick;
 
         return $this;
     }

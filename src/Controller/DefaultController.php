@@ -5,7 +5,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Repository\ArticleRepository;
 
-class HomeController extends AbstractController
+class DefaultController extends AbstractController
 {
     /**
      * @Route("/", name="app_homepage")

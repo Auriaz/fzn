@@ -13,6 +13,8 @@ use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use App\Security\LoginFormAuthenticator;
 use App\Form\UserRegistrationFormType;
 
+
+
 class SecurityController extends AbstractController
 {
     /**
@@ -49,12 +51,22 @@ class SecurityController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            $user = $form->getData();
+            $userModel = $form->getData();
 
+            $user = new User();
+
+            $user->setEmail($userModel->email);
+            $user->setFirstName($userModel->firstName);
+            $user->setlastName($userModel->lastName);
             $user->setPassword($passwordEncoder->encodePassword(
                 $user,
-                $user->getPassword()
+                $userModel->plainPassword
             ));
+
+            // be absolutely sure they agree
+            if (true === $userModel->agreeTerms) {
+                $user->agreeToTerms();
+            }
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
