@@ -12,10 +12,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Validator\Constraints\Image;
 
 class ArticleFormType extends AbstractType
 {
@@ -35,7 +37,8 @@ class ArticleFormType extends AbstractType
 
         $builder
             ->add('title', TextType::class, [
-                'help' => 'Wybierz coś chwytliwego!',
+                // 'help' => 'Wybierz coś chwytliwego!',
+                'label' => 'Tytuł', 
                 'attr' => [
                     'placeholder' => 'Podaj tytuł',
                 ]
@@ -60,6 +63,27 @@ class ArticleFormType extends AbstractType
                 ],
                 'required' => false,
             ]);
+
+        $imageConstraints = [
+            new Image([
+                'maxSize' => '8M'
+            ]),
+        ];
+
+        if (!$isEdit || !$article->getImageFilename()) {
+            $imageConstraints[] = new NotNull([
+                'message' => 'Dodaj zdjęcię!',
+            ]);
+        }
+
+        $builder->add('imageFile', FileType::class, [
+            'mapped' => false,
+            'required' => false,
+            'constraints' => $imageConstraints, 
+            'attr' => [
+                'placeholder' => 'Podaj tytuł',
+            ],
+        ]);
 
             
         if($options['include_published_at']) {
@@ -133,7 +157,7 @@ class ArticleFormType extends AbstractType
             'star' => array_combine($stars, $stars),
             'interstellar_space' => null,
         ];
-        
+
         return $locationNameChoices[$location] ?? null;
     }
 

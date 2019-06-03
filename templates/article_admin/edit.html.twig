@@ -9,10 +9,6 @@
 {% block content_body %}
 <h1>Edycja Artykułu ???</h1>
 
-<form action="{{ path('upload_test') }}" method="POST" enctype="multipart/form-data">
-    <input type="file" name="image">
-    <button type="submit" class="btn  btn-outline-secondary">Wyślij</button>
-</form>
 {{ include('article_admin/_form.html.twig', {
         button_text: 'Aktualizuj'
     }) }}

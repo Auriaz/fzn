@@ -1,8 +1,17 @@
 {{ form_start(articleForm) }}
-    {{ form_row(articleForm.title, {
-            label: 'Tytuł artykułu'
-        }) 
-    }}
+    {{ form_row(articleForm.title) }}
+
+    <div class="row">
+        <div class="col-sm-9">
+            {{ form_row(articleForm.imageFile) }}
+        </div>
+
+        <div class="col-sm-3">
+            {% if articleForm.vars.data.imageFilename|default %}
+                <img src="{{ uploaded_asset(articleForm.vars.data.imagePath)|imagine_filter('squared_thumbnail_small') }}" alt="" height="100">
+            {% endif %}
+        </div>
+    </div>
 
     {{ form_row(articleForm.author) }}
 
