@@ -19,7 +19,7 @@
         {% for article in articles %}
         <tr>
             <td>{{ article.title }}</td>
-            <td>{{ article.author.email }}</td>
+            <td>{{ article.author.firstName }} {{ article.author.lastName }}</td>
             <td>
                 <i class="fa fa-{{ article.isPublished ? 'check' : 'times' }}"></i>
             </td>

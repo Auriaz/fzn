@@ -18,6 +18,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Validator\Constraints\Image;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class ArticleFormType extends AbstractType
 {
@@ -44,9 +45,10 @@ class ArticleFormType extends AbstractType
                 ]
             ])
             ->add('content', null, [
-                'label' => 'Kontent',          
+                'label' => 'Tekst',          
             ])
             ->add('author', UserSelectTextType::class, [
+                'label' => 'Autor', 
                 'disabled' => $isEdit
             ])
             ->add('location', ChoiceType::class, [
@@ -66,7 +68,7 @@ class ArticleFormType extends AbstractType
 
         $imageConstraints = [
             new Image([
-                'maxSize' => '8M'
+                'maxSize' => '5M'
             ]),
         ];
 

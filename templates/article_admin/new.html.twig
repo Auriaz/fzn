@@ -1,15 +1,10 @@
 {% extends 'article_admin/_base.html.twig' %}
 
-{% block javascripts %}
-{{ parent() }}
-
-<script src="{{ asset('js/admin_article_form.js') }}"></script>
-{% endblock %}
-
 {% block content_body %}
-<h1>Dodaj nowy Artykuł!</h1>
-{{ include('article_admin/_form.html.twig', {
-        button_text: 'Utwórz'
-    }) }}
+    <h1>Dodaj nowy Artykuł!</h1>
 
+    {{ include('article_admin/_form.html.twig', {
+            button_text: 'Utwórz'
+        }) }}
 {% endblock %}
+

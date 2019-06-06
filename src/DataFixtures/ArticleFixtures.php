@@ -9,6 +9,8 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\File\File;
 use App\Service\UploaderHelper;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ArticleFixtures extends BaseFixture implements DependentFixtureInterface
 {
@@ -61,13 +63,12 @@ EOF
             if ($this->faker->boolean(70)) {
                 $article->setPublishedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
             }
-            $randomImage = $this->faker->randomElement(self::$articleImages);
-            $imageFilename = $this->uploaderHelper
-                ->uploadArticleImage(new File(__DIR__ . '/images/' . $randomImage));
+          
+            $imageFilename = $this->fakeUploadImage();
 
             $article->setAuthor($this->getRandomReference('main_users'))
                 ->setHeartCount($this->faker->numberBetween(5, 100))
-                ->setImageFilename($this->faker->randomElement(self::$articleImages));
+                ->setImageFilename( $imageFilename);
 
             $tags = $this->getRandomReferences('main_tags', $this->faker->numberBetween(0, 5));
             foreach ($tags as $tag) {
@@ -86,5 +87,16 @@ EOF
             UserFixture::class,
             TagFixture::class,
         ];
+    }
+
+    private function fakeUploadImage(): string
+    {
+        $randomImage = $this->faker->randomElement(self::$articleImages);
+        $fs = new Filesystem();
+        $targetPath = sys_get_temp_dir() . '/' . $randomImage;
+        $fs->copy(__DIR__ . '/images/' . $randomImage, $targetPath, true);
+
+        return $this->uploaderHelper
+            ->uploadArticleImage(new UploadedFile($targetPath, $randomImage), null);
     }
 }

@@ -2,13 +2,15 @@
     {{ form_row(articleForm.title) }}
 
     <div class="row">
-        <div class="col-sm-9">
+        <div class="col-sm-8 custom-file mb-5">
             {{ form_row(articleForm.imageFile) }}
         </div>
 
-        <div class="col-sm-3">
+        <div class="col-sm-4">
             {% if articleForm.vars.data.imageFilename|default %}
-                <img src="{{ uploaded_asset(articleForm.vars.data.imagePath)|imagine_filter('squared_thumbnail_small') }}" alt="" height="100">
+                <a href="{{ uploaded_asset(articleForm.vars.data.imagePath) }}" target="_blank">
+                    <img src="{{ articleForm.vars.data.imagePath|imagine_filter('squared_thumbnail_small') }}" height="100">
+                </a>
             {% endif %}
         </div>
     </div>

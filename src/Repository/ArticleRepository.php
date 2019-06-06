@@ -31,7 +31,7 @@ class ArticleRepository extends ServiceEntityRepository
             ->leftJoin('a.tags', 't')
             ->addSelect('t')
             ->orderBy('a.publishedAt', 'DESC')
-            ->setMaxResults(5)
+            // ->setMaxResults(5)
             ->getQuery()
             ->getResult()
         ;
