@@ -50,7 +50,7 @@ class UserSelectTextType extends AbstractType
    {
         $attr = $view->vars['attr'];
         $class = isset($attr['class']) ? $attr['class'].' ' : '';
-        $class .= 'algolia-autocomplete';
+        $class .= 'article-form_algolia-autocomplete';
 
         $attr['class'] = $class;
         $attr['data-autocomplete-url'] = $this->router->generate('admin_utility_users');

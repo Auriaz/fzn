@@ -6,9 +6,21 @@
  */
 
 // any CSS you require will output into a single css file (app.css in this case)
-require('../css/app.css');
+import '../css/app.scss';
+import getNiceMessage from './components/get_nice_message';
+import $ from 'jquery';
+import 'bootstrap';
 
-// Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
-// const $ = require('jquery');
+//  uncomment to support legacy code
+// global.$ = $;
 
-console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+
+console.log(getNiceMessage(5));
+
+$('.dropdown-toggle').dropdown();
+$('.custom-file-input').on('change', function (event) {
+    var inputFile = event.currentTarget;
+    $(inputFile).parent()
+        .find('.custom-file-label')
+        .html(inputFile.files[0].name);
+});

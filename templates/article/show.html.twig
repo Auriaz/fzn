@@ -8,13 +8,13 @@
             <span class="show-article-title ">{{ article.title }}</span>
             <br>
             <span class="align-left article-details"><img class="article-author-img rounded-circle"
-                    src="{{ asset('images/alien-profile.png') }}">{{ article.author }}</span>
+                    src="{{ asset('build/images/alien-profile.png') }}">{{ article.author }}</span>
             <span class="pl-2 article-details">
                 {{ article.publishedAt ? article.publishedAt|ago : 'unpublished' }}
             </span>
             <span class="pl-2 article-details">
                 <span class="js-like-article-count ">{{ article.heartCount }}</span>
-                <a href="{{ path('article_toggle_heart', {slug: article.slug}) }}" class="far fa-thumbs-up like-article js-like-article"></a>
+                <a href="{{ path('article_toggle_heart', {slug: article.slug}) }}" class="fa fa-thumbs-up like-article js-like-article" title="Click to Like"></a>
             </span>
             <span class="pl-2 article-details">
                 {% for tag in article.tags %}
@@ -45,7 +45,7 @@
         <div class="row mb-5">
             <div class="col-sm-12">
                 <img class="comment-img rounded-circle"
-                    src="{{ asset('images/astronaut-profile.png') }}">
+                    src="{{ asset('build/images/astronaut-profile.png') }}">
                 <div class="comment-container d-inline-block pl-3 align-top">
                     <span class="commenter-name">Amy Oort</span>
                     <div class="form-group">
@@ -59,7 +59,7 @@
         {% for comment in article.nonDeletedComments %}
         <div class="row">
             <div class="col-sm-12">
-                <img class="comment-img rounded-circle" src="{{ asset('images/alien-profile.png') }}">
+                <img class="comment-img rounded-circle" src="{{ asset('build/images/alien-profile.png') }}">
                 <div class="comment-container d-inline-block pl-3 align-top">
                     <span class="commenter-name">{{ comment.authorName }}</span>
                     <small>about {{ comment.createdAt|ago }}</small>
@@ -78,5 +78,12 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('js/article_show.js') }}"></script>
+    
+    {{ encore_entry_script_tags('article_show') }}
+{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+
+{{ encore_entry_link_tags('article_show') }}
 {% endblock %}

@@ -1,5 +1,9 @@
-$(document).ready(function () {
-    $('.algolia-autocomplete').each( function(){
+import $ from 'jquery';
+import 'autocomplete.js/dist/autocomplete.jquery';
+import '../../css/algolia-autocomplete.scss';
+
+export default function($elements, dataKey, displayKey) {
+    $elements.each( function(){
         var autocompleteUrl = $(this).data('autocomplete-url');
         var name = $(this).data('autocomplete-name');
 
@@ -9,12 +13,16 @@ $(document).ready(function () {
                     $.ajax({
                         url: autocompleteUrl+'?query='+query
                     }).then(function(data) {
-                        cb(data.users)
+                        if(dataKey) {
+                            data = data[dataKey];
+                        }
+
+                        cb(data);
                     })
                 },
-                displayKey: 'email',
+                displayKey: displayKey,
                 debounce: 500
             }
         ]);
     });
-});
+};
