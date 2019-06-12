@@ -1,21 +1,3 @@
-/* NAVIGATION */
-
-.navbar-bg {
-    background: url('../../images/space-nav.jpg');
-    background-size: 80%;
+.navbar {
+	background-color: $contentNav;
 }
-
-.dropdown-menu, .dropdown-menu.show {
-    right: 0;
-}
-
-.space-brand {
-    color: #fff;
-    font-weight: bold;
-}
-
-.nav-profile-img {
-    width: 50px;
-    border: 1px solid #fff;
-}
-

@@ -11,6 +11,7 @@ import getNiceMessage from './components/get_nice_message';
 import $ from 'jquery';
 import 'bootstrap';
 
+
 //  uncomment to support legacy code
 // global.$ = $;
 
