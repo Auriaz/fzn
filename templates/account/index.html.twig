@@ -1,6 +1,6 @@
-{% extends 'base.html.twig' %}
+{% extends 'account/_base.html.twig' %}
 
-{% block title %}Manage Account!{% endblock %}
+{% block title %} Konto {% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -8,7 +8,7 @@
     {{ encore_entry_link_tags('account') }}
 {% endblock %}
 
-{% block body %}
+{% block account_body %}
     <div class="container">
         <div class="row user-menu-container square">
             <div class="col-md-12 user-details">

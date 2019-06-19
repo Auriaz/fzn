@@ -10,7 +10,16 @@ import '../css/app.scss';
 import getNiceMessage from './components/get_nice_message';
 import $ from 'jquery';
 import 'bootstrap';
+import StickyHeader from './components/StickyHeader';
+import RevealOnSroll from './components/RevealOnSroll';
+import Login from "./components/Login";
+require('@fortawesome/fontawesome-free/css/all.min.css');
+require('@fortawesome/fontawesome-free/js/all.js');
 
+
+var login = new Login();
+var sticky = new StickyHeader();
+new RevealOnSroll("100%");
 
 //  uncomment to support legacy code
 // global.$ = $;

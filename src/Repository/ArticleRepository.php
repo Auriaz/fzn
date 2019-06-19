@@ -25,16 +25,20 @@ class ArticleRepository extends ServiceEntityRepository
      * @return Article[]
      */
 
-    public function findAllPublishedOrderedByArticles()
+    public function findAllPublishedOrderedByArticles(int $count = null)
     {
-        return $this->addIsPublishedQueryBuilder()
-            ->leftJoin('a.tags', 't')
-            ->addSelect('t')
-            ->orderBy('a.publishedAt', 'DESC')
-            // ->setMaxResults(5)
-            ->getQuery()
-            ->getResult()
-        ;
+        $query = $this->addIsPublishedQueryBuilder()
+                ->leftJoin('a.tags', 't')
+                ->addSelect('t')
+                ->orderBy('a.publishedAt', 'DESC');
+
+         if($count) {
+            $query->setMaxResults($count);
+        }
+
+        return  $query
+                    ->getQuery()
+                    ->getResult();
     }
 
     public function createNonDeletedCriteria(): Criteria

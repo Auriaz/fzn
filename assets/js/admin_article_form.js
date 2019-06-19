@@ -12,7 +12,7 @@ $(document).ready(function () {
     const $autoComplete = $('.article-form_algolia-autocomplete');
     if (!$autoComplete.is(':disabled')) {
         // Start loading animation
-        import('./components/algolia-autocomplete').then((autocomplete) => {
+        import('./components/algoliaAutocomplete').then((autocomplete) => {
             // Stop loading animation
             autocomplete.default($autoComplete, 'users', 'email');
         });

@@ -14,4 +14,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class DashboardAdminController extends AbstractController
 {
 
+    /**
+     * @Route("/admin/dashboard", name="admin_dashboard")
+     */
+    public function index()
+    {
+        // $articleContent = $markdownHelper->parse($articleContent);
+        return $this->render('dashboard_admin/index.html.twig', [
+            
+        ]);
+    }
 }

@@ -1,58 +1,96 @@
-<nav class="navbar navbar-expand-lg navbar-dark navbar-bg {{ app.session.flashbag.peek('success')|length > 0 ? '' : 'mb-5' }}">
-    <a style="margin-left: 75px;" class="navbar-brand space-brand" href="{{ path('app_homepage') }}">The Space Bar</a>
-    
+<nav class="nav navbar navbar-expand-lg {{ app.session.flashbag.peek('success')|length > 0 ? '' : 'mb-1' }}">
+    <a href="{{ path('app_homepage') }}" class="navbar-brand logo">
+        {% include "inc/logo.html.twig" %}
+        Training-Space
+    </a>
+
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
         aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+        <i class="nav-icon fa fa-bars"></i>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav mr-auto text-center">
             <li class="nav-item">
-                <a style="color: #fff;" class="nav-link" href="#">Local Asteroids</a>
+                <a class="nav-link" href="{{ path('articles_show') }}">Artykuły</a>
             </li>
 
             <li class="nav-item">
-                <a style="color: #fff;" class="nav-link" href="#">Weather</a>
+                <a  class="nav-link" href="/#price-list" id="app">Cenik</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/#description" id="app">O mnie</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/#contact" id="app">Kontakt</a>
             </li>
         </ul>
 
-        <form class="form-inline my-2 my-lg-0">
+        <!-- <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
 
             <button class="btn btn-info my-2 my-sm-0" type="submit">Search</button>
-        </form>
+        </form> -->
 
-        <ul class="navbar-nav ml-auto">
+        <ul class="nav-profile navbar-nav ml-auto">
             {% if is_granted('ROLE_USER') %}
-                <li class="nav-item dropdown" style="margin-right: 75px;">
-                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img class="nav-profile-img rounded-circle" src="{{ app.user.avatarUrl(100) }}">
-                    </a>
+            <li class="nav-item dropdown">
+                <a class="nav-link " href="http://example.com" id="navbarDropdownMenuLink"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img class="nav-profile__img rounded-circle" src="{{ app.user.avatarUrl(100) }}">
+                </a>
 
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="{{ path('app_account') }}">Profile</a>
+                <div class="nav-profile__container dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <div class="nav-profile__account">
+                        <img class="nav-profile__img nav-profile__account--img rounded-circle" src="{{ app.user.avatarUrl(100) }}">
+                        <div class="nav-profile__account--text-content">
+                            <p >{{ app.user.firstname }} {{ app.user.lastname }}</p> 
+                            <p >{{ app.user.email }}</p> 
+                        </div>
+                    </div>
 
+                    <div class="nav-profile__menu">
                         {% if is_granted('ROLE_ADMIN_ARTICLE') %}
-                            <a class="dropdown-item" href="{{ path('admin_article_new') }}">Create Post</a>
+                            <a class="dropdown-item" href="{{ path('admin_article_list') }}">
+                                <i class="fa fa-book nav-profile__icon"></i> Artykuły
+                            </a>
                         {% endif %}
 
-                        <a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a>
-                    </div>
-                </li>
-            {% else %}
-                <li class="nav-item">
-                    <a style="color: #fff;" class="nav-link" href="{{ path('app_login') }}">Login</a>
-                </li>
+                        <a class="dropdown-item" href="{{ path('app_account') }}">
+                            <i class="fa fa-user-cog nav-profile__icon"></i> Profil
+                        </a>
+    
+                        <a class="dropdown-item" href="{{ path('app_dashboard') }}">
+                            <i class="fas fa-tools nav-profile__icon"></i> Panel
+                        </a>
 
-                <li class="nav-item">
-                    <a style="color: #fff;" class="nav-link" href="{{ path('app_register') }}">Register</a>
-                </li>
+                        <a class="dropdown-item" href="{{ path("dashboard_workout") }}">
+                            <i class="fas fa-street-view nav-profile__icon"></i> Treningi
+                        </a>
+                    </div>
+                    
+                    <div class="nav-profile__logout">
+                        <a class="dropdown-item" href="{{ path('app_logout') }}">
+                            <i class="fa fa-sign-out-alt nav-profile__icon"></i>Logout
+                        </a>
+                    </div>
+                </div>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a href="#" class="nav-link nav-icon" data-toggle="modal" data-target="#form-login">
+                    <i class="fa fa-sign-in-alt"> </i> Zaloguj się
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link nav-icon" href="{{ path('app_register') }}" >
+                    <i class="fa fa-user-plus"> </i> Rejestracja
+                </a>
+            </li>
             {% endif %}
         </ul>
     </div>
 </nav>
-
-
-

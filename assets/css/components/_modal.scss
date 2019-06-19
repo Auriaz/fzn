@@ -1,0 +1,10 @@
+.modal {
+    &-header {
+        background-color: $contentModal;
+        color: $textModal;
+    }
+
+    &-close {
+        color: $textModal;
+    }
+}

@@ -12,7 +12,7 @@ class DefaultController extends AbstractController
      */
     public function homepage(ArticleRepository $repository)
     {
-        $articles = $repository->findAllPublishedOrderedByArticles();
+        $articles = $repository->findAllPublishedOrderedByArticles(5);
 
         return $this->render('home/homepage.html.twig', [
             'articles' => $articles,

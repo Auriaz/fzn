@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Psr\Log\LoggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\ArticleRepository;
 
 class ArticleController extends AbstractController
 {
@@ -43,5 +44,17 @@ class ArticleController extends AbstractController
 
         $logger->info('Article is being hearted');
         return new JsonResponse(['hearts' => $article->getHeartCount()]);
+    }
+
+    /**
+     * @Route("/article", name="articles_show")
+     */
+    public function showArticles(ArticleRepository $repository)
+    {
+        $articles = $repository->findAllPublishedOrderedByArticles();
+
+        return $this->render('article/showArticles.html.twig', [
+            'articles' => $articles,
+        ]);
     }
 }

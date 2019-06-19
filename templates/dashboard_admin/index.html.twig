@@ -1,0 +1,18 @@
+{% extends 'dashboard/_base.html.twig' %}
+
+{% block title %} Panel kontrolny {% endblock %}
+
+{% block dashboard_body %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="dashboard__switch-user">
+            <form class="form form-signin" action="{{ path('app_homepage') }}" method="GET">
+                <div class="form-group form-other">
+                    <input type="email" class="form-control" name="_switch_user" id="switch_user">
+                    <label for="switch_user" class="label">Switch</label>                   
+                </div>
+                
+                <button type="submit" class="btn btn-outline-primary">action</button> 
+            </form>
+        </div>
+    {% endif %}
+{% endblock %}

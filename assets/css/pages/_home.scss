@@ -1,0 +1,296 @@
+.home {
+    position: relative;
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+
+    &-page {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100%;
+        margin-top: 100vh;
+        z-index: 6;
+        background-color: $bodyHome01;
+
+        &__container {
+            width: 100%;
+    
+            @include atExtraLarge {
+                margin: 0 auto;
+                width: 1440px;
+            }
+        }
+
+        &__background {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            clip-path: polygon(72% 0, 100% 0%, 100% 100%, 27% 100%);
+            background: $bodyHome01;
+        }
+    
+        &__content-title {
+            @include grid-child (1, 13, 1, 2);
+            position: relative;
+            z-index: 4;
+
+            &--text {
+                padding: 30px;
+                color:  darken( $color, 20%);
+                display: flex;
+                align-items: center;
+        
+                &::after, &::before {
+                    content: '';
+                    display: block;
+                    border: 1px solid darken( $color, 20%);
+                    flex-grow: 1;
+                    margin: 0 10px;
+                }
+            }
+        }
+    
+        &__main {
+            &--container {
+                display: grid;
+                grid-template-columns: 50% auto;
+                height: auto;
+                position: absolute;
+                align-self: center;
+                margin: 0 50px;
+            }
+            
+            &--ul {
+                position: fixed;
+                list-style-type: none;
+                perspective: 1000px;
+
+                & li {
+                    display: grid;
+                    grid-template-columns: 20% auto;
+                    border-radius: 10px;
+                    padding: 15px;
+                    cursor: pointer;
+                    transform: rotateY(-30deg) rotateX(15deg);
+                    position: absolute;
+                    border-bottom: 4px solid rgba(0, 0, 0, 0.2);
+                }
+
+                & li:nth-child(1) {
+                    background: #bfe8fc;
+                    top: -105px;
+                    z-index: 3;
+                }
+
+                & li:nth-child(2) {
+                    background: #faffc8;
+                    top: -105px;
+                    z-index: 2;
+                }
+
+                & li:nth-child(3) {
+                    background: rgb(242, 228, 255);
+                    top: -105px;
+                    z-index: 1;
+                }
+            }
+
+            &-text {
+                position: fixed;
+                top: 30%;
+                left: 45%;
+                z-index: 4;
+                color: #fff;
+                transform: rotate(6deg);
+            }
+        }
+
+        &__info {
+            height: auto;
+            background-color: $bodyHome01;
+            padding: 0 20px 40px 20px;
+
+            &--container {
+                @include grid-child (1, 13, 3, 9);
+            }
+    
+            &--slider {
+                @include atMedium {
+                    grid-area: slider;
+                } 
+            }
+
+            &--wrapper {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                grid-gap: 20px;
+    
+                @include atSmall {
+                    grid-template-columns: repeat(2, minmax(200px, 1fr));
+                    grid-template-rows: repeat(2, 1fr);
+                }
+    
+                @include atMedium {
+                    grid-template-columns: repeat(3, 1fr);
+                    grid-template-rows: repeat(3, 1fr);
+                    grid-template-areas: 
+                    'slider slider card-1'                
+                    'slider slider card-2'                
+                    'card-3 card-4 card-5'                
+                }
+            }
+        }
+
+        &__answer {
+            height: auto;
+            background-color: $bodyHome01;
+            padding: 0 20px 40px 20px;
+
+            &--container {
+                @include grid-child (1, 13, 3, 9);
+            }
+
+            &--wrapper {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                grid-gap: 30px;
+                position: relative;
+
+                @include atExtraLarge {
+                    padding: 0 145px;
+                }
+            }
+
+            &__card {
+               width: 250px;
+               height: 300px;
+            //    background-color: #666;
+               
+               &--icon {
+                    margin: 30px 80px;
+               
+                }
+
+                &--text-content {
+                    text-align: center;
+                }
+            }
+        }
+
+        &__price-list {
+            height: auto;
+            background-color: $bodyHome02;
+            padding: 0 20px 40px 20px;
+
+            &--container {
+                @include atMedium {
+                    padding: 40px;
+                }
+            }
+
+            &--table {
+                position: relative;
+                z-index: 5;
+
+                &--head {
+                    background-color: $bodyHome01;  
+                }
+
+                &-1 {
+                    
+
+                    & thead {
+                        background-color: darken($bodyHome03, 20%);
+                    }
+
+                    & tbody {
+                        background-color: #666;
+                    }
+
+                }
+
+                &-2 {
+
+                    & thead {
+                        background-color: darken($bodyHome03, 20%);
+                    }
+
+                    & tbody {
+                        background-color: #777;
+                    }
+                }
+
+                &-3 {
+
+                    & thead {
+                        background-color: darken($bodyHome03, 20%);
+                    }
+
+                    & tbody {
+                        background-color: #555;
+                    }
+                }
+            }
+        }
+
+        &__contact {
+            background-color: $bodyHome01;
+            padding: 0 20px 40px 20px;
+
+            &--data {
+                width: 90%;
+                height: 200px;
+                color: #fff;
+                background-color: #888;
+                padding: 30px;
+                transform: rotate(10deg);
+            }
+
+            &--container {
+                width: 100%;
+                height: auto;
+                margin: 0 auto;
+                padding: 20px;
+            }
+        }
+
+        &__description {
+            background-color: $bodyHome03;
+            height: 800px;
+            padding: 0 20px 40px 20px;
+
+            &--image {
+                position: relative;
+                top: 0;
+                left: 0;
+                width: 400px;
+                height: 300px;
+                padding: 60px;
+                transition: all 5s ease-out;
+
+                &-1 {
+                    position: absolute;
+                    top: 20px;
+                    left: 30px; 
+                    transform: rotate(-10deg);
+                }
+
+                &-2 {
+                    position: absolute;
+                    top: 80px;
+                    left: 200px; 
+                    transform: rotate(15deg);
+                }
+
+                &-3 {
+                    position: absolute;
+                    top: 220px;
+                    left: 100px; 
+                    transform: rotate(30deg);
+                }
+            }
+        }
+    }
+}

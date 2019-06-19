@@ -1,47 +1,55 @@
+<div class="modal fade" id="form-login" tabindex="-1" role="dialog" aria-labelledby="loginLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Zaloguj się</h5>
+                <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form form-signin" method="post" action="{{ path('app_login') }}">
+                    {% if error is defined %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+                    <div class="form-group form-other">
+                        <input type="email" value="{{ last_username|default }}" name="email" id="inputEmail" class="form-control"
+                        required>
+                        <label for="inputEmail" class="label">Email</label>
+                    </div>
 
-{% extends 'base.html.twig' %}
+                    <div class="form-group form-other">
+                        <input type="password" name="password" id="inputPassword" class="form-control" required>
+                        <label for="inputPassword" class="label">Hasło</label>
+                    </div>
+                    
+                    <div class="checkbox mb-3">
+                        <label>
+                            <input type="checkbox" name="_remember_me"> Zapamietaj mnie
+                        </label>
+                    </div>
 
-{% block title %}Login!{% endblock %}
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-{% block stylesheets %}
-    {{ parent() }}
+                    {#
+                        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                        See https://symfony.com/doc/current/security/remember_me.html
 
-    {{ encore_entry_link_tags('login') }}
-{% endblock %}
+                        <div class="checkbox mb-3">
+                            <label>
+                                <input type="checkbox" name="_remember_me"> Remember me
+                            </label>
+                        </div>
+                    #}
 
-{% block body %}
-<form class="form-signin" method="post">
-    {% if error %}
-    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
-
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail" class="sr-only">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control"
-        placeholder="Email" required autofocus>
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-    <div class="checkbox mb-3">
-        <label>
-            <input type="checkbox" name="_remember_me"> Remember me
-        </label>
-    </div>
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-    {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
-
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Zamknij</button>
+                        <button type="submit" class="btn btn-outline-secondary">Zaloguj się</button>
+                    </div>
+                </form>
+            </div>
         </div>
-    #}
-
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
-{% endblock %}
+    </div>
+</div>
 

@@ -15,5 +15,34 @@ $mainDark: #000000;
 $mainWhite: #fff;
 $mainGray: #ddd;
 
+/* #### Body #### */
+$body: #2f5572;
+$hover: rgb(241, 138, 20);
+$hoverBackground: #0d6273;
+$color: #fff;
+$colorLink: #205b9e;
+
+
 /* #### Navigation #### */
-$contentNav: #0f2135;
+$bodyNav: lighten(#0c1927, 10%);
+$textNav:  lighten(#205b9e, 20%);
+$textHoverNav: #fff;
+
+$menuBodyNav: #ddd;
+$borderNav: #0d6273;
+
+$iconNav: #fff;
+$logo: #fff;
+
+/* #### login modal #### */
+$contentModal:  #08284d;
+$textModal: #fff;
+
+/* #### Home #### */
+$bodyHome01: lighten(#0c1927, 10%);
+$bodyHome02: $hover;
+$bodyHome03: lighten($borderNav, 30%);
+
+$textHome: #04859D;
+/* #### Footer  #### */
+$footer: $bodyHome03;

@@ -13,34 +13,32 @@
     </head>
 
     <body>
-        <!-- #### Header #### -->
-        <header>
-            {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-                <!-- #### Switch message #### -->
-                {% include "inc/switch.html.twig" %}
-            {% endif %}
-    
-            <!-- #### Navigation #### -->
-            {% include "inc/nav.html.twig" %}
-    
-            <!-- #### Alert message #### -->
-            {% include "inc/alert.html.twig" %}
-        </header>
-
-        <!-- #### Main Content #### -->
-        <main>
-            {% block body %}{% endblock %}
-        </main>
-
-        <!-- #### Footer #### -->
-        <footer class="footer">
-            {% include "footer/footer.html.twig" %}
-        </footer>
+        <div class="content">
+            <!-- #### Header #### -->    
+            <header>
+                {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                    <!-- #### Switch message #### -->
+                    {% include "inc/switch.html.twig" %}
+                {% endif %}
         
+                <!-- #### Navigation #### -->
+                {% include "inc/nav.html.twig" %}
+        
+                <!-- #### Alert message #### -->
+                {% include "inc/alert.html.twig" %}
+    
+            </header>
+    
+            <!-- #### Main Content #### -->
+            <main>
+                {% block body %}{% endblock %}
+                {% include "security/login.html.twig" %}
+            </main>
+        </div>
+
         {% block javascripts %}
         <!--#### Import script ####-->
             {{ encore_entry_script_tags('app') }}
-            {{ encore_entry_script_tags('vue') }}
         {% endblock %}
     </body>
 </html>

@@ -1,0 +1,36 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+<div class="dashboard">
+        {% include "dashboard/main_page.html.twig" %}
+        
+        <div class="dashboard-section">
+            <div class="dashboard-section__menu-icon">
+                <div class="sidebar__menu-icon sidebar__menu-icon--dashboard">
+                    <div class="sidebar__menu-icon__middle"></div>
+                </div>
+            </div>          
+
+            <div class="dashboard-section__wrapper">
+                {% block dashboard_body %}{% endblock %}
+            </div>
+        </div>
+
+        {% include "dashboard/sidebar.html.twig" %}
+    </div>
+{% endblock body %}
+
+
+
+{% block stylesheets %}
+{{ parent() }}
+
+{{ encore_entry_link_tags('dashboard') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {{ encore_entry_script_tags('dashboard') }}
+{% endblock %}

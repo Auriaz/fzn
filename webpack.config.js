@@ -1,5 +1,5 @@
 var Encore = require('@symfony/webpack-encore');
-const { VueLoaderPlugin } = require('vue-loader');
+// const { VueLoaderPlugin } = require('vue-loader');
 
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
@@ -25,11 +25,12 @@ Encore
      * and one CSS file (e.g. app.css) if you JavaScript imports CSS.
      */
     .addEntry('app', './assets/js/app.js')
-    .addEntry('vue', './assets/js/vue.js')
+    // .addEntry('vue', './assets/js/vue.js')
+    .addEntry('dashboard', './assets/js/dashboard.js')
     .addEntry('article_show', './assets/js/article_show.js')
     .addEntry('admin_article_form', './assets/js/admin_article_form.js')
-    .addStyleEntry('account', './assets/css/account.scss')
-    .addStyleEntry('login', './assets/css/login.scss')
+    .addStyleEntry('account', './assets/css/themes/account.scss')
+    .addStyleEntry('register', './assets/css/register.scss')
     //.addEntry('page1', './assets/js/page1.js')
     //.addEntry('page2', './assets/js/page2.js')
 
@@ -81,8 +82,9 @@ Encore
 
     // uncomment if you use API Platform Admin (composer req api-admin)
     //.enableReactPreset()
-    .enableVueLoader()
+    // .enableVueLoader()
  
+    // .addPlugin(new VueLoaderPlugin())
     //.addEntry('admin', './assets/js/admin.js')
 ;
 

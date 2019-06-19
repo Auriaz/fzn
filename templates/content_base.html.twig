@@ -1,13 +1,18 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="{% block content_class %}show-article-container p-3 mt-4{% endblock %}">
-                {% block content_body %}{% endblock %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="{% block content_class %}show-article-container wrapper{% endblock %}">
+                    {% block content_body %}{% endblock %}
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+    <!-- #### Footer #### -->
+    <footer class="footer">
+        {% include "footer/footer.html.twig" %}
+    </footer>
 {% endblock body %}

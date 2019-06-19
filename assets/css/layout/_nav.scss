@@ -1,0 +1,138 @@
+.nav { 
+	position: sticky;
+	top: 0;
+	left: 0;
+	width: 100%;	
+	background-color: rgba($bodyNav, 0.9);
+	border-bottom: 2px solid $borderNav;
+	transition: all 1.5s ease-in-out;  
+	z-index: 10;
+
+	@include atSmall {
+		background: none;
+		border: none
+	}
+
+	&-sticky { 
+		position: fixed;
+		background-color: rgba($bodyNav, 0.8);
+
+   		@include atSmall {
+	 		border-bottom: 2px solid $borderNav;
+			padding: 5px; 
+		}
+	}
+
+	&-list {
+		position: relative;
+		width: 100%;
+		list-style-type: none;
+		line-height: 200%;
+		padding-left: 0;
+		
+		@include clearfix;
+
+		@include atSmall {
+			height: 1em;
+			display: inline-block;
+			padding-left: 30px;
+		}
+
+		@include atMedium {
+			height: 2.5em;
+			display: inline-block;
+		}
+	}
+
+	&-link {
+		color: $textNav;
+
+		&:hover {
+			color: $hover;
+		}
+	}
+
+	&-icon {
+		color: $iconNav;
+	}
+
+	&-profile {
+		position: absolute;
+		top: -3px;
+		right: 30px;
+		
+		&__icon {
+			margin-right: 10px; 
+		}
+
+		&__container {
+			position: relative;
+			width: 280px;
+			// padding: 10px;
+			transform: translate(-230px, 20px);
+			text-align: center;
+			background: none;
+		}
+
+		&__img {
+			width: 40px;
+			border: 1px solid $borderNav;
+		}
+
+		&__account {
+			height: 70px;
+			background-color: $bodyNav;
+			margin-bottom: 5px;
+
+			&--img {
+				position: absolute;
+				top: 20px;
+				left: 20px;
+			}
+
+			&--text-content {
+				position: absolute;
+				top: 15px;
+				right: 0;
+				// margin: 0 5px 0 0;
+				& p {
+					color: $textNav;
+					margin: 5px 10px;
+				}
+			}
+		}
+
+		&__menu {
+			background-color: $menuBodyNav;
+			margin-bottom: 5px;
+			text-align: justify;
+
+			& a {
+				color: $colorLink;
+			}
+
+			& a:hover {
+				color: $hover;
+				background-color: $hoverBackground;
+			}
+		}
+
+		&__logout {
+			position: relative;
+			bottom: 0;
+			left: 0;
+			background-color: $bodyNav;
+			border-bottom: 2px solid $borderNav;
+
+			& a {
+				color: $textNav;
+			}
+
+			& a:hover {
+				color: $hover;
+				background-color: $hoverBackground;
+			}
+		}
+	}
+}
+
