@@ -2,75 +2,61 @@
 
 {% block body %}
     <div class="home">
-        {% include "inc/main_page.html.twig" %}
-        {% include "inc/main_page-2.html.twig" %}
-
-        <div class="home-page__main--container">
-            <h1 class="home-page__main-text">Tytuł</h1>
-            <p class="home-page__main-text">
-                Trening albo śmierć !!
-            </p>
-
-            <div id="left_main_content">
-            </div>
-
-            <div id="right_main_content">
-                <ul class="home-page__main--ul">
-                    <li>
-                        <img src="" alt="">
+        <div class="home-page__main-container" id="wrapper_main_image">
+            <div class="home-page__main-content home-page__main-content--bottom">
+                <div class="home-page__main-wrapper">
+                    <div class="home-page__main-quotation">
+                        <h1 class="home-page__main-title">Tytuł 1</h1>
                         
-                        <span>
-                            <strong>AppCoins</strong>
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. </p>
-                        </span>
-                    </li>
+                        <p class="home-page__main-text">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                        </p>
+                    </div>
 
-                    <li>
-                        <img src="" alt="">
-                    
-                        <span>
-                            <strong>Ethos</strong>
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. </p>
-                        </span>
-                    </li>
-
-                    <li>
-                        <img src="" alt="">
-                    
-                        <span>
-                            <strong>iDo</strong>
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. </p>
-                        </span>
-                    </li>
-                </ul>
+                    {% include "inc/main_page.html.twig" %}
+                </div>
             </div>
-            
+
+            <div class="home-page__main-content home-page__main-content--top">
+                <div class="home-page__main-wrapper">
+                    <div class="home-page__main-quotation">
+                        <h1 class="home-page__main-title">Tytuł 2</h1>
+                        
+                        <p class="home-page__main-text">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                        </p>
+                    </div> 
+
+                    {% include "inc/main_page-2.html.twig" %}
+                </div>
+            </div>
+
+            <a href="/#info" id="arrow-down">
+                <i class="fa fa-angle-double-down fa-3x"></i>
+            </a>           
         </div>
 
         <div class="home-page">
             <div class="home-page__background"></div>
-            
-            <a href="/#info" id="arrow-down">
-                <i class="angle-double-down"></i>
-            </a>
-            
-            
-            <div class="home-page__container"> 
-                <!-- #### Info ##### -->              
-                <div class="grid grid__home-page--info home-page__info" id="info">
+
+            <div class="home-page__container" id="info"> 
+                <!-- #### Info ##### --> 
+                {% if articles %}             
+                <div class="grid grid__home-page--info home-page__info" >
                     <div class="home-page__content-title">
                         <h3 class="home-page__content-title--text">
                             Ostatnio dodane artykuły
                         </h3>
                     </div>
 
+                    
                     <div class="home-page__info--container">
                         <div class="home-page__info--wrapper zoom">
                             <div class="home-page__info--slider">
                                 {% include "home/slider.html.twig" %}
                             </div>
 
-                            {% if articles %}
+                            
                                 {% for article in articles %}
                                     <div class="home-page__info--postcard-{{ loop.index }} postcard zoom">
                                         <div class="postcard-overlay">
@@ -100,13 +86,10 @@
                                         </div>
                                     </div>
                                 {% endfor %}
-                            {% else %}
-                                <p>Nie ma artykułów</p>
-                            {% endif %}
                         </div>
-                    </div>
+                    </div>                    
                 </div>      
-           
+                {% endif %}
 
                 <div class="home-page__answer">
                     <div class="home-page__content-title">
