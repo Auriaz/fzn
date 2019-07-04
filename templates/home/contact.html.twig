@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ article.title }}{% endblock %}
+{% block main %}
+<div class="content">
+    <div class="contact">
+        <img src="/web/assets/img/logo/logo.png" alt="logo">
+
+        <div class="contact-data">
+            <p>
+                <h1>Fundacja Zwierzęta Niczyje</h1>
+                ul. Lityńskiego 15/16<br>
+                16-400 Suwałki<br>
+                NIP 844-235-17-75<br>
+                KRS 0000463161 <br>
+                nr konta: 48 1020 1332 0000 1902 0840 1806<br>
+                Dla przelewów zagranicznych: <br>
+                IBAN PL48102013320000190208401806 <br>
+                Kod BIC /SWIFT BPKOPLPW<br><br>
+                <hr>
+            </p>
+        </div>
+
+        <div class="contact-tel">
+            <div class="contact-adoption">
+                <p>adopcje psów</p>
+               <p><b>Katarzyna:</b><a href="tel:+48603297303"> 603 297 303</a></p>
+                <p><b>Agnieszka:</b><a href="tel:+48500164897"> 500 164 897</a></p>
+            </div>
+
+            <div class="contact-adoption"> 
+                <p>adopcje kotów</p>
+                <p><b>Edyta:</b><a href="tel:+48512590016"> 512 590 016</a></p>
+                <p><b>Karolina:</b><a href="tel:+48783094227"> 783 094 227</a></p>
+            </div>
+
+            <div class="contact-adoption"> 
+                <p>interwencje</p>
+                <p><b>Asia:</b><a href="tel:+48504029945"> 504 029 945</a></p>
+                <p><b>Joanna:</b><a href="tel:+48607559019"> 607 559 019</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

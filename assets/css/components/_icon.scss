@@ -1,0 +1,194 @@
+.icon {
+    &-model {      
+        font-size: 1.4rem;
+    }
+
+    &-btn {
+        font-size: 1.2rem;
+        border-radius: 50%;
+        text-align: center;
+        padding: 0;
+        color: $mainDarkCyan;
+        cursor: pointer;
+
+        &:hover {
+            color: #d95333;
+            transform: scale(1.2);
+        }
+    }
+
+    &-nav {
+        font-size: 1.3rem;
+        position: fixed;
+        width: 50px;
+        top: 50px;
+        right: 3px;
+        margin: 0;
+        transition: all 1.5s ease-in-out; 
+        
+        @include atSmall {
+            position: relative;
+            font-size: 1.2rem;
+            transform: translateY(3em);
+            top: 0;
+        }
+        
+        @include atMedium {
+            font-size: 1.1rem;
+            width: 120px;
+            right: 10px;
+            transform: translateY(-10px);
+        }
+        
+        @include atLarge {
+            font-size: 1.2rem;
+            transform: translateY(-15px);
+        }
+        
+        @include atExtraLarge {
+            font-size: 1.3rem;
+            right: 20px;
+        }
+
+        &-sticky {
+            @include atSmall {
+                transform: translateY(40px);
+            }
+
+             @include atMedium {
+                font-size: 1rem;
+                transform: translateY(0px);
+            }
+            
+            @include atLarge {
+                font-size: 1.1rem;
+                transform: translateY(5px);
+            }
+            
+            @include atExtraLarge {
+                right: 20px;
+            }
+        }
+    }
+
+    &-footer {
+        font-size: 1.4rem;
+        color: $mainDarkBlue;
+    }
+
+    &-link {
+        margin: 7px;
+
+        @include atMedium {
+            margin: 3px;
+            color: $mainLithCyan;
+        }
+    }
+
+    &-orange{
+        color: $mainOrange;
+
+        :hover {
+            color: #d95333;
+            transform: scale(1.2);
+        }
+    }
+
+    &-dark {
+        color: $mainDarkBlue;
+
+        :hover {
+            color: $mainOrange;
+            transform: scale(1.2);
+        }
+    }
+
+    &-blue {
+        color: $mainLithBlue;
+
+        :hover {
+            color: $mainOrange;
+            transform: scale(1.2);
+        }
+    }
+
+    &-facebook {
+        :hover {
+            color: #4668b3;	
+            transform: scale(1.2);
+	    }
+    }
+
+    &-gplus {
+        :hover {
+            color: #d95333;	
+            transform: scale(1.2);
+	    }
+    }
+
+    &-instagram {
+        :hover {
+           color: #d95333;
+            transform: scale(1.2);
+	    }
+    }
+
+    &-toggle {
+        display: none;
+
+        @include atMedium {
+            display: inline-block;
+        }
+    }
+
+    &-ratujemyzwierzaki {
+        padding: 5px;
+        margin-left: 30px; 
+        width: 150px;
+        height: auto;
+
+        &:hover {
+            transform: scale(1.2);
+            transition: scale 0.5s ease;
+        }
+    }
+
+    &-users {
+        font-size: 3rem;
+    }
+
+    &-album {
+        font-size: 0.8rem;
+        position: relative;
+        left: 40%;
+        top: 25%;
+    }
+
+    &-avatar {
+        position: relative;
+        border: 2px solid $mainLithCyan;
+        border-radius: 50%;
+        font-size: 1.5rem;
+        padding: 0.5rem;
+        background-color: $mainDarkBlue;
+        top: 0; 
+        
+        &:hover {
+            background-color: $mainLithCyan;
+            color: $mainDarkBlue;
+            border: 2px solid $mainDarkBlue;
+        }
+
+        @include atSmall {
+            top: -10px;
+        }
+    }
+}
+
+.caret-right {
+    display: inline-block;
+
+    @include atMedium {
+        display: none;
+    }
+}

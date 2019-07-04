@@ -1,343 +1,423 @@
+#arrow-down {
+    position: fixed;
+    right: 50%;
+    bottom: 5%; 
+    width: 58px;
+    height: 58px;
+    transform: translateX(50%);
+    overflow: hidden;
+    border: 1px solid $mainDarkCyan;
+    background-color: rgba($mainWhite, 0.5);
+    border-radius: 50%;
+    text-align: center;
+    z-index: 3;
+
+    @include atSmall {
+        right: 5%;
+    }
+    
+    &:hover {
+        box-shadow: 0 0 30px $mainCyan;
+    }
+    
+    .angle-double-down {
+        font-size: 2rem;
+        padding: 10px;
+        animation: arrow 3s infinite linear;
+    }
+}
+
 .home {
     position: relative;
+    top: 0;
+    left: 0;
     width: 100%;
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto;
+    margin-top: 100vh;
+    background-color: lighten($mainDarkBlue, 10%);
+    z-index: 6;
 
-    &-page {
-        position: relative;
-        top: 0;
-        left: 0;
+    &-container {
         width: 100%;
-        margin-top: 100vh;
-        z-index: 6;
-        background-color: $bodyHome01;
+
+        @include atExtraLarge {
+            margin-left: auto;
+            margin-right: auto; 
+            width: 1440px;
+        }
+    }
+    
+    &-title {
+        @include grid-child (1, 13, 1, 3);
+        color: $mainCyan; 
+        display: flex;
+        align-items: center;
+
+        &::after, &::before {
+            content: '';
+            display: block;
+            border: 1px solid rgba($mainLithCyan, 0.5);
+            flex-grow: 1;
+            margin: 0 10px;
+        }
+    }
+
+    &-last {
+        background-color: lighten($mainDarkBlue, 10%);
 
         &__container {
-            width: 100%;
-    
-            @include atExtraLarge {
-                margin: 0 auto;
-                width: 1440px;
-            }
+            @include grid-child (1, 13, 3, 7);
         }
-
-        &__background {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            clip-path: polygon(72% 0, 100% 0%, 100% 100%, 27% 100%);
-            background: $bodyHome01;
-        }
-    
-        &__content-title {
-            @include grid-child (1, 13, 1, 2);
-            position: relative;
-            z-index: 4;
-
-            &--text {
-                padding: 30px;
-                color:  darken( $color, 20%);
-                display: flex;
-                align-items: center;
         
-                &::after, &::before {
-                    content: '';
-                    display: block;
-                    border: 1px solid darken( $color, 20%);
-                    flex-grow: 1;
-                    margin: 0 10px;
-                }
+        &__add-animals { 
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-gap: 20px;
+
+            @include atSmall {
+                grid-template-columns: repeat(2, minmax(200px, 1fr));
+                grid-template-rows: repeat(2, 1fr);
+            }
+
+            @include atMedium {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));                
             }
         }
+    }
     
-        &__main {
-            &-container {
-                display: grid;
-                grid-template-columns: 50% auto;
-                min-height: 55vw;
-                position: fixed;
-                align-self: center;
-                margin: 0 50px;
-                overflow: hidden;
-            }
+    &-about { 
+        background-color: rgba($mainWhite, 1); 
 
-            &-content {
-                width: 100vw;
-                min-height: 55vw;
-                position: absolute;
-                overflow: hidden;
-                transition: all 1.5s ease-out;
-
-                & .home-page__main-quotation {
-                    width: 20%;
-                    position: fixed;
-                    z-index: 4;
-                    text-align: center;
-                    transform: translateY(-50%);
-                }
-
-                &--bottom {
+        &__container {
+            display: grid;
+            @include grid-child (1, 13, 3, 19);
                     
+                grid-template-columns:  1fr;
+                grid-template-rows: repeat(6, auto);
+                grid-template-areas: 
+                "img_1"
+                "text_a"
+                "img_3"
+                "text_b"
+                "img_4"
+                "text_c";
 
-                    & .home-page__main-quotation {
-                        top: 70%;
-                        left: 10%;
-                        color: #fff;
-                       
-                        
-                        &:hover ~.home-page__main-image--1 {
-                            clip-path: none;
-                            z-index: 2;  
-                        }
-                    }
-        
-                    &-title {
-        
-                    }
-        
-                    &-text {
-                       
-                    }
-                }
+                grid-column-gap: 10px;
+                grid-row-gap: 10px;
 
-                &--top {
-                    
 
-                    & .home-page__main-quotation {
-                        top: 25%;
-                        left: 80%;
-                        color: #000;
-                        
-                        &:hover ~.home-page__main-image--2 {
-                            clip-path: none;
-                            z-index: 2;
-                           
-                        }
-                    }
-        
-                    &-title {
-        
-                    }
-        
-                    &-text {
-                       
-                    }
-                }
+            @include atSmaller {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(4, auto);
+                grid-template-areas: 
+                "text_a img_1"
+                "text_a text_b"
+                "img_4 text_b"
+                "text_c text_c";
             }
 
-            &-wrapper {
-                position: absolute;
-                width: 100vw;
-                height: 55vw;
+            @include atSmall {
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: repeat(4, 1fr);
+                grid-template-areas: 
+                "text_a img_1 img_2"
+                "text_a text_b img_2"
+                "img_3 text_b text_c"
+                "img_3 img_4 text_c";
+
+                grid-column-gap: 20px;
+                grid-row-gap: 20px;
+                
+            }
+
+            @include atMedium {
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: repeat(4, 1fr);
+                grid-template-areas: 
+                "text_a img_1 img_2"
+                "text_a text_b img_2"
+                "img_3 text_b text_c"
+                "img_3 img_4 text_c";
+    
+                grid-column-gap: 40px;
+                grid-row-gap: 40px;
+            }
+        }
+    
+        &__text {  
+            padding: 10px;  
+            text-align: justify;
+            color: rgba($mainLithCyan, 1);
+            border: 1px solid $mainLithCyan;
+            border-radius: 5px;
+
+           @include atSmall {
+                font-size: 0.8rem;
             }
             
-            &-image {
+            @include atMedium {
+                font-size: 0.9rem;
+            }
+
+            @include atLarge {
+                padding: 20px;  
+                font-size: 1rem;
+            }
+            
+            &-1 {
+               grid-area: text_a;
+       
+            }
+            
+            &-2 {
+                grid-area: text_b;
+            }
+        
+            &-3 {
+                grid-area: text_c;
+            }
+        }
+    
+        &__image {
+            padding: 0 0vw;
+    
+            & img {
                 width: 100%;
-                height: 100vh;
-                position: fixed;
-                top: 0;            
-                left: 0;
-                z-index: 0;  
+                height: 100%;
+            }
     
-                &--1 {
+            &-1 {
+                grid-area: img_1;
+            }
+    
+            &-2 {
+                grid-area: img_2;
+                display: none;
 
+                 @include atSmall {
+                     display: block;
                 }
+            }
     
-                &--2 {
-                    clip-path: polygon(68% 1%, 100% 0, 100% 100%, 50% 100%, 71% 40%, 48% 61%);
-                    filter: grayscale(90%); 
+            &-3 {
+                grid-area: img_3;
+
+                @include atSmaller {
+                    display: none;
                 }
-            }
 
-            
-        }
-
-        &__info {
-            height: auto;
-            background-color: $bodyHome01;
-            padding: 0 20px 40px 20px;
-
-            &--container {
-                @include grid-child (1, 13, 3, 9);
-            }
-    
-            &--slider {
-                @include atMedium {
-                    grid-area: slider;
-                } 
-            }
-
-            &--wrapper {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-                grid-gap: 20px;
-    
                 @include atSmall {
-                    grid-template-columns: repeat(2, minmax(200px, 1fr));
-                    grid-template-rows: repeat(2, 1fr);
+                    display: block;
                 }
+            }
     
-                @include atMedium {
-                    grid-template-columns: repeat(3, 1fr);
-                    grid-template-rows: repeat(3, 1fr);
-                    grid-template-areas: 
-                    'slider slider card-1'                
-                    'slider slider card-2'                
-                    'card-3 card-4 card-5'                
-                }
+            &-4 {
+                grid-area: img_4;
             }
         }
+    }
 
-        &__answer {
-            height: auto;
-            background-color: $bodyHome01;
-            padding: 0 20px 40px 20px;
+    &-volunteering {
+        background-color: lighten($mainDarkBlue, 10%);
+        text-align: center;
+    
+        &__text {
+            display: none;
+            @include grid-child (1, 13, 5, 8);
 
-            &--container {
-                @include grid-child (1, 13, 3, 9);
-            }
 
-            &--wrapper {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-                grid-gap: 30px;
-                position: relative;
+            & .first-letter {
+                font-size: 1.5rem;
 
-                @include atExtraLarge {
-                    padding: 0 145px;
+                @include atSmaller {
+                    font-size: 2rem;
                 }
             }
+    
+            & .and-next-text {
+                color: $mainCyan;
+                font-size: 1.2rem; 
+                text-transform: uppercase;
 
-            &__card {
-               width: 250px;
-               height: 300px;
-            //    background-color: #666;
-               
-               &--icon {
-                    margin: 30px 80px;
-               
-                }
-
-                &--text-content {
-                    text-align: center;
+                @include atSmaller {
+                    font-size: 1.5rem; 
+                    text-transform: uppercase;
                 }
             }
-        }
+    
+            & p {
+                font-size: 0.8rem;
+                padding: 10px;
+                @include alert($mainLithCyan);
+                animation: letter .5s linear;
+                text-align: justify;
 
-        &__price-list {
-            height: auto;
-            background-color: $bodyHome02;
-            padding: 0 20px 40px 20px;
-
-            &--container {
-                @include atMedium {
-                    padding: 40px;
+                @include atSmaller {
+                    font-size: 1.2rem;
+                    padding: 15px;
                 }
             }
+    
+            &-volunteer {
+                color: $mainDarkBlue;
+                @include grid-child (1, 13, 3, 4);
+                letter-spacing: 0.2rem;
+                font-size: 1.3rem;
 
-            &--table {
-                position: relative;
-                z-index: 5;
+                 @include atSmaller {
+                    letter-spacing: 0.5rem;
+                    font-size: 2.5rem;                    
+                 }
 
-                &--head {
-                    background-color: $bodyHome01;  
-                }
-
-                &-1 {
-                    
-
-                    & thead {
-                        background-color: darken($bodyHome03, 20%);
-                    }
-
-                    & tbody {
-                        background-color: #666;
-                    }
-
-                }
-
-                &-2 {
-
-                    & thead {
-                        background-color: darken($bodyHome03, 20%);
-                    }
-
-                    & tbody {
-                        background-color: #777;
-                    }
-                }
-
-                &-3 {
-
-                    & thead {
-                        background-color: darken($bodyHome03, 20%);
-                    }
-
-                    & tbody {
-                        background-color: #555;
-                    }
-                }
-            }
-        }
-
-        &__contact {
-            background-color: $bodyHome01;
-            padding: 0 20px 40px 20px;
-
-            &--data {
-                width: 90%;
-                height: 200px;
-                color: #fff;
-                background-color: #888;
-                padding: 30px;
-                transform: rotate(10deg);
-            }
-
-            &--container {
-                width: 100%;
-                height: auto;
-                margin: 0 auto;
-                padding: 20px;
-            }
-        }
-
-        &__description {
-            background-color: $bodyHome03;
-            height: 800px;
-            padding: 0 20px 40px 20px;
-
-            &--image {
-                position: relative;
-                top: 0;
-                left: 0;
-                width: 400px;
-                height: 300px;
-                padding: 60px;
-                transition: all 5s ease-out;
-
-                &-1 {
-                    position: absolute;
-                    top: 20px;
-                    left: 30px; 
-                    transform: rotate(-10deg);
-                }
-
-                &-2 {
-                    position: absolute;
-                    top: 80px;
-                    left: 200px; 
-                    transform: rotate(15deg);
-                }
-
-                &-3 {
-                    position: absolute;
-                    top: 220px;
-                    left: 100px; 
-                    transform: rotate(30deg);
+                @include atSmall {
+                    letter-spacing: 1rem;
+                    font-size: 3rem;
                 }
             }
         }
     }
+
+    &-transfer {
+        background-color: $mainWhite;
+
+        &__container {
+            display: grid;
+            @include grid-child (1, 13, 4, 22);
+
+            grid-template-columns: 1fr;
+            grid-template-rows: repeat(6, auto);
+            grid-template-areas: 
+                "transfer_5"
+                "transfer_10"
+                "transfer_30" 
+                "transfer_50"
+                "transfer_100" 
+                "transfer_any";
+            grid-gap: 10px;
+
+            @include atSmaller {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(3, auto);
+                grid-template-areas: 
+                    "transfer_5 transfer_10"
+                    "transfer_30 transfer_50"
+                    "transfer_100 transfer_any";
+            }
+
+            @include atSmall {
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: repeat(2, 1fr) auto;
+                grid-template-areas: 
+                    "transfer_5 transfer_10 transfer_30"
+                    "transfer_50 transfer_100 transfer_any"
+                    ". ratujemyzwierzaki .";
+            }
+
+            @include atMedium {
+                grid-gap: 20px;
+                justify-self: center;
+            }
+        }
+         
+        &__image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            opacity: 1;
+            width: 100px;
+            transition: .5s ease;
+            transform: translate(-50%, -50%);
+
+            @include atSmaller {
+
+            }
+        }
+    
+        &__middle {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: .5s ease;
+            opacity: 0;
+            background-color:  rgba($mainDarkBlue, 0.5);
+            
+            &:hover {
+                opacity: 1;
+            }
+        }
+    
+        &__text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);         
+        }
+        
+        &__content {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            text-align: center;
+            border: 1px dotted $mainCyan;
+            border-radius: 5px;
+
+            &--5 {
+                grid-area: transfer_5;
+            }
+        
+            &--10 {
+                grid-area: transfer_10;             
+            }
+        
+            &--30 {
+                grid-area: transfer_30;      
+            }
+        
+            &--50 {
+                grid-area: transfer_50;
+            }
+        
+            &--100 {
+                grid-area: transfer_100;
+            }
+        
+            &--any {
+                grid-area: transfer_any;
+            }
+        
+            &--ratujemyzwierzaki {
+                grid-area: ratujemyzwierzaki;
+                border: none;
+                display: none;
+
+                @include atSmall {
+                    display: block;
+                }
+
+                & img.icon-ratujemyzwierzaki {
+                    width: 200px;
+
+                    @include atMedium {
+                        width: 250px;  
+                    }
+                }
+            }
+        }
+    }
+}
+
+@keyframes letter {
+    0% { transform: scale(0.5); opacity: 0;}
+    100% { transform:scale(1); opacity: 1;}
+}
+
+@keyframes arrow {
+    0% {transform: translateY(-80px) scale(1); color: $mainLithCyan;}
+    20% {transform: translateY(-40px) scale(1.2); color: $mainLithCyan;}
+    40% {transform: translateY(-20px) scale(1.5); color: $mainLithCyan;}
+    50% {transform: translateY(0) scale(1.8); color: $mainDarkCyan;}
+    60% {transform: translateY(20px) scale(1.5); color: $mainDarkCyan;}
+    80%{transform: translateY(40px) scale(1.2); color: $mainDarkBlue;}
+    100% {transform: translateY(80px) scale(1); color: $mainLithCyan;}
 }

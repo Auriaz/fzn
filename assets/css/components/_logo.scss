@@ -1,49 +1,65 @@
 .logo {
     position: relative;
     background-repeat: no-repeat;
-    transition: all .5s ease-in-out;
+    transition: all 1.5s ease-in-out;
     width: 30%;
     height: 30%;
+    float: none;
     margin: 0 auto;
-    color: $logo;
     
-    @include atMedium {
-        width: 17vw;
-        height: 50px;
-        top: 0;
-        left: 20px;
+    @include atSmaller {
+        width: 20%;
+        height: 20%;
     }
 
-    // &__content {
-    //     width: 30px;
-    //     height: 30px; 
-    // }
+    @include atSmall {
+        float: left;
+        top: 0em;
+        left: -2em;
+        width: 5em;
+        height: 5em;
+    }
 
-    // &__svg {
-    //     // src: url('/build/images/file.b1865665.svg');
-    // //    font-size: 1rem;
-    //         width: 40px;
-    //     height: 40px; 
-    // }
+    @include atMedium {
+       
+        top: -1em;
+        left: -1.5em;
+        width: 7.5em;
+        height: 7.5em;
+        margin-right: 0.5em;
+    }
+
+    @include atLarge  { 
+       
+        top: -1.5em;
+        left: -1.5em;
+        width: 9em;
+        height: 9em;
+        margin-right: 1em;
+    }
 
     &:hover {
         transform: scale(1.05);	
-        background: none;
-        color: $hover		
+        background-color: none;			
     }
 
-    // &-sticky {
+    &-sticky {
         
-    //     @include atLarge {
-    //         transform: scale(0.65)  translateX(-2em);
-    //         border-radius: 50%;
-    //         border: 2px  solid rgba($borderNav, 1);	
-    //         background-color: rgba($mainWhite, 1);
-    //         transition: all 1.5s ease-in-out;
-    //     }
+        @include atLarge {
+            transform: scale(0.65)  translateX(-2em);
+            border-radius: 50%;
+            border: 2px  solid rgba($mainCyan, 1);	
+            background-color: rgba($mainWhite, 1);
+            transition: all 1.5s ease-in-out;
+        }
 
-    //     &:hover	{
-    //         transform: scale(1.1);
-    //     }		
-    // }
+        &:hover	{
+            transform: scale(.7) translateX(-2em);
+        }		
+    }
+
+    &-footer {
+        width: 60%;
+        height: auto;
+    }
 }

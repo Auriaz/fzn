@@ -36,6 +36,142 @@
     }
 }
 
+// Nie używane
+@mixin portrait($media) {
+		@media (orientation: portrait) {
+			#{$media}::after {
+					content:'\A';
+					white-space: pre;
+			}
+	}
+}
+
+@mixin double-shadow($color) {
+	@include box-shadow(0 1px 0 lighten($color, 10%) inset, 0 -1px 0 darken($color, 10%) inset);
+}
+
+@mixin alert($color) {
+	background-color: lighten($color, 20%);
+	color: darken($color, 20%);
+	border: 2px solid $color;
+	border-radius: 5px;
+}
+
+@mixin hover-style($background, $color) {
+	&:hover {
+    background-color: $background;
+    color: $color;
+	}
+}
+
+@mixin modal($id, $width:100%, $height:100%, $top:0, $left:0) {
+	top: $top;
+	height: $height;
+	left: -$left;
+	max-height: 100%;
+	opacity: 0;
+	overflow: hidden;
+	overflow-y: auto;
+	position: fixed;
+	visibility: hidden;
+	width: $width;
+	z-index: 11;
+
+	@at-root #{$id}:target {
+		top: $top;
+		left: $left;
+		opacity: 1;
+		visibility: visible;
+	}
+}
+
+@mixin transition($transition...) {
+    -moz-transition:    $transition;
+    -o-transition:      $transition;
+    -webkit-transition: $transition;
+    transition:         $transition;
+}
+
+@mixin transition-property($property...) {
+    -moz-transition-property:    $property;
+    -o-transition-property:      $property;
+    -webkit-transition-property: $property;
+    transition-property:         $property;
+}
+@mixin transition-duration($duration...) {
+    -moz-transition-property:    $duration;
+    -o-transition-property:      $duration;
+    -webkit-transition-property: $duration;
+    transition-property:         $duration;
+}
+@mixin transition-timing-function($timing...) {
+    -moz-transition-timing-function:    $timing;
+    -o-transition-timing-function:      $timing;
+    -webkit-transition-timing-function: $timing;
+    transition-timing-function:         $timing;
+}
+@mixin transition-delay($delay...) {
+    -moz-transition-delay:    $delay;
+    -o-transition-delay:      $delay;
+    -webkit-transition-delay: $delay;
+    transition-delay:         $delay;
+}
+
+// Fade modal in
+@mixin modal-fade-in($duration-in: .85s, $duration-out: .7s, $timing: ease-in-out, $id: '#fade', $width: 100%, $height: 100%, $top:0, $left:0) {
+	@include modal($id, $width, $height, $top, $left);
+	// Transition out: only opacity and delay the rest
+	@include transition(opacity #{$duration-out} #{$timing}, bottom 0s #{$duration-out}, left 0s #{$duration-out}, visibility 0s #{$duration-out});
+
+	// Transition in: opacity
+	@at-root #{$id}:target {
+		@include transition(opacity #{$duration-in} #{$timing});
+	}
+}
+
+// Slide modal in
+@mixin modal-slide-in($direction: top, $duration-in: .85s, $duration-out: .4s, $timing: cubic-bezier(.215, .61, .355, 1), $width:100%, $height:100%, $top: 0, $left:0) {
+	$id: '##{$direction}';  //<==
+
+	@include modal($id, $width, $height, $top, $left);
+
+	// Slide left or right
+	@if ($direction == left) or ($direction == right) {
+		// Transition out: only left and delay the rest
+		@include transition(left #{$duration-out} #{$timing}, bottom 0s #{$duration-out}, opacity 0s #{$duration-out}, visibility 0s #{$duration-out});
+
+		// Slide in from right
+		@if $direction == right {
+			left: 100%;
+		}
+
+		// Transition in: left
+		@at-root #{$id}:target {
+			@include transition(left #{$duration-in} #{$timing});
+		}
+
+	// Slide up or down
+	} @else {
+		// Transition out: only bottom and delay the rest
+		@include transition(top #{$duration-out} #{$timing}, left 0s #{$duration-out}, opacity 0s #{$duration-out}, visibility 0s #{$duration-out});
+
+		// Slide down from top (default)
+		@if $direction == top {
+			top: -100%;
+		}
+
+		// Transition in: bottom
+		@at-root #{$id}:target {
+			@include transition(top #{$duration-in} #{$timing});
+		}
+	}
+}
+
+// Better Font Rendering
+@mixin crispy-text {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
 
 @mixin grid-child ($col-start, $col-end, $row-start, $row-end) {
   -ms-grid-column: $col-start;

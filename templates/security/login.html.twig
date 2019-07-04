@@ -1,55 +1,66 @@
-<div class="modal fade" id="form-login" tabindex="-1" role="dialog" aria-labelledby="loginLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Zaloguj się</h5>
-                <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form class="form form-signin" method="post" action="{{ path('app_login') }}">
-                    {% if error is defined %}
-                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                    {% endif %}
-                    <div class="form-group form-other">
-                        <input type="email" value="{{ last_username|default }}" name="email" id="inputEmail" class="form-control"
-                        required>
-                        <label for="inputEmail" class="label">Email</label>
-                    </div>
+<dialog class="modal-overlay modal-login modal-dark" id="right">
+    <a href="#" class="modal-close">Close</a>
+    {% if is_granted('ROLE_USER') %}
+        {% set person = session.get('person') %}
 
-                    <div class="form-group form-other">
-                        <input type="password" name="password" id="inputPassword" class="form-control" required>
-                        <label for="inputPassword" class="label">Hasło</label>
-                    </div>
-                    
-                    <div class="checkbox mb-3">
-                        <label>
-                            <input type="checkbox" name="_remember_me"> Zapamietaj mnie
-                        </label>
-                    </div>
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="/article" class="btn btn-blue btn-block">Artkuły</a>
+            <a href="/structure" class="btn btn-blue btn-block">Pliki strukturalne</a>
+            <a href="/user" class="btn btn-blue btn-block">Użytkownicy</a>
+            <a href="/image" class="btn btn-blue btn-block">Zdjęcia</a>
+            <a href="/animal" class="btn btn-blue btn-block">Zwierzęta</a>
+        {% elseif is_granted('ROLE_EDITOR') %}
+            <a href="/article" class="btn btn-blue btn-block">Artkuły</a>
+            <a href="/image" class="btn btn-blue btn-block">Zdjęcia</a>
+            <a href="/animal" class="btn btn-blue btn-block">Zwierzęta</a>
+        {% else %}
+            <p>Nie posiadasz uprawnień! Skotaktuj się z administratorem strony.</p>
+        {% endif %}
 
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-                    {#
-                        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-                        See https://symfony.com/doc/current/security/remember_me.html
-
-                        <div class="checkbox mb-3">
-                            <label>
-                                <input type="checkbox" name="_remember_me"> Remember me
-                            </label>
-                        </div>
-                    #}
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Zamknij</button>
-                        <button type="submit" class="btn btn-outline-secondary">Zaloguj się</button>
-                    </div>
-                </form>
-            </div>
+        <a href="/login/logout" class="btn btn-orange btn-block">Wyloguj się</a>
+        <div class="icon icon-model icon-link">
+            <a class="icon-link icon-facebook" href="https://facebook.com/FundacjaZwierzetaNiczyje/?ref=m_notif&notif_t=group_highlights"
+                target="_blank" class="social-icon">
+                <i class="facebook"></i>
+            </a>
+            <a class="icon-link icon-instagram" href="https://instagram.com/fundacja_zwierzeta_niczyje?utm_source=ig_profile_share&igshid=1joz9gcb9eiem"
+                target="_blank" class="social-icon">
+                <i class="instagram"></i>
+            </a>
         </div>
-    </div>
-</div>
+    {% else %}
+        <div class="form form-login">
+            <i class="fas fa-users icon-users"></i>
+            <h2 class="modal-title">Sing In</h2>
+            
+            <form method="post" class="form form-signin" id="form-login" action="{{ path('app_login') }}">
+                {% if error is defined %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
 
+                <div class="form-group form-other">
+                    <input type="text" name="email" id="login" class="form-control" placeholder="Login" minlength="2" value="{{ last_username|default }}" required />
+                    <label for="login"><i class="login"></i> Login</label>
+                    <div class="form-faulty">Login składa się przynajmniej z 3 znaków</div>
+                </div>
+                
+                <div class="form-group form-other">
+                    <input type="password" name="password" id="pass" class="form-control" placeholder="Hasło"  required />
+                    <label for="pass"><i class="key"></i> Hasło</label>
+                    <div class="form-faulty"></div>
+                </div>
+
+                <div class="checkbox mb-3">
+                    <label>
+                        <input type="checkbox" name="_remember_me"> Zapamietaj mnie
+                    </label>
+                </div>
+                
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                <button class="btn btn-outline-secondary" type="submit" value="Zaloguj się" />Zaloguj się</button>
+            </form>
+            <div class="form-invalid"></div>       
+        </div>
+    {% endif %}
+</dialog>

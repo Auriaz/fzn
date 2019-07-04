@@ -1,0 +1,138 @@
+.grid {
+    display: grid; 
+	width: 100%;
+
+	&-last {
+		grid-template-columns: 1fr;
+		grid-template-rows: auto;
+		padding: 20px;
+
+		@include atMedium {
+			grid-template-columns: repeat(12,  1fr);
+			grid-template-rows: repeat(7, 38px);
+			grid-column-gap: 20px;
+			grid-row-gap: 20px;
+			padding: 60px 40px 20px;
+		}
+	}
+
+	&-about {
+		padding: 20px;
+		
+		@include atSmall {
+			grid-template-columns: repeat(12,  1fr);
+			grid-template-rows: repeat(18, 38px);
+			grid-column-gap: 30px;
+			grid-row-gap: 30px;
+		}
+
+		@include atMedium {
+			padding: 60px 40px 20px;
+		}
+	}
+
+	&-volunteering {		
+		grid-template-columns: repeat(12,  1fr);
+		grid-template-rows: repeat(8, 38px);
+		padding: 20px;
+		grid-row-gap: 15px;
+
+		@include atSmaller {
+			grid-column-gap: 20px;
+			grid-row-gap: 20px;
+		}
+
+		@include atSmall {
+			padding: 30px;
+		}
+
+		@include atMedium {
+			padding: 60px 40px 20px;
+		}
+	}
+
+	&-transfer {
+		grid-template-columns: repeat(12,  1fr);
+		grid-template-rows: repeat(40, 38px);
+		padding: 20px;
+
+		@include atSmaller {
+			grid-template-rows: repeat(21, 38px);
+		}
+		@include atSmall {
+			padding: 30px;
+		}
+
+		@include atMedium {
+			padding: 60px 40px 20px;
+		}
+	}
+    
+    &-footer {
+		grid-template-columns: 1fr;
+		grid-template-rows: auto;
+		grid-template-areas: 
+				"social"
+				"text"
+				"copyrights";
+		
+		grid-row-gap: 5px;
+		padding: 0;
+
+		@include atSmall{
+			grid-template-columns:  1fr 1fr;
+			grid-template-rows: auto;
+			grid-template-areas: 
+				"social social"
+				"text copyrights";
+
+			grid-column-gap: 20px;
+			grid-row-gap: 20px;
+			padding: 0.5em;
+		}
+
+		@include atMedium {
+			grid-template-columns:  1fr 1fr 1fr;
+			grid-template-rows: auto;
+			grid-template-areas: 
+				"social text copyrights";
+
+			grid-column-gap: 20px;
+			padding: 1em;
+		}
+	}
+
+	&-album {
+		grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+		grid-gap: 10px;
+		padding: 10px;
+
+		@include atSmaller {
+			grid-template-columns: repeat(auto-fill, minmax( 240px, 1fr));
+			grid-template-rows: repeat(auto-fill);
+			grid-gap: 20px;
+			padding: 20px;
+		}
+
+		&-modal {
+			grid-template-columns: repeat(auto-fill, 170px);
+			grid-template-rows: 100px;
+			grid-gap: 10px;
+			padding: 20px;
+		}
+	}
+
+	&-article {
+		grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+		grid-gap: 10px;
+		padding: 10px;
+
+		@include atSmaller {
+			grid-template-columns: repeat(auto-fill, minmax( 260px, 1fr));
+			grid-template-rows: repeat(auto-fit, 200px);
+			grid-gap: 20px;
+			padding: 20px;
+		}
+	}
+}
+

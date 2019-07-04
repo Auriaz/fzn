@@ -27,6 +27,7 @@ Encore
     .addEntry('app', './assets/js/app.js')
     // .addEntry('vue', './assets/js/vue.js')
     .addEntry('dashboard', './assets/js/dashboard.js')
+    .addEntry('home', './assets/js/home.js')
     .addEntry('article_show', './assets/js/article_show.js')
     .addEntry('admin_article_form', './assets/js/admin_article_form.js')
     .addStyleEntry('account', './assets/css/themes/account.scss')

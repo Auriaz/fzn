@@ -6,10 +6,9 @@ class StickyHeader {
   constructor() {
     this.Nav = $(".nav");
     this.Logo = $(".logo");
-    this.Icon = $(".nav-icon");
-    this.headerTriggerElement = $('.content');
-   
-    // this.headerLinks = $('.home-sction');
+    this.Icon = $(".icon-nav");
+    this.headerTriggerElement = $(".container");
+    this.headerLinks = $('.home-sction');
     this.createHeaderWaypoint();
   }
 

@@ -1,5 +1,6 @@
 @import './helper/variables';
 @import './helper/mixins';
+@import './helper/animations';
 // @import './helper/placeholders';
 
 @import '~bootstrap';
@@ -10,22 +11,21 @@
 
 @import './layout/nav';
 @import './layout/footer';
-@import './layout/content';
+@import './layout/grid';
+@import './layout/container';
 
 @import './components/ad';
 @import './components/article';
-@import './components/arrow';
+@import './components/btn';
 @import './components/profile';
 @import './components/sortable';
 @import './components/logo';
-@import './components/slider';
 @import './components/postcard';
-@import './components/grid';
 @import './components/reveal-item';
 @import './components/form';
 @import './components/image';
 @import './components/modal';
 @import './components/wrapper';
-
-@import './pages/home';
+@import './components/icon';
+@import './components/content';
 

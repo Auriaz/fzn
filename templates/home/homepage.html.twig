@@ -1,282 +1,30 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="home">
-        <div class="home-page__main-container" id="wrapper_main_image">
-            <div class="home-page__main-content home-page__main-content--bottom">
-                <div class="home-page__main-wrapper">
-                    <div class="home-page__main-quotation">
-                        <h1 class="home-page__main-title">Tytuł 1</h1>
-                        
-                        <p class="home-page__main-text">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                        </p>
-                    </div>
+    {% include "inc/slider.html.twig" %}
 
-                    {% include "inc/main_page.html.twig" %}
-                </div>
-            </div>
+    <a href="/#last" id="arrow-down">
+        <i class="fas fa-angle-double-down angle-double-down"></i>
+    </a>
 
-            <div class="home-page__main-content home-page__main-content--top">
-                <div class="home-page__main-wrapper">
-                    <div class="home-page__main-quotation">
-                        <h1 class="home-page__main-title">Tytuł 2</h1>
-                        
-                        <p class="home-page__main-text">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                        </p>
-                    </div> 
+    <div class='home'>
+        <div class="home-container">
+            {% include "home/last.html.twig" %}
+            {% include "home/about.html.twig" %}
+            {% include "home/volunteering.html.twig" %}
+            {% include "home/transfer.html.twig" %}      
+        </div>   
+    </div> 
+{% endblock %}
 
-                    {% include "inc/main_page-2.html.twig" %}
-                </div>
-            </div>
+{% block stylesheets %}
+{{ parent() }}
 
-            <a href="/#info" id="arrow-down">
-                <i class="fa fa-angle-double-down fa-3x"></i>
-            </a>           
-        </div>
+{{ encore_entry_link_tags('home') }}
+{% endblock %}
 
-        <div class="home-page">
-            <div class="home-page__background"></div>
+{% block javascripts %}
+{{ parent() }}
 
-            <div class="home-page__container" id="info"> 
-                <!-- #### Info ##### --> 
-                {% if articles %}             
-                <div class="grid grid__home-page--info home-page__info" >
-                    <div class="home-page__content-title">
-                        <h3 class="home-page__content-title--text">
-                            Ostatnio dodane artykuły
-                        </h3>
-                    </div>
-
-                    
-                    <div class="home-page__info--container">
-                        <div class="home-page__info--wrapper zoom">
-                            <div class="home-page__info--slider">
-                                {% include "home/slider.html.twig" %}
-                            </div>
-
-                            
-                                {% for article in articles %}
-                                    <div class="home-page__info--postcard-{{ loop.index }} postcard zoom">
-                                        <div class="postcard-overlay">
-                                            <a href="{{ path('article_show', {slug: article.slug}) }}">
-                                                {% if article.imagePath %}
-                                                    <div class="home-page__info-image">
-                                                        <img class="postcard-img" src="{{ article.imagePath|imagine_filter('squared_thumbnail_small') }}" alt="{{ article.title }}">
-                                                        <!-- {% else %}
-                                                            <div class="postcard-icon">
-                                                                <i class="paw"></i>
-                                                            </div>
-                                                        {% endif %}
-                                                        
-                                                        <small>({{ article.nonDeletedComments|length }} comments)</small>
-                                                        <br>
-                                                        {% for tag in article.tags %}
-                                                            <small>
-                                                                <span class="badge badge-light">{{ tag.name }}</span>
-                                                            </small>
-                                                        {% endfor %} -->
-                                                    </div>
-                                            </a>
-                
-                                            <div class="home-page__info-title postcard-title">
-                                                {{ article.title }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                        </div>
-                    </div>                    
-                </div>      
-                {% endif %}
-
-                <div class="home-page__answer">
-                    <div class="home-page__content-title">
-                        <h3 class="home-page__content-title--text">
-                            Dlaczego warto
-                        </h3>
-                    </div>
-
-                    <div class="home-page__answer--container">
-                        <div class="home-page__answer--wrapper">
-                            <div class="home-page__answer__card">
-                                <i class="fas fa-chalkboard-teacher fa-5x home-page__answer__card--icon"></i>
-                                <div class="home-page__answer__card--text-content">
-                                    <P>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugiat, modi perspiciatis. </P>
-                                </div>
-                            </div>
-        
-                            <div class="home-page__answer__card">
-                                <i class="fa fa-bolt fa-5x home-page__answer__card--icon"></i>
-                                <div class="home-page__answer__card--text-content">
-                                    <P>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugiat, modi perspiciatis. </P>
-                                </div>
-                            </div>
-        
-                            <div class="home-page__answer__card">
-                                <i class="fa fa-balance-scale fa-5x home-page__answer__card--icon"></i>
-                                <div class="home-page__answer__card--text-content">
-                                    <P>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugiat, modi perspiciatis. </P>
-                                </div>
-                            </div>
-        
-                            <div class="home-page__answer__card">
-                                <i class="fa fa-chart-line fa-5x home-page__answer__card--icon"></i>
-                                <div class="home-page__answer__card--text-content">
-                                    <P>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugiat, modi perspiciatis. </P>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="home-page__price-list" id="price-list">
-                    <div class="home-page__content-title">
-                        <h3 class="home-page__content-title--text">
-                        Cennik
-                        </h3>
-                    </div>
-
-                    <div class="home-page__price-list--container">
-                        <table class="table table-bordered table-dark home-page__price-list--table home-page__price-list--table-1">
-                            <thead class="text-center">
-                                <tr>
-                                    <th colspan="4" class="home-page__price-list--table--head">Trening personalny</th>
-                                </tr>
-
-                                <tr>
-                                    <th scope="col">Ilość</th>
-                                    <th scope="col">Za jeden trening personalny</th>
-                                    <th scope="col">Ogólna cena</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-center">
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>70zł</td>
-                                    <td>70zł</td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>60zł</td>
-                                    <td>180zł</td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">6</th>
-                                    <td>50zł</td>
-                                    <td>300zł</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <table class="table table-bordered table-dark home-page__price-list--table home-page__price-list--table-2">
-                            <thead class="text-center">
-                                <tr>
-                                    <th scope="col">Plan treningowy</th>
-                                    <th scope="col">Dieta</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-center">
-                                <tr>
-                                    <td>150zł</td>
-                                    <td>150zł</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <table class="table table-bordered table-dark home-page__price-list--table home-page__price-list--table-3">
-                            <thead class="text-center">
-                                <tr>
-                                    <th colspan="4" class="home-page__price-list--table--head">Prowadzenie treningów on-line</th>
-                                </tr>
-
-                                <tr>
-                                    <th scope="col">Plan treningowy</th>
-                                    <th scope="col">Dieta</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-center">
-                                <tr>
-                                    <td>150zł</td>
-                                    <td>150zł</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                </div>
-
-                <div class="home-page__contact" id="contact">
-                    <div class="home-page__content-title">
-                        <h3 class="home-page__content-title--text">
-                            Kontakt
-                        </h3>
-                    </div>
-                    
-                    <div class="home-page__contact--container row">
-                        <div class="wrapper col">
-                            <div class="home-page__contact--data">
-                                <h3><b>Dane do kontaktu</b></h3>
-                                <p><b>Numer telefonu:</b> 507 245 965</p>
-                                <p><b>Email:</b> a.stankiewicz@gmail.com</p>
-                            </div>
-                        </div>
-                        <div class="wrapper col-sm-8">
-            
-                        <div class="home-page__contact--form">
-
-                                <form class="form" action="">
-                                    <div class="form-group form-other">
-                                        <input type="email" class="form-control" name="email-contact" id="email-contact" required>
-                                        <label class="label" for="email-contact">Email</label>
-                                    </div>
-            
-                                    <div class="form-group form-other">
-                                        <textarea name="text-contact" class="form-control" id="text-contact" cols="30" rows="10" required></textarea>
-                                        <label class="label" for="text-contact">Wiadomość</label>
-                                    </div>
-                                
-                                    <button type="submit" class="btn btn-outline-secondary">Wyślij wiadomość</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="home-page__description" id="description">
-                    <div class="home-page__content-title">
-                        <h3 class="home-page__content-title--text">               
-                            O mnie
-                        </h3>
-                    </div>
-                
-                    <div class="home-page__description--container row">
-                        <div class="wrapper col">
-                            <div class="home-page__description--image">
-                                <img class="zoom home-page__description--image-1" src="build/images/description02.5d2a4c0e.JPG" alt="Description Image">
-                                <img class="zoom home-page__description--image-2" src="build/images/description02.7d0c7219.JPG" alt="Description Image">
-                                <img class="zoom home-page__description--image-3" src="build/images/description.0a3e0625.JPG" alt="Description Image">
-                            </div>
-                        </div>
-                        <div class="wrapper col-sm-6">
-                
-                            <div class="home-page__description--text">
-                                <p>Cóż moge powiedzieć o Sobie. Błyskotliwy, fantastyczny młody człowiek. O nie samowitym wdzieku :) </p>
-                                <p>Cóż moge powiedzieć o Sobie. Błyskotliwy, fantastyczny młody człowiek. O nie samowitym wdzieku :) </p>
-                                <p>Cóż moge powiedzieć o Sobie. Błyskotliwy, fantastyczny młody człowiek. O nie samowitym wdzieku :) </p>
-                                <p>Cóż moge powiedzieć o Sobie. Błyskotliwy, fantastyczny młody człowiek. O nie samowitym wdzieku :) </p>
-                                <p>Cóż moge powiedzieć o Sobie. Błyskotliwy, fantastyczny młody człowiek. O nie samowitym wdzieku :) </p>
-                
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% include "footer/footer.html.twig" %}
-        </div>
-    </div>    
+{{ encore_entry_script_tags('home') }}
 {% endblock %}

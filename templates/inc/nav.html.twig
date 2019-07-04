@@ -1,98 +1,110 @@
-<nav class="nav navbar navbar-expand-lg {{ app.session.flashbag.peek('success')|length > 0 ? '' : 'mb-1' }}">
-    <a href="{{ path('app_homepage') }}" class="navbar-brand logo">
-        {% include "inc/logo.html.twig" %}
-        Training-Space
-    </a>
+<span class="btn-x">
+    <span class="btn-x_middle"></span>
+</span>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <i class="nav-icon fa fa-bars"></i>
-    </button>
+<nav class="nav btn-x_content {{ app.session.flashbag.peek('success')|length > 0 ? '' : 'mb-1' }}">
+    <ol class="nav-list">  
+        <li class="nav-left logo">
+            <a href="{{ path('app_homepage') }}">
+                {% include "inc/logo.html.twig" %}
+            </a>
+        </li>
+                
+        <li class="nav-section dropdown">
+            <a class="nav-link nav-bind" href="#" >Podopieczni
+                <i class="caret-right"></i>
+            </a>
+            <ul class="nav-subsection dropdown-menu" data-toggle="dropdown"> 
+                <li class="nav-item">
+                    <a class="nav-link" href="/animal-all-cat">Koty</a>
+                </li>
+                <li class="nav-item"> 
+                    <a class="nav-link" href="/animal-all-dog">Psy</a>
+                </li>
+                <li class="nav-item"> 
+                    <a class="nav-link" href="/animal-all-other">Inne zwierzęta</a>
+                </li>   
+            </ul>   
+        </li>
+        
+        <li class="nav-section">
+            <a class="nav-link nav-bind" href="/article-all" >Artykuły</a>
+        </li>
 
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav mr-auto text-center">
+        <li class="nav-section dropdown">
+            <a class="nav-link nav-bind  a" href="#">Tak działamy
+                <i class="caret-right"></i>
+            </a>
+            <ul class="nav-subsection dropdown-menu" data-toggle="dropdown"> 
+                <li class="nav-item">
+                    <a class="nav-link" href="/#about-us" id="about-us-link">O nas</a>
+                </li>
+                <li class="nav-item nav-section"> 
+                    <a class="nav-link nav-bind" href="#">Procedura adopcyjna
+                        <span class="icon icon-toggle">
+                            <i class="right-arrow dropdown-nav"></i>
+                        </span>                        
+                    </a>
+                    <ul class="nav-subsection nav-toggle dropdown-menu">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/s-wizyta-przedadopcyjna">Wizyta przedadopcyjna</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/s-umowa-adopcyjna">Umowa adopcyjna</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/s-ankieta-kot">Ankieta kot</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/s-ankieta-pies">Ankieta pies</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul> 
+        </li>
+
+        <li class="nav-section dropdown">
+            <a class="nav-link nav-bind" href="#">WSPIERAM FZN
+                <i class="caret-right"></i>
+            </a>
+            <ul class="nav-subsection dropdown-menu" data-toggle="dropdown"> 
+                <li class="nav-item">
+                    <a class="nav-link" href="/#volunteering" id="volunteering-link">Wolontariat</a>
+                </li>
+                <li class="nav-item"> 
+                    <a class="nav-link" href="/s-domy-tymczasowe">Domy Tymczasowe</a>
+                </li>
+                <li class="nav-item"> 
+                    <a class="nav-link" href="/#transfer" id="transfer-link">Przelewy na Fundację</a>
+                </li>
+            </ul> 
+        </li>
+        <li class="nav-section">
+            <a class="nav-link nav-bind" href="/contact">Kontakt</a>
+        </li>
+        {% if is_granted('ROLE_USER') %}
+      
+        <div class="icon icon-nav nav-right">
+            <a href="#right" class="icon-link modal-link">
+                <i class="users-cog icon-avatar"></i>
+            </a>
+        </div>
+
+        {% else %}
+        <div class="icon icon-nav nav-right">        
+            <a class="icon-link icon-facebook" href="https://facebook.com/FundacjaZwierzetaNiczyje/?ref=m_notif&notif_t=group_highlights" target="_blank" class="social-icon">
+                    <i class="fab fa-facebook-square"></i>
+            </a>                           
+            <a class="icon-link icon-instagram" href="https://instagram.com/fundacja_zwierzeta_niczyje?utm_source=ig_profile_share&igshid=1joz9gcb9eiem" target="_blank" class="social-icon">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#right" class="icon-link modal-link">
+                <i class="fa fa-user"></i>
+            </a>
+        </div>
+        {% endif %}
+    </ol>	     
+</nav>	
 
 
-            <li class="nav-item">
-                <a class="nav-link" href="/#description" id="app">O mnie</a>
-            </li>
 
-            <li class="nav-item">
-                <a  class="nav-link" href="/#price-list" id="app">Cennik</a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('articles_show') }}">Artykuły</a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="/#contact" id="app">Kontakt</a>
-            </li>
-        </ul>
-
-        <!-- <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-
-            <button class="btn btn-info my-2 my-sm-0" type="submit">Search</button>
-        </form> -->
-
-        <ul class="nav-profile navbar-nav ml-auto">
-            {% if is_granted('ROLE_USER') %}
-            <li class="nav-item dropdown">
-                <a class="nav-link " href="http://example.com" id="navbarDropdownMenuLink"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="nav-profile__img rounded-circle" src="{{ app.user.avatarUrl(100) }}">
-                </a>
-
-                <div class="nav-profile__container dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <div class="nav-profile__account">
-                        <img class="nav-profile__img nav-profile__account--img rounded-circle" src="{{ app.user.avatarUrl(100) }}">
-                        <div class="nav-profile__account--text-content">
-                            <p >{{ app.user.firstname }} {{ app.user.lastname }}</p> 
-                            <p >{{ app.user.email }}</p> 
-                        </div>
-                    </div>
-
-                    <div class="nav-profile__menu">
-                        {% if is_granted('ROLE_ADMIN_ARTICLE') %}
-                            <a class="dropdown-item" href="{{ path('admin_article_list') }}">
-                                <i class="fa fa-book nav-profile__icon"></i> Artykuły
-                            </a>
-                        {% endif %}
-
-                        <a class="dropdown-item" href="{{ path('app_account') }}">
-                            <i class="fa fa-user-cog nav-profile__icon"></i> Profil
-                        </a>
-    
-                        <a class="dropdown-item" href="{{ path('app_dashboard') }}">
-                            <i class="fas fa-tools nav-profile__icon"></i> Panel
-                        </a>
-
-                        <a class="dropdown-item" href="{{ path("dashboard_workout") }}">
-                            <i class="fas fa-street-view nav-profile__icon"></i> Treningi
-                        </a>
-                    </div>
-                    
-                    <div class="nav-profile__logout">
-                        <a class="dropdown-item" href="{{ path('app_logout') }}">
-                            <i class="fa fa-sign-out-alt nav-profile__icon"></i>Logout
-                        </a>
-                    </div>
-                </div>
-            </li>
-            {% else %}
-            <li class="nav-item">
-                <a href="#" class="nav-link nav-icon" data-toggle="modal" data-target="#form-login">
-                    <i class="fa fa-sign-in-alt"> </i> Zaloguj się
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link nav-icon" href="{{ path('app_register') }}" >
-                    <i class="fa fa-user-plus"> </i> Rejestracja
-                </a>
-            </li>
-            {% endif %}
-        </ul>
-    </div>
-</nav>

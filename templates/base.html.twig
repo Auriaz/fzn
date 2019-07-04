@@ -2,7 +2,7 @@
 <html lang="en">
 
     <head>
-        <title>{% block title %}Welcome to the SpaceBar{% endblock %}</title>
+        <title>{% block title %}Fundacja Zwierząt Niczyich{% endblock %}</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -13,7 +13,7 @@
     </head>
 
     <body>
-        <div class="content">
+        <div class="container">
             <!-- #### Header #### -->    
             <header>
                 {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
@@ -34,6 +34,11 @@
                 {% block body %}{% endblock %}
                 {% include "security/login.html.twig" %}
             </main>
+
+            <!-- #### Main Content #### -->
+            <footer>
+                {% include "footer/footer.html.twig" %}
+            </footer>
         </div>
 
         {% block javascripts %}

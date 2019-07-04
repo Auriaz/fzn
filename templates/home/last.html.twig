@@ -1,0 +1,26 @@
+<div class="grid grid-last page-section home-last wrapper" id="last">
+    <h1 class="content-title home-title">Nowości na czterech łapach</h1>
+    <div class="home-last__container">
+        <div class="home-last__add-animals"> 
+            {% if animals|default %}
+            {% for animal in animals %}
+            <div class="postcard zoom">
+                <div class="postcard-overlay">
+                    <a href="/animal-{{ animal.id }}">
+                        {% if animal.image %}
+                        <img class="postcard-img" src="{{ animal.image }}" alt="{{ animal.name }}" />
+                        {% else %}
+                        <div class="postcard-icon"><i class="paw"></i></div>
+                        {% endif %}
+                    </a>
+                </div>
+
+                <h3 class="postcard-title">{{ animal.name }}</h3>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>No animals to display</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
