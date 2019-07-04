@@ -6,7 +6,7 @@
 	background-color: rgba($mainWhite, 0.9);
 	border-bottom: 2px solid $mainLithCyan;
 	transition: all 1.5s ease-in-out;
-	z-index: 8;  
+	scroll-behavior: auto;
 	
 	@include atSmall {
 		background-color: rgba($mainWhite, 0.5);
@@ -22,11 +22,11 @@
 	}
 
 	&-sticky { 
-    @include atSmall {
+    	@include atSmall {
 	 		background-color: rgba($mainDark, 0.5);
 	 		border-bottom: 2px solid $mainCyan;
 			padding-top: 0; 
-		 }
+		}
 		 
 		& a.nav-bind {
 			color: $mainLithCyan;
@@ -50,7 +50,6 @@
 
 		@include atMedium {
 			height: 1.5em;
-			display: inline-block;
 		}
 
 	  @include atLarge {
@@ -67,12 +66,12 @@
 	}
 
 	&-section {
+		width: 100%;		
 		font-size: 0.8rem;
 		margin-left: auto;
 		margin-right: auto;	
 		letter-spacing: 1px;
 		display: inline-block;
-		width: 100%;		
 		text-align: center;	
 			
 		@include atSmall {
@@ -116,20 +115,12 @@
 	}
 
 	&-subsection {
+		width: 100%;		
 		list-style-type: none;
 		padding-inline-start: 0;
-		margin: 2px 0 0 0;
+		margin: 0;
 		display: none;
-
-
-		@include atMedium {
-			margin: 10px 0 0 0;
-		}
-
-		@include atLarge {
-			margin: 13px 0 0 0;
-		}
-
+		background-color: rgba($mainDark, 0);
 	}
 
 	&-link {
@@ -140,6 +131,7 @@
 		width: auto;
 		height: auto;
 		display: block;
+		cursor: pointer;
 		
 		&:hover {
 			background-color: rgba($mainDarkCyan, 1);
@@ -168,7 +160,7 @@
 		position: relative;
 		letter-spacing: 2px;
 		width: 100%;
-		background-color: rgba($mainDark, 0.8);
+		background-color: rgba($mainDark, 0.7);
 		border: 1px  solid ;
 		margin-bottom: 1px;
 
@@ -193,7 +185,7 @@
 	&-toggle {
 		list-style-type: none;
 		display: block;
-		padding-inline-start: 0;
+		padding-inline-start: 2px;
 
 		@include atSmall {
 			display: none;
@@ -206,8 +198,16 @@
 		}
 		
 		@include atLarge {
-			transform: translateX(100%) translateY(-41%);
+			transform: translateX( calc(100% - 4px)) translateY(calc(-30% - 4px));
 		}
 
+	}
+}
+
+.fa-caret-right {
+	display: inline;
+
+	@include atSmall {
+		display: none;
 	}
 }

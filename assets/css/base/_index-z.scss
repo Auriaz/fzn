@@ -1,0 +1,43 @@
+.nav {
+    z-index: 7;
+
+    &-list {
+        z-index: 3;
+    }
+
+    &-section {
+        z-index: 5;
+    }
+
+    &-link {
+        z-index: 6;
+    }
+} 
+
+.icon {
+    z-index: 12;
+
+    &-link {
+        z-index: 13;
+    }
+}
+
+.btn {
+    &-x {
+       z-index: 11;
+    }
+}
+
+.modal{
+    &-overlay {
+      z-index: 14;  
+    }
+}
+
+.arrow {
+    z-index: 5;
+}
+
+.slide-content__quotation--hero {
+    z-index: 5;
+}

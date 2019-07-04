@@ -41,6 +41,21 @@
 			padding: 0;
 			justify-self: start;
 		}
+
+		&__web-space {
+			p {
+				color: $mainDarkBlue;
+				padding: 5px 0 0 0;
+				margin: 0;
+			}
+			a {
+				color: #fff;
+				list-style-type: none;
+				line-height: 100%;
+				padding: 0;
+				margin: 0;
+			}
+		}
 	}
 
 	&-copyrights {
