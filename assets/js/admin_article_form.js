@@ -62,6 +62,7 @@ class ReferenceList {
                 });
             }
         });
+        
         this.references = [];
 
         this.render();
