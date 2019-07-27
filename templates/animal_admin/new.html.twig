@@ -1,0 +1,15 @@
+{% extends 'animal_admin/_base.html.twig' %}
+
+{% block dashboard_title %}Dodaj nowe zwierzę{% endblock %}
+
+{% block dashboard_adding_btn %}
+    <a href="{{ path('admin_animal_list') }}" class="dashboard-section__adding-btn btn btn-outline-secondary">
+        <i class="fa fa-share" title="Wróć do listy zwierząt"></i>
+    </a>
+{% endblock %}
+
+{% block dashboard_body %}
+    <article>
+        {{ include('animal_admin/_form.html.twig', {button_text: 'Dodaj'}) }}
+    </article>
+{% endblock %}

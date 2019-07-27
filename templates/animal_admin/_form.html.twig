@@ -1,0 +1,32 @@
+{{ form_start(animalForm) }}
+    {{ form_row(animalForm.name) }}
+
+    <div class="row">
+        <div class="col-sm-8 custom-file mb-5">
+            {{ form_row(animalForm.image) }}
+        </div>
+
+        <div class="col-sm-4">
+            {% if animalForm.vars.data.imageFilename|default %}
+                <a href="{{ uploaded_asset(animalForm.vars.data.imagePath) }}" target="_blank">
+                    <img src="{{ animalForm.vars.data.imagePath }}" height="100">
+                </a>
+            {% endif %}
+        </div>
+    </div> 
+
+    {{ form_row(animalForm.category) }}
+
+    {{ form_row(animalForm.description) }}
+
+
+    {% if animalForm.adoptionAt is defined %}
+        {{ form_row(animalForm.adoptionAt) }}
+    {% endif %}
+
+    <button type="submit" class="btn btn-outline-secondary">
+        {{ button_text }}
+    </button>
+
+
+{{ form_end(animalForm) }}

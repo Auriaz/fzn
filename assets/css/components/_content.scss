@@ -1,5 +1,4 @@
 .content {
-    margin-top: 0;
     width: 100%;
     height: auto;
     position: relative;
@@ -36,6 +35,7 @@
         height: auto;
         color: #555;
         transition: all 0.3s linear;
+        position: relative;
 
         @include atSmall {
             display: inline-block;
@@ -43,12 +43,6 @@
             float: right;
             transition: all 0.5s linear;
             padding: 10px;
-        }
-
-        &--dashboard {
-            @include atSmall {
-                width: 93vw;
-            }
         }
 
         &--article {

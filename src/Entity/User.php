@@ -83,10 +83,16 @@ class User implements UserInterface
      */
     private $nick;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Animal", mappedBy="user")
+     */
+    private $animals;
+
     public function __construct()
     {
         $this->apiTokens = new ArrayCollection();
         $this->articles = new ArrayCollection();
+        $this->animals = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -301,6 +307,37 @@ class User implements UserInterface
     public function setNick(string $nick): self
     {
         $this->nick = $nick;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Animal[]
+     */
+    public function getAnimals(): Collection
+    {
+        return $this->animals;
+    }
+
+    public function addAnimal(Animal $animal): self
+    {
+        if (!$this->animals->contains($animal)) {
+            $this->animals[] = $animal;
+            $animal->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnimal(Animal $animal): self
+    {
+        if ($this->animals->contains($animal)) {
+            $this->animals->removeElement($animal);
+            // set the owning side to null (unless already changed)
+            if ($animal->getUser() === $this) {
+                $animal->setUser(null);
+            }
+        }
 
         return $this;
     }

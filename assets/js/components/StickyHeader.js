@@ -3,12 +3,13 @@ import $ from "jquery";
 
 /*  #### Przyklejanie nawigacji  ####  */
 class StickyHeader {
-  constructor() {
+  constructor(element = null) {
     this.Nav = $(".nav");
     this.Logo = $(".logo");
     this.Icon = $(".icon-nav");
-    this.headerTriggerElement = $(".container");
+    this.headerTriggerElement = $("#container");
     this.headerLinks = $('.home-sction');
+    this.additionalElement = $(`${element}`);
     this.createHeaderWaypoint();
   }
 
@@ -16,12 +17,14 @@ class StickyHeader {
     this.Nav.addClass("nav-sticky");
     this.Logo.addClass("logo-sticky");
     this.Icon.addClass("icon-nav-sticky");
+    this.additionalElement.addClass('add-sticky');
   }
 
   removeSticky() {
     this.Nav.removeClass("nav-sticky");
     this.Logo.removeClass("logo-sticky");
     this.Icon.removeClass("icon-nav-sticky");
+    this.additionalElement.removeClass('add-sticky');
   }
 
   createHeaderWaypoint() {

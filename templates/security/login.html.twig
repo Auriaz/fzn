@@ -1,23 +1,22 @@
 <dialog class="modal-overlay modal-login modal-dark" id="right">
     <a href="#" class="modal-close">Close</a>
     {% if is_granted('ROLE_USER') %}
-        {% set person = session.get('person') %}
 
         {% if is_granted('ROLE_ADMIN') %}
-            <a href="/article" class="btn btn-blue btn-block">Artkuły</a>
+            <a href="{{ path('admin_article_list') }}" class="btn btn-blue btn-block">Artkuły</a>
             <a href="/structure" class="btn btn-blue btn-block">Pliki strukturalne</a>
             <a href="/user" class="btn btn-blue btn-block">Użytkownicy</a>
             <a href="/image" class="btn btn-blue btn-block">Zdjęcia</a>
-            <a href="/animal" class="btn btn-blue btn-block">Zwierzęta</a>
+            <a href="{{ path('admin_animal_list') }}" class="btn btn-blue btn-block">Zwierzęta</a>
         {% elseif is_granted('ROLE_EDITOR') %}
-            <a href="/article" class="btn btn-blue btn-block">Artkuły</a>
+            <a href="{{ path('admin_article_list') }}" class="btn btn-blue btn-block">Artkuły</a>
             <a href="/image" class="btn btn-blue btn-block">Zdjęcia</a>
             <a href="/animal" class="btn btn-blue btn-block">Zwierzęta</a>
         {% else %}
             <p>Nie posiadasz uprawnień! Skotaktuj się z administratorem strony.</p>
         {% endif %}
 
-        <a href="/login/logout" class="btn btn-orange btn-block">Wyloguj się</a>
+        <a href="{{ path('app_logout') }}" class="btn btn-orange btn-block">Wyloguj się</a>
         <div class="icon icon-model icon-link">
             <a class="icon-link icon-facebook" href="https://facebook.com/FundacjaZwierzetaNiczyje/?ref=m_notif&notif_t=group_highlights"
                 target="_blank" class="social-icon">
@@ -33,21 +32,21 @@
             <i class="fas fa-users icon-users"></i>
             <h2 class="modal-title">Sing In</h2>
             
-            <form method="post" class="form form-signin" id="form-login" action="{{ path('app_login') }}">
+            <form method="POST" class="form form-signin" id="form-login">
                 {% if error is defined %}
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                 {% endif %}
 
                 <div class="form-group form-other">
-                    <input type="text" name="email" id="login" class="form-control" placeholder="Login" minlength="2" value="{{ last_username|default }}" required />
-                    <label for="login"><i class="login"></i> Login</label>
+                    <input type="text" name="email" id="login" class="form-control" placeholder="E-mail" minlength="2" value="{{ last_username|default }}" required />
+                    <label for="login"><i class="login"></i> E-mail</label>
                     <div class="form-faulty">Login składa się przynajmniej z 3 znaków</div>
                 </div>
                 
                 <div class="form-group form-other">
-                    <input type="password" name="password" id="pass" class="form-control" placeholder="Hasło"  required />
+                    <input type="password" name="password" id="pass" class="form-control" placeholder="Hasło" minlength="3" required />
                     <label for="pass"><i class="key"></i> Hasło</label>
-                    <div class="form-faulty"></div>
+                    <div class="form-faulty">Login składa się przynajmniej z 3 znaków</div>
                 </div>
 
                 <div class="checkbox mb-3">
@@ -58,9 +57,85 @@
                 
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-                <button class="btn btn-outline-secondary" type="submit" value="Zaloguj się" />Zaloguj się</button>
+                <button type="submit" class="btn btn-outline-secondary"/>Zaloguj się</button>
             </form>
             <div class="form-invalid"></div>       
         </div>
     {% endif %}
 </dialog>
+
+{% block javascripts %}
+    <script>
+        class Login {
+            constructor() {
+                this.form = $('form #form-login');
+                this.data = [];
+                this.events();
+            }
+
+            events() {
+                var that = this;
+
+                this.form.submit(function (e) {
+                    e.preventDefault();
+
+                    $("#form-login input").each(function () {
+                        that.checkField($(this));
+                    });
+                    that.setField();
+                });
+            }
+
+            setField() {
+                var data = this.data;
+
+                axios({
+                    method: 'POST',
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                    data: qs.stringify(data),
+                    url: '{{ path('app_login') }}',
+                })
+                    .then(res => res.data)
+                    .then(data => {
+                        console.log(data);
+                        // przesyła wiadomości do alerta
+                        //catchAlert(data.message);
+                        this.validedField(data.message.alert);
+                    })
+                    .catch(err => console.log(err));
+            }
+
+            checkField(field) {
+                if ($(field).prop('required') == true) {
+                    if ($(field).prop('type') == 'text') {
+                        if ($(field).val()) {
+                            this.data.login = $(field).val();
+                        }
+                    }
+
+                    if ($(field).prop('type') == 'password') {
+                        if ($(field).val()) {
+                            this.data.pass = $(field).val();
+                        }
+                    }
+                }
+            }
+
+            validedField(res) {
+                if (res == 'success') {
+                    //setTimeout(() => location.reload(), 500);
+                } else if (res == "warning") {
+                    $('#login').css({ 'color': 'green', 'border-bottom': '2px solid green' });
+                    $('#login').next('label').css("color", "green");
+                    $('#pass').css({ 'color': 'red', 'border-bottom': '2px solid red' });
+                    $('#pass').next('label').css("color", "red");
+                } else {
+                    $('#login').css({ 'color': 'red', 'border-bottom': '2px solid red' });
+                    $('#login').next('label').css("color", "red");
+                    $('#pass').css({ 'color': 'red', 'border-bottom': '2px solid red' });
+                    $('#pass').next('label').css("color", "red");
+                }
+            }
+        }
+    </script>
+{% endblock javascripts %}

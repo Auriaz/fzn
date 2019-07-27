@@ -35,12 +35,12 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     }
     public function supports(Request $request)
     {
-        return $request->attributes->get('_route') === 'app_login'
-            && $request->isMethod('POST');
+        return $request->isMethod('POST');
     }
 
     public function getCredentials(Request $request)
     {
+        
         $credentials = [
             'email' => $request->request->get('email'),
             'password' => $request->request->get('password'),
@@ -84,7 +84,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             return new RedirectResponse($targetPath);
         }
         // TODO - the router should point to the Dashboard!
-        return new RedirectResponse($this->routerInterface->generate('app_homepage'));
+        return new RedirectResponse($this->routerInterface->generate('app_dashboard'));
     }
 
     // public function start(Request $request, AuthenticationException $authException = null)

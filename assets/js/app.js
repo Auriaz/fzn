@@ -13,7 +13,7 @@ import 'bootstrap';
 import Dropdown from "./components/Dropdown";
 import StickyHeader from './components/StickyHeader';
 import RevealOnSroll from './components/RevealOnSroll';
-import Login from "./components/Login";
+// import Login from "./components/Login";
 import MobileMenu from "./components/MobileMenu";
 require('@fortawesome/fontawesome-free/css/all.min.css');
 require('@fortawesome/fontawesome-free/js/all.js');
@@ -21,8 +21,9 @@ require('@fortawesome/fontawesome-free/js/all.js');
 
 const dropdown = new Dropdown();
 const mobileMenu = new MobileMenu();
-const login = new Login();
+// const login = new Login();
 const sticky = new StickyHeader();
+
 
 new RevealOnSroll("100%");
 

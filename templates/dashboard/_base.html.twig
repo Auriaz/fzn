@@ -1,15 +1,18 @@
 {% extends "base.html.twig" %}
 
-{% block body %}
+{% block title %}{{ title }}{% endblock %}
 
-<div class="dashboard">
+{% block body %}
+    <div class="dashboard">
         {% include "dashboard/main_page.html.twig" %}
         
         <div class="dashboard-section">
             <div class="dashboard-section__menu-icon">
+                <h2 class="dashboard-section__title">{% block dashboard_title %}{% endblock %}</h2>
                 <div class="sidebar__menu-icon sidebar__menu-icon--dashboard">
                     <div class="sidebar__menu-icon__middle"></div>
                 </div>
+                {% block dashboard_adding_btn %}{% endblock %}
             </div>          
 
             <div class="dashboard-section__wrapper">
@@ -22,11 +25,10 @@
 {% endblock body %}
 
 
-
 {% block stylesheets %}
-{{ parent() }}
+    {{ parent() }}
 
-{{ encore_entry_link_tags('dashboard') }}
+    {{ encore_entry_link_tags('dashboard') }}
 {% endblock %}
 
 {% block javascripts %}

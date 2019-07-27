@@ -168,10 +168,11 @@
         position: relative;
         border: 2px solid $mainLithCyan;
         border-radius: 50%;
-        font-size: 1.5rem;
+        font-size: 3rem;
         padding: 0.5rem;
         background-color: $mainDarkBlue;
         top: 0; 
+        transform: translateX(10px) translateY(10px);
         
         &:hover {
             background-color: $mainLithCyan;

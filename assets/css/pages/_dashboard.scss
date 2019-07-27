@@ -1,17 +1,10 @@
 .dashboard {
     width: 100%;
-    height: auto;
+    min-height: 100vh;
     position: relative;
-    margin-top: 0;
+    margin-top: 110px;
     top: 0;
     left: 0;
-
-    &-title {
-        text-transform: uppercase;
-        text-align: center;
-        font-size: 1.8rem;
-        color: $mainDark;
-    }
 
     &__switch-user {
         position: relative;
@@ -22,19 +15,19 @@
     }
 
     &-section {	
-        display: inline-block;
         width: 100%;
         height: auto;
-        color: #555;
+        position: relative;
+        display: inline-block;
+        color: $mainDarkBlue;
         transition: all 0.3s linear;
 
         @include atSmall {
             width: 94vw;
-            display: inline-block;
             float: right;
             transition: all 0.5s linear;
             margin: 0 1vw;
-            padding: 10px;
+            padding: 15px 30px 10px 20px;
         }
 
         &--is-mid-large {
@@ -44,16 +37,43 @@
             @include atSmall {
                 transition: all 0.5s linear;
                 width: 81vw;	
+                display: block;
             }       
         }
+        
+
 
         &__menu-icon {
-            // display: block;
-            // margin: 0 0 20px 0;
+            width: 100%;
+            height: auto;
+            position: relative;
+            background-color: $body;
+        }
+
+        .add-sticky {
+            position: fixed;
+            top:0;
+            padding: 70px 20px 20px 0;
         }
 
         &__wrapper {
+            width: 100%;
+            height: auto;
+            position: relative;
+            margin-top: 10px;
             display: block;
+        }
+        
+        &__title {
+            text-transform: uppercase;
+            text-align: center;
+            font-size: 1.8rem;
+            color: $mainDark;
+        }
+
+        &__adding-btn {
+            position: relative;
+            margin-left: 10px;
         }
     }
 }
