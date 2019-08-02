@@ -14,8 +14,9 @@ class DefaultController extends AbstractController
     {
         $articles = $repository->findAllPublishedOrderedByArticles(5);
 
-        return $this->render('home/homepage.html.twig', [
+        return $this->render('home/_base.html.twig', [
             'articles' => $articles,
+            'title' => 'Fundacja Zwierzęta Niczyje'
         ]);
     }
 }

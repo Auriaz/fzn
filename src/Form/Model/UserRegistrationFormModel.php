@@ -31,11 +31,11 @@ class UserRegistrationFormModel
      */
     public $plainPassword;
 
-    /**
-     * @Assert\NotBlank(message="Wpisz to samo hasło!")
-     * @Assert\Length(min=5, minMessage="Hasło powino składać się przynajmniej z 5 znaków.")
-     */
-    public $secondPassword;
+    // /**
+    //  * @Assert\NotBlank(message="Wpisz to samo hasło!")
+    //  * @Assert\Length(min=5, minMessage="Hasło powino składać się przynajmniej z 5 znaków.")
+    //  */
+    // public $secondPassword;
     
     /**
      * @Assert\IsTrue(message="I know, it's silly, but you must agree to our terms.")

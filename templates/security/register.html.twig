@@ -1,60 +1,60 @@
 
-{% extends 'base.html.twig' %}
+{% extends 'security/_base.html.twig' %}
 
-{% block title %}Rejestracja!{% endblock %}
+{% block security_title %}{{ title }}{% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
+{% block security_content %} security-section__content--regrister{% endblock %}
 
-    {{ encore_entry_link_tags('register') }}
+{% block security_image %}
+    <img src="{{ asset('images/thumbs/security/regrister.png') }}" class="security-section__image--regrister" alt="Zdjęcie rejestracji">
 {% endblock %}
 
-{% block body %}
-    <div class="row ml-3">
-        <div class="col">
-            <h1 class="">Tworzenie konta</h1>
-            <div class="">
-                <img src="https://robohash.org/admin2@example.com" class="img-responsive thumbnail">
-            </div>
-        </div>
+{% block security_wrapper %}security-section__wrapper--regrister col-md-5 float-right{% endblock %}
 
-        <div class="form-regrister col-md-5 float-right mt-5 mr-5">
-            {{ form_start(registrationForm) }}
-                <div class="form-row ">
-                    <div class="col-md-6 mb-4">
-                        {{ form_row(registrationForm.firstName) }}
-                    </div>
-                    <div class="col-md-6 mb-4">
-                        {{ form_row(registrationForm.lastName) }}
-                    </div>
+{% block security_body %}
+    <div class="form-regrister">
+        {{ form_start(registrationForm) }}
+            <div class="form-row ">
+                <div class="col-md-6 mb-4">
+                    {{ form_row(registrationForm.firstName) }}
                 </div>
-        
-                <div class="form-row">
-                    <div class="col-md-12 mb-4">
-                        {{ form_row(registrationForm.email) }}
-                    </div>
+                <div class="col-md-6 mb-4">
+                    {{ form_row(registrationForm.lastName) }}
                 </div>
-        
-                <div class="form-row">
-                    <div class="col-md-6 mb-4">
-                        {{ form_row(registrationForm.plainPassword) }}
-                    </div>
-                    <div class="col-md-6 mb-4">
-                        {{ form_row(registrationForm.secondPassword) }}
-                    </div>
+            </div>
+    
+            <div class="form-row">
+                <div class="col-md-12 mb-4">
+                    {{ form_row(registrationForm.email) }}
                 </div>
-        
-                <div class="form-row">
-                    <div class="col-md-8 mb-3 ml-4">
-                        {{ form_row(registrationForm.agreeTerms) }}
-                    </div>
-            
-                    <button class="btn btn-outline-secondary col pull-right" type="submit">
-                        Zarejestruj się
-                    </button>
+            </div>
+    
+            <div class="form-row">
+                <div class="col-md-6 mb-4">
+                    {{ form_row(registrationForm.plainPassword.first) }}
                 </div>
-            {{ form_end(registrationForm) }}
-        </div>
+                <div class="col-md-6 mb-4">
+                    {{ form_row(registrationForm.plainPassword.second) }}
+                </div>
+            </div>
+    
+            <div class="form-row">
+                <div class="col-md-8 mb-3 ml-4">
+                    {{ form_row(registrationForm.agreeTerms) }}
+                </div>
+  
+                <button class="btn btn-outline-secondary col pull-right" type="submit">
+                    Zarejestruj się
+                </button>
+            </div>
+        {{ form_end(registrationForm) }}
+
+        {% include "inc/modal.html.twig" %}
     </div>
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    
+    {{ encore_entry_script_tags('regrister') }}
+{% endblock %}

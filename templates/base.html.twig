@@ -2,7 +2,7 @@
 <html lang="en">
 
     <head>
-        <title>{% block title %}Fundacja Zwierząt Niczyich{% endblock %}</title>
+        <title>{% block title %}{{ title }}{% endblock %}</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -32,7 +32,6 @@
             <!-- #### Main Content #### -->
             <main>
                 {% block body %}{% endblock %}
-                {% include "security/login.html.twig" %}
             </main>
 
             <!-- #### Main Content #### -->

@@ -30,8 +30,9 @@ Encore
     .addEntry('home', './assets/js/home.js')
     .addEntry('article_show', './assets/js/article_show.js')
     .addEntry('admin_article_form', './assets/js/admin_article_form.js')
+    .addEntry('regrister', './assets/js/regrister.js')
     .addStyleEntry('account', './assets/css/themes/account.scss')
-    .addStyleEntry('register', './assets/css/register.scss')
+    .addStyleEntry('security', './assets/css/themes/security.scss')
     //.addEntry('page1', './assets/js/page1.js')
     //.addEntry('page2', './assets/js/page2.js')
 

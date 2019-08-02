@@ -1,0 +1,72 @@
+.table {
+    position: relative;
+    width: 100%;
+    height: auto;
+    
+    &-dark {
+        & thead {
+            background-color: $mainDark;
+
+            & th {
+                padding: 10px;
+                color: $mainLithBlue;
+            }
+        }
+
+        & tbody {
+            background-color: $mainGray;
+
+            & tr {
+                
+                &:hover {
+                    background-color: $mainDarkCyan;
+                    & td {
+                        border: 2px solid $mainLithCyan;
+                        color: $mainGray;
+                    }
+                }
+            } 
+
+            & td {
+                padding: 5px;
+                color: $mainDark;
+            }
+        }
+    }
+
+    & .color-blue {
+        color: $mainCyan;
+    }
+
+    & .text-center {
+        text-align: center;
+    }
+
+    & .text-left {
+        text-align: justify;
+    }
+    
+    & .col-1 {
+       width: 10%; 
+    }
+
+    & .col-2 {
+       width: 20%; 
+    }
+
+    & .col-4 {
+       width: 40%; 
+    }
+
+    & .col-6 {
+       width: 60%; 
+    }
+
+    & .col-8 {
+       width: 80%; 
+    }
+
+    & .col-10 {
+       width: 100%; 
+    }
+}

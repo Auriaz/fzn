@@ -41,7 +41,7 @@ class ArticleAdminController extends BaseController
             return $this->redirectToRoute('admin_article_list');
         }
        
-        return $this->render('article_admin/new.html.twig', [
+        return $this->_render('article_admin/new.html.twig', [
             'articleForm' => $form->createView(),
             'title' => 'Artykuły'
            
@@ -59,9 +59,10 @@ class ArticleAdminController extends BaseController
         ]);
 
         $form->handleRequest($request);
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $uploadedFile = $form[ 'imageFile']->getData();
-            // dd( $uploadedFile);
+            // dd( $form);
             if ($uploadedFile) {
                $newFilename = $uploaderHelper->uploadArticleImage($uploadedFile, $article->getImageFilename());
                 $article->setImageFilename($newFilename);
@@ -71,14 +72,15 @@ class ArticleAdminController extends BaseController
             $em->flush();
 
             $this->addFlash('success', 'Artykuł został zaktualizowany!');
-            return $this->redirectToRoute( 'admin_article_edit', [
+            return $this->redirectToRoute( 'admin_article_list', [
                 'id' => $article->getId(),
             ]);
         }
-
+    
         return $this->render('article_admin/edit.html.twig', [
             'articleForm' => $form->createView(),
             'article' => $article,
+            'title' => 'Artykuły'
         ]);
     }
 

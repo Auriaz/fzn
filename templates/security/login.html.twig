@@ -1,4 +1,57 @@
-<dialog class="modal-overlay modal-login modal-dark" id="right">
+{% extends 'security/_base.html.twig' %}
+
+{% block security_title %}{{ title }}{% endblock %}
+
+{% block security_content %} security-section__content--login {% endblock %}
+
+{% block security_image %}
+    <img src="{{ asset('images/thumbs/security/login.png') }}" class="security-section__image--login" alt="Zdjęcie logowania">
+{% endblock %}
+
+{% block security_wrapper %} security-section__wrapper--login {% endblock %}
+
+{% block security_body %}
+    <div class="form form-login">
+
+        <form method="POST" class="form form-signin">
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+            <div class="form-group form-other">
+                <input type="text" name="email" id="login" class="form-control" placeholder="E-mail" minlength="2"
+                    value="{{ last_username|default }}" required autocomplete="off"/>
+                <label for="login"><i class="login"></i> E-mail</label>
+                <div class="form-faulty">Login składa się przynajmniej z 3 znaków</div>
+            </div>
+
+            <div class="form-group form-other">
+                <input type="password" name="password" id="pass" class="form-control" placeholder="Hasło" minlength="3"
+                    required autocomplete="off"/>
+                <label for="pass"><i class="key"></i> Hasło</label>
+                <div class="form-faulty">Login składa się przynajmniej z 3 znaków</div>
+            </div>
+
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" name="_remember_me"> Zapamietaj mnie
+                </label>
+            </div>
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+            <button type="submit" class="btn btn-outline-secondary form-control" />Zaloguj się</button>
+        </form>
+        <div class="form-invalid"></div>
+    </div>
+{% endblock %}
+
+
+
+                    
+
+
+{#}<dialog class="modal-overlay modal-login modal-dark" id="right">
     <a href="#" class="modal-close">Close</a>
     {% if is_granted('ROLE_USER') %}
 
@@ -138,4 +191,4 @@
             }
         }
     </script>
-{% endblock javascripts %}
+{% endblock javascripts %}{#}

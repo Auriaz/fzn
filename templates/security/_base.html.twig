@@ -1,0 +1,29 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+    <div class="security"> 
+        <div class="security-section">
+            <div class="security-section__content {% block security_content %}{% endblock %}">
+                <h2 class="security-section__title">
+                    <div class="security-section__image">
+                        {% block security_image %}{% endblock %}
+                    </div>
+                    
+                    {% block security_title %}{% endblock %}
+                </h2>
+            </div>          
+        
+            <div class="security-section__wrapper {% block security_wrapper %}{% endblock %}">
+                {% block security_body %}{% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock body %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {{ encore_entry_link_tags('security') }}
+{% endblock %}

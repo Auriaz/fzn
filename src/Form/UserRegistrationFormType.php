@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\IsTrue;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
 class UserRegistrationFormType extends AbstractType
 {
@@ -38,24 +39,30 @@ class UserRegistrationFormType extends AbstractType
                     'placeholder' => 'Email',
                 ],
             ])
-    // don't use password, avoid EVER setting on a field that might be persisted
-            ->add('plainPassword', PasswordType::class, [
-                'label' => 'Hasło',
-                'mapped' => false,
-                'attr' => [
-                    'placeholder' => 'Hasło',
+            ->add('plainPassword', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'invalid_message' => 'Wpisz to samo hasło!',
+                'options' => ['attr' => ['class' => 'password-field']],
+                'required' => true,
+                'first_options'  => [
+                    'label' => 'Hasło',
+                    'attr' => [
+                        'placeholder' => 'Hasło',
+                    ],
+                ],
+                'second_options' => [
+                    'label' => 'Powtórz hasło',
+                    'attr' => [
+                        'placeholder' => 'Powtórz hasło',
+                    ],
                 ],
             ])
-            ->add('secondPassword', PasswordType::class, [
-                'label' => 'Potwierdź',
-                'mapped' => false,
-                'attr' => [
-                    'placeholder' => 'Potwierdź',
-                ],
-            ])
-            ->add('agreeTerms', CheckboxType::class, [
+            ->add('agreeTerms', null, [
                 'label' => 'Zaakceptuj regulamin',
-                'mapped' => false,
+                'attr' => [
+                    "data-toggle" => "modal",
+                    "data-target" => "#user_registration_modal_agreeTerms"
+                ],
                 'constraints' => [
                     new IsTrue([
                         'message' => 'Jeżeli chcesz sie zarejstrować, to potwierdź regulamin!'

@@ -18,7 +18,6 @@ import MobileMenu from "./components/MobileMenu";
 require('@fortawesome/fontawesome-free/css/all.min.css');
 require('@fortawesome/fontawesome-free/js/all.js');
 
-
 const dropdown = new Dropdown();
 const mobileMenu = new MobileMenu();
 // const login = new Login();

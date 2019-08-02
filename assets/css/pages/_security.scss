@@ -1,0 +1,107 @@
+.security {
+    width: 100vw;
+    height: auto;
+    position: relative;
+    top: 0;
+    left: 0;
+    margin-top: 60px;
+
+    @include atSmall {
+        margin-top: 120px;
+    }
+
+    &-section {
+        width: 100%;
+        min-height: 1050px;
+        position: relative;
+        padding: 20px;
+
+        @include atSmall {
+            min-height: 600px;
+        }
+
+        &__content {
+            position: relative;
+            
+            &--login {
+                width: 250px;
+                height: 200px;
+                margin: 0 auto;
+
+                @include atSmall {
+                    width: 400px;
+                    transform: translateY(250%);
+                }
+            }
+
+            &--regrister {
+                width: 250px;
+                transform: translateY(200px);
+                margin: 0 auto; 
+
+                @include atSmall {
+                    width: auto;
+                    margin: 0;
+                    transform: translateY(250px) translateX(50px);
+                }
+               
+            }
+        }
+
+        &__title {
+            font-size: 2rem;
+            position: absolute;
+            top: 0;
+            left: 0;
+          
+            @include atSmall {
+                font-size: 3rem; 
+                top: -250%;
+                transform: translateY(250%);
+            }
+        }
+
+        &__image { 
+            position: absolute;
+            
+            &--login {
+                transform: translateX(150%) translateY(-67%); 
+                width: 35%;
+            }
+
+            &--regrister {
+                width: auto;
+                height: 250px;
+                transform: translateY(-100%); 
+
+               @include atMedium {
+                    transform: translateX(100%) translateY(-100%); 
+               }
+            } 
+        }
+
+        &__wrapper {
+            position: relative;
+
+            &--login {
+                width: 300px;
+                height: 300px;
+                margin: 0 auto;
+                transform: translateY(-150px);
+
+                @include atSmall {
+                    transform: translateX(-20px);
+                }
+            }
+
+            &--regrister {
+                transform: translateY(250px);
+                padding: 20px;
+
+                @include atSmall {
+                    transform: translateY(20px);
+                }
+            }
+        }
+    }
+}

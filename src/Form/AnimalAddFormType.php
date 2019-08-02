@@ -46,6 +46,9 @@ class AnimalAddFormType extends AbstractType
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Opis',
+            'attr' => [
+                'class' => 'my-editor'
+            ],
             ]);
 
         // $imageConstraints = [

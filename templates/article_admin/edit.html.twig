@@ -1,9 +1,14 @@
 {% extends "article_admin/_base.html.twig" %}
 
-{% block dashboard_body %}
-<h1>Edycja Artykułu</h1>
+{% block dashboard_title %}{{ title }}{% endblock %}
 
-<hr>
+{% block dashboard_adding_btn %}
+    <a href="{{ path('admin_article_list')}}" class="dashboard-section__adding-btn btn btn-outline-secondary" title="Cofnij do listy artykułów">
+        <i class="fas fa-share"></i>
+    </a>
+{% endblock %}
+
+{% block dashboard_body %}
 
 <div class="row">
     <div class="col-sm-8">
@@ -15,7 +20,7 @@
     </div>
 
     <div class="col-sm-4">
-        <h3>Odniesienie</h3>
+        <h3>Dodaj zdjecie</h3>
 
         <ul class="list-group small reference-list" data-url="{{ path('admin_article_list_references', { id: article.id }) }}"></ul>
 

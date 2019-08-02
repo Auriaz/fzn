@@ -1,35 +1,42 @@
 {% extends 'dashboard/_base.html.twig' %}
 
-{% block dashboard_body %}
+{% block dashboard_title %}{{ title }}{% endblock %}
 
-<a href="{{ path('admin_article_new') }}" class="btn btn-outline-secondary pull-right">
-    <i class="fa fa-plus-circle"></i>
-</a>
-<h1>Wszystkie artykuły</h1>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Tytuł</th>
-            <th>Autor</th>
-            <th>Data publikacji</th>
-            <th>&nbsp;</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for article in articles %}
-        <tr>
-            <td>{{ article.title }}</td>
-            <td>{{ article.author.firstName }} {{ article.author.lastName }}</td>
-            <td>
-                <i class="fa fa-{{ article.isPublished ? 'check' : 'times' }}"></i>
-            </td>
-            <td>
-                <a href="{{ path('admin_article_edit', { id: article.id }) }}">
-                    <i class="fa fa-pencil"></i>
-                </a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+{% block dashboard_adding_btn %}
+    <a href="{{ path('admin_article_new')}}" class="dashboard-section__adding-btn btn btn-outline-secondary">
+        <i class="fas fa-plus-circle"></i>
+    </a>
+{% endblock %}
+
+{% block dashboard_body %}
+    <table class="table table-dark" id="example">
+        <thead>
+            <tr>
+                <th>Tytuł</th>
+                <th>Autor</th>
+                <th>Data publikacji</th>
+                <th>Akcja</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for article in articles %}
+            <tr>
+                <td>{{ article.title }}</td>
+                <td>{{ article.author.firstName }} {{ article.author.lastName }}</td>
+                <td>
+                    <i class="fa fa-{{ article.isPublished ? 'check' : 'times' }}"></i>
+                </td>
+                <td>
+                    <a href="{{ path('admin_article_edit', { id: article.id }) }}">
+                        <i class="fas fa-pencil-alt"></i>
+                    </a>
+
+                    <a href="{{ path('admin_article_edit', { id: article.id }) }}">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

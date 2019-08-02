@@ -85,8 +85,12 @@
         {% if is_granted('ROLE_USER') %}
       
         <div class="icon icon-nav nav-right">
-            <a href="#right" class="icon-link modal-link">
+            <a href="" class="icon-link modal-link">
                 <i class="fa fa-users-cog icon-avatar"></i>
+            </a>
+
+            <a href="{{ path('app_logout') }}" class="icon-link modal-link">
+                <i class="fas fa-sign-out-alt"></i>
             </a>
         </div>
 
@@ -98,9 +102,17 @@
             <a class="icon-link icon-instagram" href="https://instagram.com/fundacja_zwierzeta_niczyje?utm_source=ig_profile_share&igshid=1joz9gcb9eiem" target="_blank" class="social-icon">
                 <i class="fab fa-instagram"></i>
             </a>
-            <a href="#right" class="icon-link modal-link">
-                <i class="fa fa-user"></i>
-            </a>
+
+            {% if app.request.get('_route') == 'app_login' %}
+                <a href="{{ path('app_register') }}" class="nav-link">
+                    <i class="fa fa-user-plus"></i>
+                </a>
+            {% else %}
+                <a href="{{ path('app_login') }}" class="nav-link">
+                    <i class="fa fa-user"></i>
+                </a> 
+            {% endif %}         
+                        
         </div>
         {% endif %}
     </ol>	     

@@ -86,8 +86,7 @@ class ArticleFormType extends AbstractType
                 'placeholder' => 'Podaj tytuł',
             ],
         ]);
-
-            
+    
         if($options['include_published_at']) {
             $builder->add('publishedAt', null, [
                 'label' => 'Data',
