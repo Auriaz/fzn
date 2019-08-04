@@ -1,9 +1,14 @@
 framework:
     messenger:
+        # after retrying, messages will be sent to the "failed" transport
+        failure_transport: failed
+
         transports:
             # Uncomment the following line to enable a transport named "amqp"
-            # amqp: '%env(MESSENGER_TRANSPORT_DSN)%'
+            async: '%env(MESSENGER_TRANSPORT_DSN)%'
+
+            failed: 'doctrine://default?queue_name=failed'
 
         routing:
             # Route your messages to the transports
-            # 'App\Message\YourMessage': amqp
+            'App\Message\AddEmailFromRegrister': async

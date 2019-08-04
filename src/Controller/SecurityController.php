@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -12,10 +11,10 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use App\Security\LoginFormAuthenticator;
 use App\Form\UserRegistrationFormType;
+use Symfony\Component\Messenger\MessageBusInterface;
+use App\Message\AddEmailFromRegrister;
 
-
-
-class SecurityController extends AbstractController
+class SecurityController extends BaseController
 {
     /**
      * @Route("/login", name="app_login")
@@ -45,7 +44,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $formAuthenticator)
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $formAuthenticator, MessageBusInterface $messageBus)
     {
         $form = $this->createForm(UserRegistrationFormType::class);
 
@@ -69,9 +68,9 @@ class SecurityController extends AbstractController
                 $user->agreeToTerms();
             }
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
+            $message = new AddEmailFromRegrister($user);
+            $messageBus->dispatch($message);
+
 
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
@@ -111,5 +110,10 @@ W przypadku dodatkowych pytań prosimy o kontakt: zwierzeta.niczyje@gmail.com
 '
             ]
         ]);
+    }
+
+    public function acceptRegriter(Type $var = null)
+    {
+        # code...
     }
 }

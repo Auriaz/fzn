@@ -24,15 +24,15 @@ Encore
      * Each entry will result in one JavaScript file (e.g. app.js)
      * and one CSS file (e.g. app.css) if you JavaScript imports CSS.
      */
-    .addEntry('app', './assets/js/app.js')
+    .addEntry('app', './templates/assets/js/app.js')
     // .addEntry('vue', './assets/js/vue.js')
-    .addEntry('dashboard', './assets/js/dashboard.js')
-    .addEntry('home', './assets/js/home.js')
-    .addEntry('article_show', './assets/js/article_show.js')
-    .addEntry('admin_article_form', './assets/js/admin_article_form.js')
-    .addEntry('regrister', './assets/js/regrister.js')
-    .addStyleEntry('account', './assets/css/themes/account.scss')
-    .addStyleEntry('security', './assets/css/themes/security.scss')
+    .addEntry('dashboard', './templates/assets/js/dashboard.js')
+    .addEntry('home', './templates/assets/js/home.js')
+    .addEntry('article_show', './templates/assets/js/article_show.js')
+    .addEntry('admin_article_form', './templates/assets/js/admin_article_form.js')
+    .addEntry('regrister', './templates/assets/js/regrister.js')
+    .addStyleEntry('account', './templates/assets/css/themes/account.scss')
+    .addStyleEntry('security', './templates/assets/css/themes/security.scss')
     //.addEntry('page1', './assets/js/page1.js')
     //.addEntry('page2', './assets/js/page2.js')
 
@@ -84,7 +84,7 @@ Encore
 
     // uncomment if you use API Platform Admin (composer req api-admin)
     //.enableReactPreset()
-    // .enableVueLoader()
+    .enableVueLoader()
  
     // .addPlugin(new VueLoaderPlugin())
     //.addEntry('admin', './assets/js/admin.js')

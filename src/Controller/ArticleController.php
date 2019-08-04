@@ -30,6 +30,7 @@ class ArticleController extends AbstractController
         // $articleContent = $markdownHelper->parse($articleContent);
         return $this->render('article/show.html.twig', [
             'article' => $article,
+            'title' => $article->getTitle()
         ]);
     }
 
@@ -55,6 +56,7 @@ class ArticleController extends AbstractController
 
         return $this->render('article/showArticles.html.twig', [
             'articles' => $articles,
+            'title' => 'Artykuły'
         ]);
     }
 }
