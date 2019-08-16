@@ -25,7 +25,7 @@ Encore
      * and one CSS file (e.g. app.css) if you JavaScript imports CSS.
      */
     .addEntry('app', './templates/assets/js/app.js')
-    // .addEntry('vue', './assets/js/vue.js')
+    .addEntry('file_manager', './templates/assets/js/file_manager.js')
     .addEntry('dashboard', './templates/assets/js/dashboard.js')
     .addEntry('home', './templates/assets/js/home.js')
     .addEntry('article_show', './templates/assets/js/article_show.js')
@@ -68,7 +68,7 @@ Encore
     .enablePostCssLoader()
 
     .copyFiles({
-        from: './assets/images',
+        from: './templates/assets/images',
         to: 'images/[path][name].[hash:8].[ext]'
     })
 

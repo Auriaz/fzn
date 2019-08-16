@@ -2,7 +2,7 @@
     <span class="btn-x_middle"></span>
 </span>
 
-<nav class="nav btn-x_content {{ app.session.flashbag.peek('success')|length > 0 ? '' : 'mb-1' }}">
+<nav class="nav btn-x_content {% if app.request.get('_route') != 'app_homepage' %}nav-background-color{% endif %} {{ app.session.flashbag.peek('success')|length > 0 ? '' : 'mb-1' }}">
     <ol class="nav-list">  
         <li class="nav-left logo">
             <a href="{{ path('app_homepage') }}">
@@ -14,7 +14,7 @@
             <div class="nav-link nav-bind">Podopieczni
                 <i class="fa fa-caret-right"></i>
             </div>
-            <ul class="nav-subsection dropdown-menu" data-toggle="dropdown"> 
+            <ul class="nav-subsection dropdown-menu"> 
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('animal_show', {category: 1}) }}">Koty</a>
                 </li>
@@ -35,17 +35,17 @@
             <div class="nav-link nav-bind">Tak działamy
                 <i class="fa fa-caret-right"></i>
             </div>
-            <ul class="nav-subsection dropdown-menu" data-toggle="dropdown"> 
+            <ul class="nav-subsection dropdown-menu"> 
                 <li class="nav-item">
                     <a href="/#about-us" class="nav-link" id="about-us-link">O nas</a>
                 </li>
                 <li class="nav-item nav-section"> 
                     <div class="nav-link nav-bind">Procedura adopcyjna
                         <span class="icon icon-toggle">
-                            <i class="fab fa-right-arrow dropdown-nav"></i>
+                            <i class="fas fa-arrow-right dropdown-nav"></i>
                         </span>                        
                     </div>
-                    <ul class="nav-subsection nav-toggle dropdown-menu">
+                    <ul class="nav-subsection nav-toggle ">
                         <li class="nav-item">
                             <a class="nav-link" href="/s-wizyta-przedadopcyjna">Wizyta przedadopcyjna</a>
                         </li>
@@ -67,7 +67,7 @@
             <div class="nav-link nav-bind">WSPIERAM FZN
                 <i class="fa fa-caret-right"></i>
             </div>
-            <ul class="nav-subsection dropdown-menu" data-toggle="dropdown"> 
+            <ul class="nav-subsection dropdown-menu"> 
                 <li class="nav-item">
                     <a class="nav-link" href="/#volunteering" id="volunteering-link">Wolontariat</a>
                 </li>
@@ -82,38 +82,125 @@
         <li class="nav-section">
             <a class="nav-link nav-bind" href="/contact">Kontakt</a>
         </li>
+
         {% if is_granted('ROLE_USER') %}
-      
-        <div class="icon icon-nav nav-right">
-            <a href="" class="icon-link modal-link">
-                <i class="fa fa-users-cog icon-avatar"></i>
-            </a>
+            <li class="nav-section nav-user__section dropdown">
+                <div class="nav-avatar">
+                    <i class="fa fa-users-cog icon-avatar"></i>
+                </div>
+                <ul class="nav-subsection nav-user__subsection">
+                    <div class="nav-user__subsection--content">
 
-            <a href="{{ path('app_logout') }}" class="icon-link modal-link">
-                <i class="fas fa-sign-out-alt"></i>
-            </a>
-        </div>
+                        <div class="nav-user__profile row">
+                            <div class="nav-user__profile-avatar col-3 left">
+                                {% if avatar|default %}
+                                    <img src="" alt="Avatar" class="icon-avatar">
+                                {% else %}
+                                    <i class="fa fa-users-cog icon-avatar"></i>
+                                {% endif %}
+                            </div>
+                            <div class="nav-user__profile-account col-8 right">
+                                <div class="nav-user__profile-email">
+                                    {% if email|default %}
+                                        {{ email }}
+                                    {% endif %}
+                                </div>
+                                <div class="nav-user__profile-name">
+                                    {% if firstname|default and lastname|default %}
+                                        {{ firstname }} {{ lastname }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+    
+                        {% if is_granted('ROLE_ADMIN_ARTICLE') %}
+                            <li class="nav-user__link">
+                                <a href="{{ path('admin_article_list') }}" class="btn btn-blue btn-block">
+                                    <i class="fa fa-book" title="Artykuły"></i>
+                                     Artkuły
+                                </a>
+                            </li>
+                        {% endif %}
 
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li class="nav-user__link">
+                                <a href="{{ path("admin_dashboard") }}" class="btn btn-blue btn-block">
+                                    <i class="fa fa-tools" title="Panel administratora"></i>
+                                    Panel administratora
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        <li class="nav-user__link">
+                            <a href="{{ path('app_account') }}" class="btn btn-blue btn-block">
+                                <i class="fa fa-street-view" title="Panel użytkownika"></i>
+                                Panel użytkownika
+                            </a>
+                        </li>
+
+                        <li class="nav-user__link">
+                            <a href="{{ path('file_manager') }}" class="btn btn-blue btn-block">
+                                <i class="fas fa-photo-video" title="Manager plików"></i>
+                                Manager plików
+                            </a>
+                        </li>
+
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li class="nav-user__link">
+                                <a href="{{ path("admin_dashboard") }}" class="btn btn-blue btn-block">
+                                    <i class="fas fa-users-cog" title="Użytkownicy"></i>
+                                    Użytkownicy
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        <li class="nav-user__link">
+                            <a href="{{ path('admin_animal_list') }}" class="btn btn-blue btn-block">
+                                <i class="fas fa-frog" title="Zwierzęta"></i>
+                                Zwierzęta
+                            </a>
+                        </li>
+    
+                        <li class="nav-user__link">
+                            <a href="{{ path('app_logout') }}" class="btn btn-orange btn-block">
+                                <i class="fas fa-sign-out-alt" title="Wyloguj się"></i>
+                                Wyloguj się
+                            </a>
+                        </li>
+    
+                        <li class="nav-user__link nav-user__social">
+                            <a href="https://facebook.com/FundacjaZwierzetaNiczyje/?ref=m_notif&notif_t=group_highlights" class="social-icon"
+                                target="_blank">
+                                <i class="fab fa-facebook-square icon-facebook icon-link fa-lg"></i>
+                            </a>
+    
+                            <a href="https://instagram.com/fundacja_zwierzeta_niczyje?utm_source=ig_profile_share&igshid=1joz9gcb9eiem"
+                                class="social-icon" target="_blank">
+                                <i class="fab fa-instagram icon-instagram icon-link fa-lg"></i>
+                            </a>
+                        </li>
+                    </div>
+                </ul>
+            </li>
         {% else %}
-        <div class="icon icon-nav nav-right">        
-            <a class="icon-link icon-facebook" href="https://facebook.com/FundacjaZwierzetaNiczyje/?ref=m_notif&notif_t=group_highlights" target="_blank" class="social-icon">
-                    <i class="fab fa-facebook-square"></i>
-            </a>                           
-            <a class="icon-link icon-instagram" href="https://instagram.com/fundacja_zwierzeta_niczyje?utm_source=ig_profile_share&igshid=1joz9gcb9eiem" target="_blank" class="social-icon">
-                <i class="fab fa-instagram"></i>
-            </a>
-
-            {% if app.request.get('_route') == 'app_login' %}
-                <a href="{{ path('app_register') }}" class="nav-link">
-                    <i class="fa fa-user-plus"></i>
+            <div class="icon icon-nav nav-right">        
+                <a href="https://facebook.com/FundacjaZwierzetaNiczyje/?ref=m_notif&notif_t=group_highlights" class="social-icon"  target="_blank">
+                    <i class="fab fa-facebook-square icon-facebook icon-link"></i>
+                </a>                           
+                <a href="https://instagram.com/fundacja_zwierzeta_niczyje?utm_source=ig_profile_share&igshid=1joz9gcb9eiem" class="social-icon" target="_blank">
+                    <i class="fab fa-instagram icon-instagram icon-link"></i>
                 </a>
-            {% else %}
-                <a href="{{ path('app_login') }}" class="nav-link">
-                    <i class="fa fa-user"></i>
-                </a> 
-            {% endif %}         
-                        
-        </div>
+
+                {% if app.request.get('_route') == 'app_login' %}
+                    <a href="{{ path('app_register') }}" class="social-icon">
+                        <i class="fa fa-user-plus icon-link"></i>
+                    </a>
+                {% else %}
+                    <a href="{{ path('app_login') }}" class="social-icon">
+                        <i class="fa fa-user icon-link"></i>
+                    </a> 
+                {% endif %}             
+            </div>
         {% endif %}
     </ol>	     
 </nav>	

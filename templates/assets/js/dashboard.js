@@ -1,7 +1,7 @@
 import '../css/themes/dashboard.scss';
 import $ from 'jquery';
 import 'bootstrap';
-import './components/Editor';
+// import './components/Editor';
 
 import Sidebar from './components/Sidebar';
 import StickyHeader from './components/StickyHeader';

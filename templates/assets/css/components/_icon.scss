@@ -21,8 +21,8 @@
         font-size: 1.3rem;
         position: fixed;
         width: 50px;
-        top: 50px;
-        right: 3px;
+        top: 200px;
+        right: 5px;
         margin: 0;
         transition: all 1.5s ease-in-out; 
         
@@ -37,12 +37,11 @@
             font-size: 1.1rem;
             width: 120px;
             right: 10px;
-            transform: translateY(-10px);
+            transform: translateY(3em);
         }
         
         @include atLarge {
             font-size: 1.2rem;
-            transform: translateY(-15px);
         }
         
         @include atExtraLarge {
@@ -81,14 +80,18 @@
 
         @include atMedium {
             margin: 3px;
-            color: $mainLithCyan;
+            color: $mainWhite;
+        }
+
+        &:hover {
+            transform: scale(1.2);
         }
     }
 
     &-orange{
         color: $mainOrange;
 
-        :hover {
+        &:hover {
             color: #d95333;
             transform: scale(1.2);
         }
@@ -106,30 +109,27 @@
     &-blue {
         color: $mainLithBlue;
 
-        :hover {
+        &:hover {
             color: $mainOrange;
             transform: scale(1.2);
         }
     }
 
     &-facebook {
-        :hover {
+        &:hover {
             color: #4668b3;	
-            transform: scale(1.2);
 	    }
     }
 
     &-gplus {
-        :hover {
+        &:hover {
             color: #d95333;	
-            transform: scale(1.2);
 	    }
     }
 
     &-instagram {
-        :hover {
+        &:hover {
            color: #d95333;
-            transform: scale(1.2);
 	    }
     }
 
@@ -138,6 +138,7 @@
 
         @include atMedium {
             display: inline-block;
+            opacity: 0;
         }
     }
 

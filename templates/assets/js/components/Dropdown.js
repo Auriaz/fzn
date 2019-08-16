@@ -4,6 +4,7 @@ class Dropdown {
     constructor() {
         this.dropdown = $('.dropdown');
         this.menu = $('.dropdown-menu');
+        
         this.events();
     }
 

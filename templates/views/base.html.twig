@@ -14,27 +14,24 @@
 
     <body>
         <div class="container" id="container">
+            <!-- #### Navigation #### -->
+            {% include "inc/nav.html.twig" %}
             <!-- #### Header #### -->    
             <header>
-               {#} {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-                    <!-- #### Switch message #### -->
-                    {% include "inc/switch.html.twig" %}
+                {#} {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                <!-- #### Switch message #### -->
+                {% include "inc/switch.html.twig" %}
                 {% endif %}{#}
-        
-                <!-- #### Navigation #### -->
-                {% include "inc/nav.html.twig" %}
-        
                 <!-- #### Alert message #### -->
                 {% include "inc/alert.html.twig" %}
-    
+                
             </header>
     
             <!-- #### Main Content #### -->
             <main>
                 {% block body %}{% endblock %}
             </main>
-
-            <!-- #### Main Content #### -->
+            <!-- #### Footer Content #### -->
             <footer>
                 {% include "footer/footer.html.twig" %}
             </footer>

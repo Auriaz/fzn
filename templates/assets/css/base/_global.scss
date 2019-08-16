@@ -1,6 +1,6 @@
 body {
 	margin: 0 !important;
-	background-color: $body;
+	background-color: lighten($color:  $mainBlue, $amount: 10%);
 	
 }
 

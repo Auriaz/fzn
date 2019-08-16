@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class UploaderHelper
 {
     const ARTICLE_IMAGE = 'article_image';
+
     const ARTICLE_REFERENCE = 'article_reference';
 
     private $filesystem;
@@ -65,9 +66,6 @@ class UploaderHelper
             ->getBasePath() . $this->publicAssetBaseUrl . '/' . $path;
     }
 
-    /**
-     * @return resource
-     */
     public function readStream(string $path, bool $isPublic)
     {
         $filesystem = $isPublic ? $this->filesystem : $this->privateFilesystem;
@@ -91,13 +89,15 @@ class UploaderHelper
         }
     }
 
-    private function uploadFile(File $file, string $directory, bool $isPublic)
+    public function uploadFile(File $file, string $directory, bool $isPublic)
     {
         if ($file instanceof UploadedFile) {
             $originalFilename = $file->getClientOriginalName();
         } else {
             $originalFilename = $file->getFilename();
         }
+
+
         
         $newFilename = Urlizer::urlize(pathinfo($originalFilename, PATHINFO_FILENAME)) . '-' . uniqid() . '.' . $file->guessExtension();
 

@@ -179,7 +179,7 @@ class ArticleReferenceAdminController extends BaseController
             'json',
             [
                 'object_to_populate' => $reference,
-                'groups' => ['input']
+                'groups' => ['file_manager:output']
             ]
         );
 

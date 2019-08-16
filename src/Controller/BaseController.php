@@ -12,13 +12,14 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Security;
 use Psr\Container\ContainerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-
 use Knp\Component\Pager\PaginatorInterface;
-/**
- * @method User getUser()
- */
+// /**
+//  * @method User getUser()
+//  */
 abstract class BaseController extends AbstractController
 {
+    protected $user;
+
     protected $conn;
 
     protected $router;
@@ -36,11 +37,12 @@ abstract class BaseController extends AbstractController
     public function __construct(UrlGeneratorInterface $router, PaginatorInterface $paginator, Security $security, ContainerInterface $container = null) 
     {
         parent::setContainer($container);
-        
+    
         $this->security = $security;
         $this->router = $router;
         $this->paginator = $paginator;
-        
+
+        $this->user = $this->security->getUser();
         $this->request = Request::createFromGlobals();
         $this->conn = $this->getDoctrine()->getManager()->getConnection();
         $this->em = $this->getDoctrine()->getManager();
@@ -52,12 +54,20 @@ abstract class BaseController extends AbstractController
 
     protected function _render($twig, array $variable = array())
     {
-
         $param = array();
         $param = $variable;
-        // $param['imie'] = $this->user->getImieNazwisko();
-        // $param['title'] = $this->page_settings->getPageTitle();
-        // $param['wyloguj_link'] = $this->router->generate('app_logout');
+
+        if (!empty($this->user)) {
+            $param['email'] = $this->user->getEmail();
+            $param['firstname'] = $this->user->getFirstName();
+            $param['lastname'] = $this->user->getLastName();
+
+            if ($this->user->getAvatar()) {
+                $param['avatar'] = $this->user->getAvatarUrl();
+            }
+        }
+
+        $param['title'] = "Fundacja Zwierząt Niczyich";
         // $param['page_settings'] = array(
         //     'per_page' => $this->page_settings->per_page,
         //     'page' => $this->request->query->getInt('page', 1)
@@ -68,9 +78,8 @@ abstract class BaseController extends AbstractController
         return $response;
     }
 
-
-    protected function _json(array $json = array())
+    protected function _json($data, int $status = 200, array $headers = [], array $context = []): JsonResponse
     {
-        return new JsonResponse($json);
+        return $this->json($data, $status, $headers, $context);
     }
 }

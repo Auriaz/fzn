@@ -17,10 +17,13 @@
     }
 
     &-nav {
-        color: rgba($mainCyan, 1);
-        transform: translateY(-100%) translateX(50%) scale(1) ;
-        right: 0;
-        transition: all 0.5s ease-in-out;
+        &:hover {
+            opacity: 1;
+            color: rgba($mainCyan, 1);
+            transform: translateY(-100%) translateX(50%) scale(1) ;
+            right: 0;
+            transition: all 0.5s ease-in-out;
+        }
     }
 }
 .fa-caret-right {

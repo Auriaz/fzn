@@ -2,7 +2,7 @@
     width: 100%;
     min-height: 100vh;
     position: relative;
-    margin-top: 110px;
+    margin-top: 20px;
     top: 0;
     left: 0;
 
@@ -47,7 +47,7 @@
             width: 100%;
             height: auto;
             position: relative;
-            background-color: $body;
+            background-color: lighten($color:  $mainBlue, $amount: 10%);
         }
 
         .add-sticky {

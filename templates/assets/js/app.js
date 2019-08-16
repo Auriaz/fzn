@@ -7,20 +7,20 @@
 
 // any CSS you require will output into a single css file (app.css in this case)
 import '../css/app.scss';
-import getNiceMessage from './components/get_nice_message';
 import $ from 'jquery';
 import 'bootstrap';
+
+import getNiceMessage from './components/get_nice_message';
 import Dropdown from "./components/Dropdown";
 import StickyHeader from './components/StickyHeader';
 import RevealOnSroll from './components/RevealOnSroll';
-// import Login from "./components/Login";
 import MobileMenu from "./components/MobileMenu";
+
 require('@fortawesome/fontawesome-free/css/all.min.css');
 require('@fortawesome/fontawesome-free/js/all.js');
 
 const dropdown = new Dropdown();
 const mobileMenu = new MobileMenu();
-// const login = new Login();
 const sticky = new StickyHeader();
 
 

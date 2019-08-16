@@ -2,10 +2,9 @@
 namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Repository\ArticleRepository;
 
-class DefaultController extends AbstractController
+class DefaultController extends BaseController
 {
     /**
      * @Route("/", name="app_homepage")
@@ -14,7 +13,7 @@ class DefaultController extends AbstractController
     {
         $articles = $repository->findAllPublishedOrderedByArticles(5);
 
-        return $this->render('home/_base.html.twig', [
+        return $this->_render('home/_base.html.twig', [
             'articles' => $articles,
             'title' => 'Fundacja Zwierzęta Niczyje'
         ]);

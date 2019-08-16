@@ -77,7 +77,7 @@ class ArticleAdminController extends BaseController
             ]);
         }
     
-        return $this->render('article_admin/edit.html.twig', [
+        return $this->_render('article_admin/edit.html.twig', [
             'articleForm' => $form->createView(),
             'article' => $article,
             'title' => 'Artykuły'
@@ -91,7 +91,7 @@ class ArticleAdminController extends BaseController
     {
         $articles = $articleRepository->findAll();
 
-        return $this->render('article_admin/list.html.twig', [
+        return $this->_render('article_admin/list.html.twig', [
             'articles' => $articles,
             'title' => 'Artykuły'
         ]);
@@ -113,7 +113,7 @@ class ArticleAdminController extends BaseController
         if (!$form->has('specificLocationName')) {
             return new Response(null, 204);
         }
-        return $this->render('article_admin/_specific_location_name.html.twig', [
+        return $this->_render('article_admin/_specific_location_name.html.twig', [
             'articleForm' => $form->createView(),
         ]);
     }

@@ -22,7 +22,7 @@ class DashboardController extends BaseController
     {
     
         // $articleContent = $markdownHelper->parse($articleContent);
-        return $this->render('dashboard/index.html.twig', [
+        return $this->_render('dashboard/index.html.twig', [
             'section' => $section,
             'title' => 'Strona kontrolna'
         ]);

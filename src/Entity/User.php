@@ -88,6 +88,11 @@ class User implements UserInterface
      */
     private $animals;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $avatar;
+
     public function __construct()
     {
         $this->apiTokens = new ArrayCollection();
@@ -195,17 +200,6 @@ class User implements UserInterface
         $this->twitterUsername = $twitterUsername;
 
         return $this;
-    }
-
-    public function getAvatarUrl(int $size = null)
-    {
-        $url = 'https://robohash.org/'. $this->getEmail();
-
-        if($size) {
-            $url .= sprintf('?size=%dx%d', $size, $size);
-        }
-
-        return $url;
     }
 
     /**
@@ -340,5 +334,28 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?string $avatar): self
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    public function getAvatarUrl(int $size = null)
+    {
+        $url = 'https://robohash.org/' . $this->getEmail();
+
+        if ($size) {
+            $url .= sprintf('?size=%dx%d', $size, $size);
+        }
+
+        return $url;
     }
 }

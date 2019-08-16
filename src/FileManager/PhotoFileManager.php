@@ -1,72 +1,38 @@
 <?php
-
 namespace App\FileManager;
 
 use App\Entity\FileManager;
 use App\Service\UploaderHelper;
+use League\Flysystem\FileNotFoundException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class PhotoFileManager
 {
-    private $filesystem;
-    private $publicAssetBaseUrl;
+    const IMAGE = 'images';
 
-    public function __construct(FilesystemInterface $photoFilesystem, string $publicAssetBaseUrl)
+    private $uploaderHelper;
+
+    public function __construct(UploaderHelper $uploaderHelper)
     {
-        $this->filesystem = $photoFilesystem;
-        $this->publicAssetBaseUrl = $publicAssetBaseUrl;
+        $this->uploaderHelper = $uploaderHelper;
     }
 
     public function uploadImage(File $file)
     {
-        if ($file instanceof UploadedFile) {
-            $originalFilename = $file->getClientOriginalName();
-        } else {
-            $originalFilename = $file->getFilename();
-        }
-
-        $newFilename = pathinfo($originalFilename, PATHINFO_FILENAME) . '-' . uniqid() . '.' . $file->guessExtension();
-        $stream = fopen($file->getPathname(), 'r');
-        $result = $this->filesystem->writeStream(
-            $newFilename,
-            $stream,
-            [
-                'visibility' => AdapterInterface::VISIBILITY_PUBLIC
-            ]
-        );
-
-        if ($result === false) {
-            throw new \Exception(sprintf('Could not write uploaded file "%s"', $newFilename));
-        }
-
-        if (is_resource($stream)) {
-            fclose($stream);
-        }
-
-        return $newFilename;
+        return $this->uploaderHelper->uploadFile($file, self::IMAGE, true);
     }
 
-    public function deleteImage(string $filename): void
+    public function getPublicPathPhoto(FileManager $file): string
+    {
+        return $this->uploaderHelper->getPublicPath(self::IMAGE.'/'.$file->getFilename());
+    }
+
+    public function deletePhoto(string $filename): void
     {
         // make it a bit slow
         sleep(3);
 
-        $this->filesystem->delete($filename);
-    }
-
-    public function getPublicPath(ImagePost $imagePost): string
-    {
-        return $this->publicAssetBaseUrl . '/' . $imagePost->getFilename();
-    }
-
-    public function read(string $filename): string
-    {
-        return $this->filesystem->read($filename);
-    }
-
-    public function update(string $filename, string $updatedContents): void
-    {
-        $this->filesystem->update($filename, $updatedContents);
+        $this->uploaderHelper->deleteFile(self::IMAGE . '/' . $filename, true);
     }
 }
