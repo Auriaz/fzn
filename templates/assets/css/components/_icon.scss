@@ -78,8 +78,10 @@
     &-link {
         margin: 7px;
         cursor: pointer;
+        color: $mainWhite;
 
         &:hover {
+            color: darken($color: $mainWhite, $amount: 20%);
             transform: scale(1.2);
         }
     }

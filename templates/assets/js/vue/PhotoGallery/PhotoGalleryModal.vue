@@ -268,7 +268,6 @@ export default {
                 padding: 0 5px;
                 font-size: 1.2rem;
                 transition: scale 1s ease-in;
-                
             
                 :hover {
                     transform: scale(1.05);

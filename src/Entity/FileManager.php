@@ -69,11 +69,6 @@ class FileManager
     private $mimeType;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\ArticleReference", mappedBy="fileManager", cascade={"persist", "remove"})
-     */
-    private $articleReference;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $directory;
@@ -148,23 +143,23 @@ class FileManager
         return UploaderHelper::ARTICLE_REFERENCE . '/' . $this->getFilename();
     }
 
-    public function getArticleReference(): ?ArticleReference
-    {
-        return $this->articleReference;
-    }
+    // public function getArticleReference(): ?ArticleReference
+    // {
+    //     return $this->articleReference;
+    // }
 
-    public function setArticleReference(?ArticleReference $articleReference): self
-    {
-        $this->articleReference = $articleReference;
+    // public function setArticleReference(?ArticleReference $articleReference): self
+    // {
+    //     $this->articleReference = $articleReference;
 
-        // set (or unset) the owning side of the relation if necessary
-        $newFileManager = $articleReference === null ? null : $this;
-        if ($newFileManager !== $articleReference->getFileManager()) {
-            $articleReference->setFileManager($newFileManager);
-        }
+    //     // set (or unset) the owning side of the relation if necessary
+    //     $newFileManager = $articleReference === null ? null : $this;
+    //     if ($newFileManager !== $articleReference->getFileManager()) {
+    //         $articleReference->setFileManager($newFileManager);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getDirectory(): ?string
     {
