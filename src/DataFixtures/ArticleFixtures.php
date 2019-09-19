@@ -21,9 +21,9 @@ class ArticleFixtures extends BaseFixture implements DependentFixtureInterface
     ];
 
     private static $articleImages = [
-        'asteroid.jpeg',
-        'mercury.jpeg',
-        'lightspeed.png',
+        'dzikusek.jpeg',
+        'edek.jpeg',
+        'zbinek.jpeg',
     ];
 
     private $uploaderHelper;

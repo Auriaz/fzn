@@ -144,10 +144,14 @@
 
 	&-edit {
 		position: absolute;
+		color: $mainCyan;
+		top: 5px;
 		right: 10px;
+		z-index: 10;
+		cursor: pointer;
 
 		&:hover {
-			color: $mainDarkBlue;
+			color: $mainBlue;
 			transform: scale(1.1);
 		}
 	}

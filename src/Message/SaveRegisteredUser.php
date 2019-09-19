@@ -4,7 +4,7 @@ namespace App\Message;
 
 use App\Entity\User;
 
-class AddEmailFromRegrister
+class SaveRegisteredUser
 {
     private $user;
 

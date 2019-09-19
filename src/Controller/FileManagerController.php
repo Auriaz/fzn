@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\FileManager;
 use App\FileManager\PhotoFileManager;
+use App\Message\FileManager\AddPhotoToFileManager;
+use App\Message\FileManager\DeletePhotoManager;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\FileManagerRepository;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -11,8 +13,13 @@ use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Validator\Constraints\File;
 
-
+/**
+ * @IsGranted("ROLE_ADMIN_IMAGE")
+ */
 class FileManagerController extends BaseController
 {
     /**
@@ -21,12 +28,12 @@ class FileManagerController extends BaseController
     public function Index()
     {
         return $this->_render('file_manager/index.html.twig', [
-            'title' => 'File Manager'
+            'title' => 'Menager Zdjęć'
         ]);
     }
 
     /**
-     * @Route("/api/files",  methods="GET")
+     * @Route("/api/files",  methods="GET", name="api_file_manager_get" )
      */
     public function list(FileManagerRepository $file_manager_repository)
     {
@@ -40,10 +47,11 @@ class FileManagerController extends BaseController
     /**
      * @Route("/api/files", methods="POST")
      */
-    public function create( ValidatorInterface $validator, PhotoFileManager $photo_manager, FileManagerRepository $file_manager_repository)
+    public function create( ValidatorInterface $validator, FileManagerRepository $file_manager_repository, MessageBusInterface $messageBusInterface)
     {
         $file = $this->request->files->get('file');
         $errors = $validator->validate($file, [
+            // new File(),
             new Image(),
             new NotBlank()
         ]);
@@ -60,18 +68,54 @@ class FileManagerController extends BaseController
             return $this->toJson($errors, 400);
         }
 
-        $input = ['extension' => $file->guessExtension()];
-        $rules = ['extension' => 'in:jpeg,jpg,png,bmp,gif'];
-
         // TODO extension
-        $newFilename = $photo_manager->uploadImage($file);
-        
+        // $input = ['extension' => $file->guessExtension()];
+        // $rules = ['extension' => 'in:jpeg,jpg,png,bmp,gif'];
+
+        // $newFilename = $photo_manager->uploadImage($addPhotoToFileManager->getFile());
+        // $orginalFilename = $file->getClientOriginalName();
 
         $file_manager = new FileManager();
-        $file_manager->setFilename($newFilename);
-        $file_manager->setOriginalFilename($file->getClientOriginalName());
 
-        $this->em->persist($file_manager);
+        $message = new AddPhotoToFileManager($file, $file_manager);
+        $messageBusInterface->dispatch($message);
+
+        return $this->toJson($file_manager, 201);
+    }
+
+    /**
+     * @Route("/api/files/{id}", methods="PUT")
+     */
+    public function active(FileManager $file_manager)
+    {
+        $description = $this->request->request->get('description');
+        $isPublished = $this->request->request->get('isPublished');
+        
+        if(!empty($description)) {
+             $file_manager->setDescription($description);
+        } 
+
+        if(!empty($isPublished)) {
+            if($file_manager->getIsPublished() === true) {
+                $file_manager->setIsPublished(false);
+            } else {
+                $file_manager->setIsPublished(true);
+            }
+        }
+
+        $this->em->flush();
+        
+        return $this->toJson($file_manager, 201);
+    }
+
+    /**
+     * @Route("/api/files/{id}/description", methods="POST")
+     */
+    public function setDescription(FileManager $file_manager)
+    {
+        $file = $this->request->request->get('description');
+
+        $file_manager->setDescription($file);
         $this->em->flush();
 
         return $this->toJson($file_manager, 201);
@@ -80,12 +124,9 @@ class FileManagerController extends BaseController
     /**
      * @Route("/api/files/{id}", methods="DELETE")
      */
-    public function delete(FileManager $file_manager, PhotoFileManager $photo_manager)
+    public function delete(FileManager $file_manager, MessageBusInterface $messageBusInterface)
     {
-        $photo_manager->deletePhoto($file_manager->getFilename());
-
-        $this->em->remove($file_manager);
-        $this->em->flush();
+        $messageBusInterface->dispatch(new DeletePhotoManager($file_manager));
 
         return new Response(null, 204);
     }

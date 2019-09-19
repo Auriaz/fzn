@@ -77,14 +77,18 @@
 
     &-link {
         margin: 7px;
-
-        @include atMedium {
-            margin: 3px;
-            color: $mainWhite;
-        }
+        cursor: pointer;
 
         &:hover {
             transform: scale(1.2);
+        }
+    }
+
+    &-social {
+        color: $mainLithCyan;
+
+        @include atMedium {
+            margin: 3px;
         }
     }
 
@@ -161,7 +165,7 @@
     &-album {
         font-size: 0.8rem;
         position: relative;
-        left: 40%;
+        right: -80px;
         top: 25%;
     }
 

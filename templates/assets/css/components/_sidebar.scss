@@ -1,56 +1,43 @@
 .sidebar {
-	display: inline-block;
 	width: 10%; 
-	height: 100%;
-	text-align: left;
-	top: 0;
+	min-height: 100vh;
 	left: 0;
-	position: fixed;
 	padding: 0.5em;
-  	background-color: lighten($mainDarkBlue, 10%);
-	transition: all 0.5s linear;
-    display: none;
+	background-color: lighten($mainDarkBlue, 10%);
+	transition: all .3s linear;
+	display: none;
 	
 	& .active {
 		display: inline-block;
 	}
-
+	
     &-article {
-        @include atSmall {
-            display: block;
-            width: 14vw; 
-		}  
+		width: 100%;
+		position: sticky;
+		top: 110px;
 		
-		@include atExtraLarge {
-            width: 12vw; 
-        }  
+        @include atMedium {
+			display: block;
+			opacity: 1;	
+            width: 320px;
+		}   
     }
     
     &-dashboard {
-
-        @include atSmall {
-            display: block;
-            width: 5vw; 
-		}  
+		position: fixed;
+		display: flex;
+		top: 1px;
 		
 		@include atMedium {
-            display: block;
-            width: 4.5vw; 
+			width: 50px;
+			padding-top: 120px; 
 		}  
-		
-		@include atLarge {
-            display: block;
-            width: 4vw; 
-		}  
-		
-		@include atExtraLarge {
-            display: block;
-            width: 3vw; 
-        } 
     }
   
     &__header {
-        margin-top: 100px;
+		margin-top: 30px;
+		width: 230px;
+		
     }
   	
 	&--is-unseen {
@@ -59,15 +46,16 @@
 	 		z-index: -10;
 			width: 0;
 			background-color: $mainDarkCyan;
-	  		transform: rotateY(150deg);
+			transform: rotateY(360deg);
 		}
 		
   		&__dashboard {
-			display: block;
-			width: 70vw;
+			display: flex;
+			flex-direction: column;
+			width: 100%;
 
-			@include atSmall {
-				width: 17vw;	
+			@include atMedium {
+				width: 220px;	
 			}
   		}
 	}
@@ -75,13 +63,17 @@
 	&__name-section {
 		margin: 20px auto;
 		color: $mainLithCyan;
+		width: 230px;
 	}
 
 	&__list {
+		position: sticky;
+		top: 20px;
+		left: 0;
+		
 		&--icon {
 			font-size: 1.6rem;
 			display: inline-block;
-			
 		}
 
 		&--ul {
@@ -90,13 +82,19 @@
 			line-height: 150%;
             letter-spacing: 2px;
             padding: 0;
-                    
+			
+			// &-dashboard {
+			// 	// display: flex;
+			// 	// align-self: center;
+			// 	justify-items: center;
+			// }
+
             & ul {
 				padding: 0;
 				display: none;
             }
 
-			@include atSmall {
+			@include atMedium{
 				padding-top: 30px;
 			}
 		}
@@ -106,7 +104,7 @@
 			list-style-type: none;
             width: 100%;
 			left: 2px;
-			display: inline-block;
+			display: block;
 			padding: 10px 0;
 
 			&:hover a.sidebar__name-section {
@@ -114,21 +112,23 @@
 			}
 
 			& > ul:active {
-				display: block;
+				display: flex;
+				flex-direction: column;
 			}
 		}
 
 		&--secend-li {
 			position: relative;
-			width: 90%; 
+			width: 230px; 
 			list-style-type: none;
 			line-height: 150%;
 			margin-bottom: 20px;
-			padding: 0;
-			margin: 2px 5px;
-			// border-bottom: 0.5px dotted #666;
+			padding: 10px;
+			margin: 5px;
+			border: 0.5px dotted #666;
 
-			&:hover a { 
+			&:hover { 
+				border: 0.5px dotted $mainOrange;
 				color: $mainOrange; 
 			}
 		}
@@ -169,87 +169,97 @@
 		}
 	}
 
-	&__menu-icon {
-		position: fixed;
- 		width: 20px;
- 		height: 20px;
- 		z-index: 10;
+	&__menu {
+		z-index: 10;
 		cursor: pointer;
-		display: block;
-		  
-		&--dashboard {
-			top: 20px;
-			left: 20px;
+		position: fixed;
 
-			@include atMedium {
-				position: relative;
-				top: 5px;
-				left: 5px;
-				display: inline-block;
+		&-icon {
+			width: 20px;
+			height: 20px;
+		
+			&--dashboard {
+				top: 20px;
+				left: 20px;
+
+				@include atMedium {
+					position: relative;
+					top: 5px;
+					left: 5px;
+					display: inline-block;
+				}
+			}
+
+			&--text-content {
+				width: 20px;
+				height: 20px;
+				top: 15px;
+				left: 15px;
+				padding: 20px;
+				margin-bottom: 25px;
+				display: none;
+				
+				@include atMedium {
+					position: relative;
+					top: 5px;
+					left: 5px;
+					display: inline-block;
+				}
+			}
+
+			
+
+			&::before {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 20px;
+				height: 3px;
+				background-color: $mainLithBlue;
+				transform-origin: 0 0;
+				transition: transform .3s ease-out;
+			}
+
+			&__middle {
+				position: absolute;
+				top: 8px;
+				left: 0;
+				width: 20px;
+				height: 3px;
+				background-color: $mainLithBlue;
+				transition: all .3s ease-out;
+				transform-origin: 0 50%;
+			}
+
+			&::after {
+				content: "";
+				position: absolute;
+				top: 16px;
+				left: 0;
+				width: 20px;
+				height: 3px;
+				background-color: $mainLithBlue;
+				transform-origin: 0 100%;
+				transition: transform .3s ease-out;
+			}
+
+			&--close-x {
+				&::before {
+					transform: rotate(45deg) scaleX(1.25);
+					background-color: $mainLithBlue;
+				}
+
+				.sidebar__menu-icon__middle {
+					opacity: 0;
+					transform: scaleX(0);
+				}
+
+				&::after {
+					background-color: $mainLithBlue;
+					transform: rotate(-45deg) scaleX(1.25) translateY(1px);				
+				}
 			}
 		}
-
-		&--text-content {
-			top: 1em;
-			left:1em;
-			padding: 20px;
-			width: 97%;
-			border-bottom: 2px dotted rgba(0, 0, 0, 1);
-            margin-bottom: 25px;
-		}
-
- 		
-
- 		&::before {
- 			content: "";
- 			position: absolute;
- 			top: 0;
- 			left: 0;
- 			width: 20px;
- 			height: 3px;
- 			background-color: #fff;
- 			transform-origin: 0 0;
- 			transition: transform .3s ease-out;
- 		}
-
- 		&__middle {
- 			position: absolute;
- 			top: 8px;
- 			left: 0;
- 			width: 20px;
- 			height: 3px;
- 			background-color: #fff;
- 			transition: all .3s ease-out;
- 			transform-origin: 0 50%;
- 		}
-
- 		&::after {
- 			content: "";
- 			position: absolute;
- 			top: 16px;
- 			left: 0;
- 			width: 20px;
- 			height: 3px;
- 			background-color: #fff;
- 			transform-origin: 0 100%;
- 			transition: transform .3s ease-out;
- 		}
-
- 		&--close-x {
- 			&::before {
- 				transform: rotate(45deg) scaleX(1.25);
- 				background-color: $mainLithBlue;
- 			}
-
- 			.sidebar__menu-icon__middle {
- 				opacity: 0;
- 				transform: scaleX(0);
- 			}
-
- 			&::after {
- 				background-color: $mainLithBlue;
- 				transform: rotate(-45deg) scaleX(1.25) translateY(1px);				
- 			}
- 		}
  	}
 }

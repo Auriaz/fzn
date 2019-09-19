@@ -1,43 +1,51 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container">
+    <div class="grid grid-article wrapper">
 
         {% for article in articles %}
-            <div class="article-container my-1">
+            <div class="article__card zoom">
                 <a href="{{ path('article_show', {slug: article.slug }) }}">
-                    <img class="article-img" src="{{ article.imagePath | imagine_filter('squared_thumbnail_small') }}">
+                    <img class="article__card--img" src="{{ article.imagePath | imagine_filter('squared_thumbnail_small') }}">
                     
-                    <div class="article-title d-inline-block pl-3 align-middle">
-                        <span>{{ article.title }}</span>
-                        <small>({{ article.nonDeletedComments|length }} comments)</small>
+                    <div class="article__card--info">
+                        <span class="article__card--details"><strong>Autora:</strong>
+                            {# <img class="article__card--author-img rounded-circle"
+                            src="{{ asset('build/images/alien-profile.png') }}"> #}
+                            {{ article.author.firstName }} {{ article.author.lastName }}
+                        </span>
+                        <br>
+                        <span class="article__card--details"><strong>Opublikowane: </strong>
+                            {{ article.publishedAt ? article.publishedAt|ago }}
+                        </span>
+                        <br>
+                        
+                        <span class="article__card--details"><strong>Ilość coment: </strong>
+                            <small>({{ article.nonDeletedComments|length }} )</small>
+                        </span>
                         <br>
 
                         {% for tag in article.tags %}
-                            <small>
-                                <span class="badge badge-light">{{ tag.name }}</span>
-                            </small>
-                        {% endfor %}
-
+                        <small>
+                            <span class="article__card--tag">{{ tag.name }}</span>
+                        </small>
                         <br>
-
-                        <span class="align-left article-details">
-                            <img class="article-author-img rounded-circle"
-                                src="{{ asset('build/images/alien-profile.png') }}">
-                                {{ article.author.firstName }} {{ article.author.lastName }}
-                        </span>
                         
-                        <span class="justify-content-center article-details">
-                            {{ article.heartCount }} 
-                            <i class="fa fa-thumbs-up"></i>
-                        </span>
-
-                        <span class="pl-5 article-details float-right">
-                            {{ article.publishedAt ? article.publishedAt|ago }}
-                        </span>
+                        {% endfor %}
+                        
+                    </div> 
+                    
+                    <div class="article__card--title">
+                        <span>{{ article.title }}</span>
                     </div>
                 </a>
             </div>
         {% endfor %}
     </div>
+{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+
+{{ encore_entry_link_tags('article') }}
 {% endblock %}

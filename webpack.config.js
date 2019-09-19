@@ -26,11 +26,12 @@ Encore
      */
     .addEntry('app', './templates/assets/js/app.js')
     .addEntry('file_manager', './templates/assets/js/file_manager.js')
+    .addEntry('file_uploader', './templates/assets/js/file_uploader.js')
     .addEntry('dashboard', './templates/assets/js/dashboard.js')
     .addEntry('home', './templates/assets/js/home.js')
-    .addEntry('article_show', './templates/assets/js/article_show.js')
     .addEntry('admin_article_form', './templates/assets/js/admin_article_form.js')
     .addEntry('regrister', './templates/assets/js/regrister.js')
+    .addEntry('article', './templates/assets/js/article.js')
     .addStyleEntry('account', './templates/assets/css/themes/account.scss')
     .addStyleEntry('security', './templates/assets/css/themes/security.scss')
     //.addEntry('page1', './assets/js/page1.js')

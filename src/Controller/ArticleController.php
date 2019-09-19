@@ -25,10 +25,12 @@ class ArticleController extends AbstractController
     /**
      * @Route("/article/{slug}", name="article_show")
      */
-    public function show(Article $article)
+    public function show(Article $article, ArticleRepository $articleRepository)
     {
+        $articles = $articleRepository->findAll();      
         // $articleContent = $markdownHelper->parse($articleContent);
         return $this->render('article/show.html.twig', [
+            'articles'=> $articles,
             'article' => $article,
             'title' => $article->getTitle()
         ]);

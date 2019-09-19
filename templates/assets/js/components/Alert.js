@@ -17,7 +17,7 @@ class Alert {
     //Funkcja wyłaczjąca alert 'span.i' po upływie założonego czasu.
     // Czas musi być idenntyczny jak w animacji 'row'.
     disableTimeout(i) {
-        var timer = setTimeout(()=>{
+        const timer = setTimeout(()=>{
             this.alertBox.children(`.${i}`).remove();
        }, 4000);
 

@@ -21,12 +21,7 @@ class Animal
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $image;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $publishedAt;
+    private $imageFilename;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -49,40 +44,28 @@ class Animal
     private $category;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $active;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="animals")
      */
     private $user;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isActive = false;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getImage(): ?string
+    public function getImageFilename(): ?string
     {
-        return $this->image;
+        return $this->imageFilename;
     }
 
-    public function setImage(?string $image): self
+    public function setImageFilename(?string $imageFilename): self
     {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    public function getPublishedAt(): ?\DateTimeInterface
-    {
-        return $this->publishedAt;
-    }
-
-    public function setPublishedAt(\DateTimeInterface $publishedAt): self
-    {
-        $this->publishedAt = $publishedAt;
+        $this->imageFilename = $imageFilename;
 
         return $this;
     }
@@ -135,18 +118,6 @@ class Animal
         return $this;
     }
 
-    public function getActive(): ?int
-    {
-        return $this->active;
-    }
-
-    public function setActive(?int $active): self
-    {
-        $this->active = $active;
-
-        return $this;
-    }
-
     public function getUser(): ?User
     {
         return $this->user;
@@ -155,6 +126,18 @@ class Animal
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getIsActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): self
+    {
+        $this->isActive = $isActive;
 
         return $this;
     }

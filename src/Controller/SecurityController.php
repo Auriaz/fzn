@@ -12,7 +12,7 @@ use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use App\Security\LoginFormAuthenticator;
 use App\Form\UserRegistrationFormType;
 use Symfony\Component\Messenger\MessageBusInterface;
-use App\Message\AddEmailFromRegrister;
+use App\Message\SaveRegisteredUser;
 
 class SecurityController extends BaseController
 {
@@ -68,7 +68,7 @@ class SecurityController extends BaseController
                 $user->agreeToTerms();
             }
 
-            $message = new AddEmailFromRegrister($user);
+            $message = new SaveRegisteredUser($user);
             $messageBus->dispatch($message);
 
 

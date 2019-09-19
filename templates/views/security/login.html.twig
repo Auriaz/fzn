@@ -19,17 +19,15 @@
             {% endif %}
 
             <div class="form-group form-other">
-                <input type="text" name="email" id="login" class="form-control" placeholder="E-mail" minlength="2"
+                <input type="text" name="email" id="login" class="form-control" minlength="2"
                     value="{{ last_username|default }}" required autocomplete="off"/>
-                <label for="login"><i class="login"></i> E-mail</label>
-                <div class="form-faulty">Login składa się przynajmniej z 3 znaków</div>
+                <label for="login"><i class="fas fa-envelope"></i> E-mail</label>
             </div>
 
             <div class="form-group form-other">
-                <input type="password" name="password" id="pass" class="form-control" placeholder="Hasło" minlength="3"
+                <input type="password" name="password" id="pass" class="form-control" minlength="3"
                     required autocomplete="off"/>
-                <label for="pass"><i class="key"></i> Hasło</label>
-                <div class="form-faulty">Login składa się przynajmniej z 3 znaków</div>
+                <label for="pass"><i class="fas fa-key"></i> Hasło</label>
             </div>
 
             <div class="checkbox mb-3">
@@ -40,7 +38,7 @@
 
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-            <button type="submit" class="btn btn-outline-secondary form-control" />Zaloguj się</button>
+            <button type="submit" class="btn btn-outline-success form-control" />Zaloguj się</button>
         </form>
         <div class="form-invalid"></div>
     </div>

@@ -23,7 +23,7 @@ class UserFixture extends BaseFixture
             $user->setFirstName($this->faker->firstName);
             $user-> setLastName($this->faker->lastName);
             $user->agreeToTerms();
-            
+            $user->setIsActive($this->faker->boolean($i));
             if($this->faker->boolean) {
                 $user-> setNick($this->faker->name);
                 $user->setTwitterUsername($this->faker->userName);
@@ -52,6 +52,7 @@ class UserFixture extends BaseFixture
             $user->setLastName($this->faker->lastName);
             $user->setNick($this->faker->name);
             $user->setRoles(['ROLE_ADMIN']);
+            $user->setIsActive($this->faker->boolean($i));
             $user->agreeToTerms();
 
             $user->setPassword(

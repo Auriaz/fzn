@@ -1,6 +1,6 @@
 <nav class="sidebar sidebar-dashboard" id="sidebar__dashboard">
     <div class="sidebar__header"></div>
-    <ul class="sidebar__list--ul">
+    <ul class="sidebar__list--ul sidebar__list--ul-dashboard">
         {% if is_granted('ROLE_ADMIN_ARTICLE') %}
             <li class="sidebar__list--first-li">
                 <a href="{{ path('admin_article_list') }}" class="sidebar__list--link">
@@ -12,7 +12,7 @@
             </li>
         {% endif %}
 
-        {% if is_granted('ROLE_ADMIN') %}
+       {#} {% if is_granted('ROLE_ADMIN') %}
             <li class="sidebar__list--first-li">
                 <a href="{{ path("admin_dashboard") }}" class="sidebar__list--link">
                     <i class="fas fa-tools sidebar__list--icon" title="Panel administratora"></i>
@@ -21,7 +21,7 @@
                     </span>
                 </a>
             </li>
-        {% endif %}
+        {% endif %} {#}
 
         <li class="sidebar__list--first-li">
             <a href="{{ path('app_account') }}" class="sidebar__list--link">
@@ -34,9 +34,9 @@
 
         <li class="sidebar__list--first-li">
             <a href="{{ path('file_manager') }}" class="sidebar__list--link">
-                <i class="fas fa-photo-video sidebar__list--icon" title="Manager plików"></i>
+                <i class="fas fa-photo-video sidebar__list--icon" title="Manager zdjęć"></i>
                 <span class="sidebar__list--dashboard-text-name">
-                    Manager plików
+                    Manager zdjęć
                 </span>
             </a>
         </li>

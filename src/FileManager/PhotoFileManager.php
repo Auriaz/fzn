@@ -31,7 +31,7 @@ class PhotoFileManager
     public function deletePhoto(string $filename): void
     {
         // make it a bit slow
-        sleep(3);
+        sleep(1);
 
         $this->uploaderHelper->deleteFile(self::IMAGE . '/' . $filename, true);
     }

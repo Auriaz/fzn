@@ -1,0 +1,223 @@
+.photo-manager {
+    &__content {
+        width: 100%; 
+        height: 100%;
+        position: relative;
+
+        .add-sticky {
+            position: fixed;
+            transform: translateY(30px);
+        }
+    }
+    
+    &__uploader {
+        width: 100%;
+        height: auto;
+        display: none;
+        transform: translateY(5%);
+        padding: 10px;
+    }
+    
+    &__list {
+        width: 100%;
+        height: auto;
+        transition: all 1s;
+    }
+    
+    &__search-field {            
+        width: 300px;
+        height: 40px;
+        position: absolute;
+        top: 0;
+        right: 3%;
+        transform: translateY(-60px);
+        z-index: 3;
+        display: none;
+
+        @include atSmall {
+            display: block;
+        }
+    } 
+}
+
+.gallery {
+    
+    &-container {
+        width: 100%; height: auto;
+        display: flex; justify-content: space-around;
+    }
+
+    &-content {
+        width: 200px;
+        height: 150px;
+        position:relative;
+    }
+}
+
+.album {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    cursor: pointer;
+    transition: opacity 2s ease-in-out;
+
+    &-transparent {
+        background-color: rgba($mainDark, 0.5);
+
+        &-dark {
+            background-color: rgba($mainDark, 0.9);
+        }
+    }
+
+    &__title {
+        width: 100%;
+        display: block;
+        color: #fff;
+        font-weight: 700;
+        height: 45px;
+        position: relative;
+    }
+
+    &-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+        opacity: 0;
+        padding: 20px;
+        display: none;
+        text-align: center;
+
+        &__main-conteiner {
+            width: auto;
+            height: 100%;
+            position: relative;    
+        }
+
+        &__main-content {
+            display:flex;
+            justify-content: center;
+            position: relative;  
+            width: 90%;
+            height: 90%;
+            top: 40px;
+            margin: 0 auto;
+        }
+
+        &__main-image {
+            position: relative;
+            width: 100%;
+            height: 100%;
+           
+            &--img {
+                width: auto;
+                height: 100%;
+                background-repeat: no-repeat;
+                object-fit: cover;
+            }
+        }
+
+        &__how-many-image {
+            z-index: 7;
+            color: $mainLithBlue;
+            position: absolute;
+            left: 0;
+            text-align: left;
+        }
+
+        &--is-visible {
+            display: block;
+            z-index: 14;
+            animation: openAlbum 0.5s ease-in;
+            opacity: 1;
+        }
+
+        &--open-sidebar {
+            height: 85%;
+        }
+
+        &--control-panel {
+            position: absolute;
+            padding-right: 40px;
+            right: 0;
+            top: -5px;
+            width: 100%;
+            height: 5%;
+            text-align: right;
+            z-index: 6;
+
+
+            &__icon {
+                color: $mainLithBlue;
+                cursor: pointer;
+                padding: 2px;
+                margin: 0 2px;
+
+                &:hover {
+                    color: $mainOrange;
+                    transform: scale(1.2);
+                    transition: all 0.3s ease-in-out;
+                }
+            }
+        }
+
+        &--close {
+            color: $mainLithBlue;
+            cursor: pointer;
+            border: 1px solid $mainLithBlue;
+            padding: 1px 3px;
+            margin: 0 2px;
+            
+            &:hover {
+                color: $mainOrange;
+                border: 2px solid $mainOrange;
+                transform: scale(1.2);
+                transition: all 0.3s ease-in-out;
+            }
+        }
+
+        &__sidebar-conteiner {
+            position: relative;
+            left: 0;
+            bottom: 0;
+            height: 15%;
+            display: none;
+            z-index: 6;
+            align-content: center;
+            overflow: hidden;
+
+            &--is-visible {
+                display: inline-grid;
+            }
+        }
+
+        &__sidebar {
+            position: relative;
+            width: 100%;
+            align-self: center;
+
+            & img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                cursor: pointer;
+
+                &:hover {
+                    transform: scale(1.1);
+                }
+            }
+        }
+    }
+}
+
+
+
+
+@keyframes openAlbum {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}

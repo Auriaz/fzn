@@ -6,13 +6,16 @@
     <div class="dashboard">
         {% include "dashboard/main_page.html.twig" %}
         
-        <div class="dashboard-section">
+        <div class="dashboard-section row">
             <div class="dashboard-section__menu-icon">
                 <h2 class="dashboard-section__title">{% block dashboard_title %}{% endblock %}</h2>
                 <div class="sidebar__menu-icon sidebar__menu-icon--dashboard">
                     <div class="sidebar__menu-icon__middle"></div>
                 </div>
                 {% block dashboard_adding_btn %}{% endblock %}
+                {% block dashboard_search %}{% endblock %}
+                <!-- #### Alert message #### -->
+                {% include "inc/alert.html.twig" %}
             </div>          
 
             <div class="dashboard-section__wrapper">

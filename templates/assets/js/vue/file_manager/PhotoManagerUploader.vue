@@ -1,12 +1,10 @@
 <template>
-    <div>
-        <vue-dropzone
-            id="dropzone"
-            ref="vueDropzone"
-            v-on:vdropzone-success="onDropzoneSuccess"
-            :options="dropzoneOptions"
-        ></vue-dropzone>
-    </div>
+    <vue-dropzone
+        id="dropzone"
+        ref="vueDropzone"
+        v-on:vdropzone-success="onDropzoneSuccess"
+        :options="dropzoneOptions"
+    ></vue-dropzone>
 </template>
 
 <script>
@@ -19,7 +17,6 @@
         },
         methods: {
             onDropzoneSuccess(file, response) {
-                console.log(response);
                 this.$emit('new-file', response);
                 this.$refs.vueDropzone.removeFile(file);
             }

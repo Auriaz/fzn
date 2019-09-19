@@ -20,9 +20,10 @@
                 
                 &:hover {
                     background-color: $mainDarkCyan;
+                    color: $mainWhite;
+
                     & td {
                         border: 2px solid $mainLithCyan;
-                        color: $mainGray;
                     }
                 }
             } 
@@ -35,7 +36,16 @@
     }
 
     & .color-blue {
+        background-color: $mainWhite;
         color: $mainCyan;
+    }
+
+    & .icon-blue {
+        color: $mainCyan;
+
+        &:hover {
+            color: $mainWhite;
+        }
     }
 
     & .text-center {

@@ -13,10 +13,10 @@
 @import './layout/nav';
 @import './layout/footer';
 @import './layout/grid';
-@import './layout/container';
+@import './layout/header';
 
+@import './components/sidebar';
 @import './components/ad';
-@import './components/article';
 @import './components/btn';
 @import './components/dropdown';
 @import './components/profile';
@@ -24,10 +24,10 @@
 @import './components/logo';
 @import './components/postcard';
 @import './components/reveal-item';
-@import './components/image';
 @import './components/modal';
 @import './components/wrapper';
 @import './components/icon';
 @import './components/content';
 @import './components/table';
+
 

@@ -85,7 +85,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             return new RedirectResponse($targetPath);
         }
         // TODO - the router should point to the Dashboard!
-        return new RedirectResponse($this->routerInterface->generate('app_dashboard'));
+        return new RedirectResponse($this->routerInterface->generate('app_account'));
     }
 
     // public function start(Request $request, AuthenticationException $authException = null)

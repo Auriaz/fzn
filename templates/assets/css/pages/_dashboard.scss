@@ -21,23 +21,22 @@
         display: inline-block;
         color: $mainDarkBlue;
         transition: all 0.3s linear;
+        display: flex;
 
-        @include atSmall {
-            width: 94vw;
+        @include atMedium {
+            width: calc(99% - 50px);
             float: right;
-            transition: all 0.5s linear;
-            margin: 0 1vw;
+            margin: 0 .5%;
             padding: 15px 30px 10px 20px;
         }
-
+ 
         &--is-mid-large {
-            display: block;
+            display: flex;
             width: 100%;
 
-            @include atSmall {
-                transition: all 0.5s linear;
-                width: 81vw;	
-                display: block;
+            @include atMedium {
+                transition: all 0.3s linear;
+                width: calc(99% - 220px);	
             }       
         }
         
@@ -47,13 +46,17 @@
             width: 100%;
             height: auto;
             position: relative;
-            background-color: lighten($color:  $mainBlue, $amount: 10%);
+            background-color: $mainWhite;
         }
 
         .add-sticky {
             position: fixed;
             top:0;
-            padding: 70px 20px 20px 0;
+            padding: 40px 20px 20px 0;
+
+            @include atMedium {
+                padding: 70px 20px 20px 0;
+            }
         }
 
         &__wrapper {
@@ -72,8 +75,16 @@
         }
 
         &__adding-btn {
-            position: relative;
+            position: fixed;
+            top: 10px;
+            left: 40px;
             margin-left: 10px;
+            
+            @include atMedium {
+                position: relative;
+                top: 0;
+                left: 0;
+            }
         }
     }
 }

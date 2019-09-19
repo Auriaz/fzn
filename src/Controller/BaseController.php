@@ -66,8 +66,9 @@ abstract class BaseController extends AbstractController
                 $param['avatar'] = $this->user->getAvatarUrl();
             }
         }
-
-        $param['title'] = "Fundacja Zwierząt Niczyich";
+        if(!$param['title']) {
+            $param['title'] = "Fundacja Zwierząt Niczyich";
+        }
         // $param['page_settings'] = array(
         //     'per_page' => $this->page_settings->per_page,
         //     'page' => $this->request->query->getInt('page', 1)

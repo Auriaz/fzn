@@ -1,5 +1,5 @@
 import $ from "jquery";
-// import Waypoint from 'waypoints/lib/jquery.waypoints';
+// import Waypoint from 'Waypoint';
 
 /*  #### Przyklejanie nawigacji  ####  */
 class StickyHeader {

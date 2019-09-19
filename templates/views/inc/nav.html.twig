@@ -1,8 +1,10 @@
-<span class="btn-x">
-    <span class="btn-x_middle"></span>
-</span>
+<div class="nav-small">
+    <span class="btn-x">
+        <span class="btn-x_middle"></span>
+    </span>
+</div>
 
-<nav class="nav btn-x_content {% if app.request.get('_route') != 'app_homepage' %}nav-background-color{% endif %} {{ app.session.flashbag.peek('success')|length > 0 ? '' : 'mb-1' }}">
+<nav class="nav btn-x_content {% if app.request.get('_route') != 'app_homepage' %}nav-background-color{% endif %} {{ app.session.flashbag.peek('success')|length > 0 ? '' : '' }}">
     <ol class="nav-list">  
         <li class="nav-left logo">
             <a href="{{ path('app_homepage') }}">
@@ -122,14 +124,14 @@
                             </li>
                         {% endif %}
 
-                        {% if is_granted('ROLE_ADMIN') %}
+                       {#} {% if is_granted('ROLE_ADMIN') %}
                             <li class="nav-user__link">
                                 <a href="{{ path("admin_dashboard") }}" class="btn btn-blue btn-block">
                                     <i class="fa fa-tools" title="Panel administratora"></i>
                                     Panel administratora
                                 </a>
                             </li>
-                        {% endif %}
+                        {% endif %} {#}
 
                         <li class="nav-user__link">
                             <a href="{{ path('app_account') }}" class="btn btn-blue btn-block">
@@ -140,8 +142,8 @@
 
                         <li class="nav-user__link">
                             <a href="{{ path('file_manager') }}" class="btn btn-blue btn-block">
-                                <i class="fas fa-photo-video" title="Manager plików"></i>
-                                Manager plików
+                                <i class="fas fa-photo-video " title="Manager zdjęć"></i>
+                                Manager zdjęć
                             </a>
                         </li>
 
@@ -185,19 +187,19 @@
         {% else %}
             <div class="icon icon-nav nav-right">        
                 <a href="https://facebook.com/FundacjaZwierzetaNiczyje/?ref=m_notif&notif_t=group_highlights" class="social-icon"  target="_blank">
-                    <i class="fab fa-facebook-square icon-facebook icon-link"></i>
+                    <i class="fab fa-facebook-square icon-facebook icon-link icon-social"></i>
                 </a>                           
                 <a href="https://instagram.com/fundacja_zwierzeta_niczyje?utm_source=ig_profile_share&igshid=1joz9gcb9eiem" class="social-icon" target="_blank">
-                    <i class="fab fa-instagram icon-instagram icon-link"></i>
+                    <i class="fab fa-instagram icon-instagram icon-link icon-social"></i>
                 </a>
 
                 {% if app.request.get('_route') == 'app_login' %}
                     <a href="{{ path('app_register') }}" class="social-icon">
-                        <i class="fa fa-user-plus icon-link"></i>
+                        <i class="fa fa-user-plus icon-link icon-social"></i>
                     </a>
                 {% else %}
                     <a href="{{ path('app_login') }}" class="social-icon">
-                        <i class="fa fa-user icon-link"></i>
+                        <i class="fa fa-user icon-link icon-social"></i>
                     </a> 
                 {% endif %}             
             </div>

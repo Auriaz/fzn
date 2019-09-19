@@ -18,7 +18,8 @@ class AccountController extends BaseController
     {
         $logger->debug('Checking account page for'. $this->getUser()->getEmail());
         return $this->_render('account/index.html.twig', [
-       
+            'title' => 'panel użytkownika',
+            'user' => $this->getUser()
         ]);
     }
 

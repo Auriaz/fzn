@@ -1,10 +1,16 @@
-{% extends 'dashboard/_base.html.twig' %}
+{% extends 'animal_admin/_base.html.twig' %}
 
-{% block title %} Panel kontrolny {% endblock %}
+{% block dashboard_title %}Lista użytkowników{% endblock %}
+
+{% block dashboard_adding_btn %}
+    <button type="button" class="dashboard-section__adding-btn btn btn-outline-success" data-toggle="modal" data-target=".add-new-user-modal">
+        <i class="fas fa-plus-circle"></i>
+    </button>
+{% endblock %}
 
 {% block dashboard_body %}
     {% if is_granted('ROLE_ADMIN') %}
-        <div class="dashboard__switch-user">
+        <!-- <div class="dashboard__switch-user">
             <form class="form form-signin" action="{{ path('app_homepage') }}" method="GET">
                 <div class="form-group form-other">
                     <input type="email" class="form-control" name="_switch_user" id="switch_user">
@@ -13,6 +19,72 @@
                 
                 <button type="submit" class="btn btn-outline-primary">action</button> 
             </form>
-        </div>
+        </div> -->
+        {% if users %}
+            <table class="table table-dark text-center">
+                <thead>
+                    <tr>
+                        <th scope="col">lp</th>
+                        <th scope="col">E-mail</th>
+                        <th scope="col">Rola</th>
+                        <th scope="col">Imie Nazwisko</th>
+                        <th class="col-1">Status</th>
+                        <th class="col-1">Data dodania</th>
+                        <th scope="col">Akcja</th>
+                    </tr>
+                </thead>
+                <tbody >
+                    {% for user in users %}
+                        {% if user.isDelete == false %}
+                            <tr class="color-blue text-center justify-content-center">
+                                <th>{{ loop.index }}</th>
+                                <th scope="row">{{ user.email }}</th>
+                                <th scope="row">
+                                    <form method="POST" action="{{ path('admin_dashboard_user_change_role', {id: user.id} )}}">
+                                        <select name="role">
+                                            <option {% if user.roles[0] == 'ROLE_EDITOR' %} selected="selected" {% endif %} value="ROLE_EDITOR">Redaktor
+                                            </option>
+                                            <option {% if user.roles[0] == 'ROLE_USER' %} selected="selected" {% endif %} value="ROLE_USER">Użytkownik
+                                            </option>
+                                            <option {% if user.roles[0] == 'ROLE_ADMIN' %} selected="selected" {% endif %} value="ROLE_ADMIN">Administrator
+                                            </option>
+                                        </select>
+                                        <button type="submit" class="btn btn-outline-primary"><i class="fas fa-check-circle"></i></button>
+                                    </form>
+                                </th>
+                                <th scope="row">{{ user.firstName }} {{ user.lastName }}</th>
+                                <th scope="row">
+                                    {% if user.isActive %}
+                                        <input type="checkbox" class="custom-control-switch" id="switch-{{user.id}}"
+                                            onchange="window.location.href='{{ path('admin_dashboard_user_activity', { id: user.id}) }}'" checked="checked">
+                                        <label class="control-label-switch" for="switch-{{user.id}}" title="aktywny"></label>
+                                    {% else %}
+                                        <input type="checkbox" class="custom-control-switch" id="switch-{{user.id}}"
+                                            onchange="window.location.href='{{ path('admin_dashboard_user_activity', { id: user.id}) }}'" >
+                                        <label class="control-label-switch" for="switch-{{user.id}}" title="nieaktywny"></label>
+                                    {% endif %}
+                                </th>
+                                <td scope="row"><p>{{ user.createdAt|date("Y-m-d") }}</p></td>
+                                <th scope="row">
+                                    <button type="button" class="btn btn-outline-success edit" data-toggle="modal" data-target=".edit-user-modal" data-url="{{ path('admin_dashboard_user_edit', {id: user.id})}}">
+                                        <i class="fas fa-user-edit"></i>
+                                    </button>
+
+                                    <button type="button" class="btn btn-outline-danger delete" data-url="{{ path('admin_dashboard_user_delete',  { id: user.id })}}">
+                                        <i class="fas fa-trash-alt" data-url="{{ path('admin_dashboard_user_delete',  { id: user.id })}}"></i>
+                                    </button>
+                                </th>
+        
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>    
+        {% else %}
+            <p>Nie ma żadnego urzytkownika</p>
+        {% endif %}
     {% endif %}
+
+    {% include "dashboard_admin/_modal_add_user.html.twig" %}
+    {% include "dashboard_admin/_modal_edit.html.twig" %}
 {% endblock %}

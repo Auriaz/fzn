@@ -1,9 +1,14 @@
 body {
     font-family: 'Nunito', sans-serif;
-    color: $color;
+    color: $mainLithCyan;
 }
 
 a {
-	color: $colorLink;
-	text-decoration: none;
+	color: $mainBlue;
+    text-decoration: none;
+    
+    &:hover {
+        color: $mainCyan;
+        text-decoration: none;
+    }
 }
