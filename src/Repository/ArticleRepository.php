@@ -7,6 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\QueryBuilder as DoctrineQueryBuilder;
 
 /**
  * @method Article|null find($id, $lockMode = null, $lockVersion = null)
@@ -24,6 +25,20 @@ class ArticleRepository extends ServiceEntityRepository
     /**
      * @return Article[]
      */
+
+    public function getWithSearchQueryBuilder(?string $term): DoctrineQueryBuilder
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->innerJoin('a.author', 'u')
+            ->addSelect('u');
+
+        if ($term) {
+            $qb->andWhere('a.content LIKE :term OR a.title LIKE :term OR u.firstName LIKE :term OR u.lastName LIKE :term')
+                ->setParameter('term', '%' . $term . '%');
+        }
+
+        return $qb->orderBy('a.createdAt', 'DESC');
+    }
 
     public function findAllPublishedOrderedByArticles(int $count = null)
     {

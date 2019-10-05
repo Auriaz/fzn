@@ -14,77 +14,83 @@
         </a>
         
         {% if is_granted('ROLE_ADMIN_ARTICLE') %}
-            <a href="/article/edit/{{ article.id }}" class="btn-edit"><b>Edytuj</b></a>
+            <a href="{{ path('admin_article_edit', { id: article.id }) }}" class="btn-edit"><b>Edytuj <i class="fas fa-pencil-alt"></i></b></a>
         {% endif %}
 
         <div class='content-section__article--content'>
-            <div class="row">
-                <div class="col-sm-12">
-                    <img class="content-section__article--image" src="{{ article.imagePath|imagine_filter('squared_thumbnail_medium') }}">
-                    <div class="align-middle">
-                        <span class="content-section__article--title">{{ article.title }}</span>
-                        <br>
-                        <span class="align-left article-details">{{ article.author }}</span>
-                        <span class="pl-2 article-details">
-                            {{ article.publishedAt ? article.publishedAt|ago : 'unpublished' }}
-                        </span>
-                        <span class="pl-2 article-details">
-                            {% for tag in article.tags %}
-                            <span class="badge badge-secendery">{{ tag.name }}</span>
-                            {% endfor %}
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="article-text">
-                        {{ article.content|cached_markdown }}
-                    </div>
-                </div>
-            </div>
-            <span class="content-section__article--author"><i>autor: {{ article.author|raw }} </i></span>
-            <span class="content-section__article--date"><i>dodano: {{ article.publishedAt ? article.publishedAt|ago : 'unpublished' }} </i></span>
-        </div>
-
-     {#}   <div class="row">
-            <div class="col-sm-12">
-                <h3><i class="pr-3 fa fa-comment"></i>{{ article.nonDeletedComments|length }} Comments</h3>
-                <hr>
-                <div class="row mb-5">
-                    <div class="col-sm-12">
-                        <img class="comment-img rounded-circle"
-                            src="{{ asset('build/images/astronaut-profile.png') }}">
-                        <div class="comment-container d-inline-block pl-3 align-top">
-                            <span class="commenter-name">Amy Oort</span>
-                            <div class="form-group">
-                                <textarea class="form-control comment-form" id="articleText"
-                                    rows="1"></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-info">Comment</button>
-                        </div>
-                    </div>
-                </div>
-                {% for comment in article.nonDeletedComments %}
+            {% if article.isDelete == true|default %}
+                <p>Artykuł nie istnieje</p>
+            {% else %}
+                
                 <div class="row">
                     <div class="col-sm-12">
-                        <img class="comment-img rounded-circle" src="{{ asset('build/images/alien-profile.png') }}">
-                        <div class="comment-container d-inline-block pl-3 align-top">
-                            <span class="commenter-name">{{ comment.authorName }}</span>
-                            <small>about {{ comment.createdAt|ago }}</small>
-                            {% if comment.isDeleted %}
-                                <span class="fa fa-close"> deleted</span>
-                            {% endif %}
+                        <img class="content-section__article--image" src="{{ article.imagePath|imagine_filter('squared_thumbnail_medium') }}">
+                        <div class="align-middle">
+                            <span class="content-section__article--title">{{ article.title }}</span>
                             <br>
-                            <span class="comment"> {{ comment.content }}</span>
-                            <p><a href="#">Reply</a></p>
+                            <span class="align-left article-details">{{ article.author }}</span>
+                            <span class="pl-2 article-details">
+                                {{ article.publishedAt ? article.publishedAt|ago : 'unpublished' }}
+                            </span>
+                            <span class="pl-2 article-details">
+                                {% for tag in article.tags %}
+                                <span class="badge badge-secendery">{{ tag.name }}</span>
+                                {% endfor %}
+                            </span>
                         </div>
                     </div>
                 </div>
-                {% endfor %}
-            </div>
-        </div>      {#}
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="article-text">
+                           <p>{{ article.content|cached_markdown }}</p>
+                        </div>
+                    </div>
+                </div>
+                <span class="content-section__article--author"><i>autor: {{ article.author|raw }} </i></span>
+                <span class="content-section__article--date"><i>dodano: {{ article.publishedAt ? article.publishedAt|ago : 'unpublished' }} </i></span>
+                
+                {#}   <div class="row">
+                    
+                <div class="col-sm-12">
+                    <h3><i class="pr-3 fa fa-comment"></i>{{ article.nonDeletedComments|length }} Comments</h3>
+                    <hr>
+                    <div class="row mb-5">
+                        <div class="col-sm-12">
+                            <img class="comment-img rounded-circle"
+                                src="{{ asset('build/images/astronaut-profile.png') }}">
+                            <div class="comment-container d-inline-block pl-3 align-top">
+                                <span class="commenter-name">Amy Oort</span>
+                                <div class="form-group">
+                                    <textarea class="form-control comment-form" id="articleText"
+                                        rows="1"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-info">Comment</button>
+                            </div>
+                        </div>
+                    </div>
+                    {% for comment in article.nonDeletedComments %}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <img class="comment-img rounded-circle" src="{{ asset('build/images/alien-profile.png') }}">
+                            <div class="comment-container d-inline-block pl-3 align-top">
+                                <span class="commenter-name">{{ comment.authorName }}</span>
+                                <small>about {{ comment.createdAt|ago }}</small>
+                                {% if comment.isDeleted %}
+                                    <span class="fa fa-close"> deleted</span>
+                                {% endif %}
+                                <br>
+                                <span class="comment"> {{ comment.content }}</span>
+                                <p><a href="#">Reply</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                </div>{#}
+                {% endif %}
+            </div>      
     </article>
 
 {% endblock %}

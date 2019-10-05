@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Service\UploaderHelper;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
@@ -52,6 +53,16 @@ class Animal
      * @ORM\Column(type="boolean")
      */
     private $isActive = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isDelete;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
 
     public function getId(): ?int
     {
@@ -140,5 +151,34 @@ class Animal
         $this->isActive = $isActive;
 
         return $this;
+    }
+
+    public function getIsDelete(): ?bool
+    {
+        return $this->isDelete;
+    }
+
+    public function setIsDelete(bool $isDelete): self
+    {
+        $this->isDelete = $isDelete;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getImagePath()
+    {
+        return UploaderHelper::ARTICLE_IMAGE . '/' . $this->getImageFilename();
     }
 }

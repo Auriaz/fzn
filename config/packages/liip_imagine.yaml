@@ -25,6 +25,10 @@ liip_imagine:
 #        # an example thumbnail transformation definition
 #        # https://symfony.com/doc/current/bundles/LiipImagineBundle/basic-usage.html#create-thumbnails
     filter_sets:
+        squared_thumbnail_smaller:
+            filters:
+                thumbnail: { size: [50, 50], mode: outbound }
+
         squared_thumbnail_small:
             filters:
                 thumbnail: { size: [200, 200], mode: outbound }

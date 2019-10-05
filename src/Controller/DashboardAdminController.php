@@ -137,7 +137,7 @@ class DashboardAdminController extends BaseController
 
             $this->addFlash('success', 'Usunięto urzytkownika!');
         } else {
-            $this->addFlash('warning', 'Administratora nie można usunąć jedynie wyłoczyć!');
+            $this->addFlash('warning', 'Administratora nie można usunąć!');
         }
 
         return $this->redirectToRoute('admin_dashboard');

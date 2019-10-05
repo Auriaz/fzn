@@ -17,7 +17,7 @@
                 <i class="fa fa-caret-right"></i>
             </div>
             <ul class="nav-subsection dropdown-menu"> 
-                <li class="nav-item">
+               {#} <li class="nav-item">
                     <a class="nav-link" href="{{ path('animal_show', {category: 1}) }}">Koty</a>
                 </li>
                 <li class="nav-item"> 
@@ -25,7 +25,7 @@
                 </li>
                 <li class="nav-item"> 
                     <a class="nav-link" href="{{ path('animal_show', {category: 3}) }}">Inne zwierzęta</a>
-                </li>   
+                </li>  {#}
             </ul>   
         </li>
         
@@ -118,7 +118,7 @@
                         {% if is_granted('ROLE_ADMIN_ARTICLE') %}
                             <li class="nav-user__link">
                                 <a href="{{ path('admin_article_list') }}" class="btn btn-blue btn-block">
-                                    <i class="fa fa-book" title="Artykuły"></i>
+                                    <i class="fa fa-book float-left" title="Artykuły"></i>
                                      Artkuły
                                 </a>
                             </li>
@@ -135,14 +135,14 @@
 
                         <li class="nav-user__link">
                             <a href="{{ path('app_account') }}" class="btn btn-blue btn-block">
-                                <i class="fa fa-street-view" title="Panel użytkownika"></i>
+                                <i class="fa fa-street-view float-left" title="Panel użytkownika"></i>
                                 Panel użytkownika
                             </a>
                         </li>
 
                         <li class="nav-user__link">
                             <a href="{{ path('file_manager') }}" class="btn btn-blue btn-block">
-                                <i class="fas fa-photo-video " title="Manager zdjęć"></i>
+                                <i class="fas fa-photo-video float-left" title="Manager zdjęć"></i>
                                 Manager zdjęć
                             </a>
                         </li>
@@ -150,7 +150,7 @@
                         {% if is_granted('ROLE_ADMIN') %}
                             <li class="nav-user__link">
                                 <a href="{{ path("admin_dashboard") }}" class="btn btn-blue btn-block">
-                                    <i class="fas fa-users-cog" title="Użytkownicy"></i>
+                                    <i class="fas fa-users-cog float-left" title="Użytkownicy"></i>
                                     Użytkownicy
                                 </a>
                             </li>
@@ -158,14 +158,14 @@
 
                         <li class="nav-user__link">
                             <a href="{{ path('admin_animal_list') }}" class="btn btn-blue btn-block">
-                                <i class="fas fa-frog" title="Zwierzęta"></i>
+                                <i class="fas fa-frog float-left" title="Zwierzęta"></i>
                                 Zwierzęta
                             </a>
                         </li>
     
                         <li class="nav-user__link">
                             <a href="{{ path('app_logout') }}" class="btn btn-orange btn-block">
-                                <i class="fas fa-sign-out-alt" title="Wyloguj się"></i>
+                                <i class="fas fa-sign-out-alt float-left" title="Wyloguj się"></i>
                                 Wyloguj się
                             </a>
                         </li>

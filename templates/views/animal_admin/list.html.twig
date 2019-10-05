@@ -1,0 +1,160 @@
+{% extends 'animal_admin/_base.html.twig' %}
+
+{% block dashboard_title %}Lista zwierząt ({{ pagination.getTotalItemCount }}){% endblock %}
+
+{% block dashboard_adding_btn %}
+    <a href="{{ path('admin_animal_new')}}" class="dashboard-section__adding-btn btn btn-outline-secondary">
+        <i class="fas fa-plus-circle"></i>
+    </a>
+{% endblock %}
+
+{% block dashboard_search %}
+<div class="dashboard-section__search">
+    <div class="dashboard-section__search dashboard-section__search--btn-undo">
+        <a href="{{path('admin_animal_list')}}" class="btn btn-outline-secondary">
+            <i class="fas fa-undo"></i>
+        </a>
+    </div>
+    <form class="dashboard-section__search dashboard-section__search--form">
+        <div class="form-group form-other">
+            <input type="text" name="query" class="form-control" value="{{ app.request.query.get('query') }}" required>
+
+            <label for="query">
+                <button type="submit" class="btn-search">
+                    <i class="fas fa-search"></i> Szukaj
+                </button>
+            </label>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block dashboard_body %}
+    <article>
+        {% if pagination %}
+            <div class="table-responsive">
+                <table class="table table-main table-bordered table-striped">
+                    <thead class="text-center table-sticky">
+                        <tr>
+                            {#<th>Lp.</th>#}
+                            <th class="col-tab-4">
+                                {% if pagination.isSorted('a.Name') %}
+                            class="sorted"{% endif %}{{ knp_pagination_sortable(pagination, 'Imię', 'a.name') }}
+                            </th>
+                            <th class="col-tab-3">
+                                {% if pagination.isSorted('a.Category') %}
+                                class="sorted"{% endif %}{{ knp_pagination_sortable(pagination, 'Rodzaj', 'a.category') }}
+                            </th>
+                            <th class="col-tab-3">
+                                {% if pagination.isSorted('a.CreatedAt') %}
+                                class="sorted"{% endif %}{{ knp_pagination_sortable(pagination, 'Data dodania', 'a.createdAt') }}
+                            </th>
+                            <th class="col-tab-3">
+                                {% if pagination.isSorted('a.UpdatedAt') %}
+                                class="sorted"{% endif %}{{ knp_pagination_sortable(pagination, 'Data zmiany', 'a.updatedAt') }}
+                            </th>
+                            <th class="col-tab-3">
+                                {% if pagination.isSorted('a.AdoptionAt') %}
+                                class="sorted"{% endif %}{{ knp_pagination_sortable(pagination, 'Data adopcji', 'a.adoptionAt') }}
+                            </th>
+                            <th class="col-tab-2">
+                                {% if pagination.isSorted('a.IsActive') %}
+                                class="sorted"{% endif %}{{ knp_pagination_sortable(pagination, 'Status', 'a.isActive') }}
+                            </th>
+                            <th class="col-tab-4">Akcja </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for animal in pagination %}
+                            {% if animal.isDelete == false %}
+                                <tr {% if loop.index is odd %} class="color" {% endif %}>
+                                    {#<th scope="row">{{ loop.index }}</th>#}
+                                    <td class="col-tab-4">{{ animal.name }} <br> <img class="article__card--img" src="{{ animal.imagePath | imagine_filter('squared_thumbnail_smaller') }}"
+                                        alt="{{ animal.name }}"></td>
+                                    
+                                    <td class="col-tab-3">
+                                        <div class="text-center">
+                                            {% if animal.category == 1 %}
+                                            <i class="fas fa-cat fa-2x" title="Kot"></i>
+                                            {% elseif animal.category == 2 %}
+                                            <i class="fas fa-dog fa-2x" title="Pies"></i>
+                                            {% else %}
+                                            <i class="fas fa-frog fa-2x" title="Inne zwierzę"></i>
+                                            {% endif %}
+                                            <hr>
+                                            <form method="POST" action="{{ path('admin_animal_change_category', {id: animal.id})}}">
+                                                <select name="category">
+                                                    <option {% if animal.category == 1 %} selected="selected" {% endif %} value="1">Kot
+                                                    </option>
+                                                    <option {% if animal.category == 2 %} selected="selected" {% endif %} value="2">Pies
+                                                    </option>
+                                                    <option {% if animal.category == 3 %} selected="selected" {% endif %} value="3">
+                                                        Inne</option>
+                                                </select>
+    
+                                                <button type="submit" class="btn btn-outline-success">
+                                                    <i class="fas fa-check-circle"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                    <td class="col-tab-3 text-center">{{ animal.createdAt|date("Y-m-d") }}</td>
+                                    <td class="col-tab-3 text-center">{{ animal.updatedAt|date("Y-m-d") }}</td>
+                                    <td class="col-tab-3 text-center">{{ animal.adoptionAt|date("Y-m-d")|default('Nie adoptowany') }}</td>
+                                    <td class="col-tab-2">
+                                        <div class="center">
+                                            {% if animal.isActive == true %}  
+                                                <input type="checkbox" class="custom-control-switch" id="switch-{{animal.id}}"
+                                                    onchange="window.location.href='{{ path('admin_animal_activity', { id: animal.id}) }}'" checked="checked">
+    
+                                                <label class="control-label-switch" for="switch-{{animal.id}}" title="aktywny"></label>
+                                            {% else %}
+                                                <input type="checkbox" class="custom-control-switch" id="switch-{{animal.id}}"
+                                                    onchange="window.location.href='{{ path('admin_animal_activity', { id: animal.id}) }}'">
+    
+                                                <label class="control-label-switch" for="switch-{{animal.id}}" title="nieaktywny"></label>
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                    <td class="col-tab-4">
+                                        <div class="center">
+                                            <a href="{{ path('admin_animal_edit', { id: animal.id })}}" class="btn btn-outline-primary" title="Edytuj">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                
+                                            <button type="button" class="btn btn-outline-danger delete" title="usuń"
+                                                data-url="{{ path('admin_animal_delete', { id: animal.id }) }}">
+                                                <i class="fas fa-trash-alt" data-url="{{ path('admin_animal_delete', { id: animal.id }) }}"></i>
+                                            </button>
+                
+                                            <a href="{{ path('animal_show', { slug: animal.id }) }}" class="btn btn-outline-success" title="pokaż">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {{ knp_pagination_render(pagination) }}
+            </div>
+        {% else %}
+            <p>No animals to display</p>
+        {% endif %}
+    </article>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        @media (max-width: 600px) {
+            td:nth-of-type(1):before { content: "Imie"; }
+            td:nth-of-type(2):before { content: "Rodzaj"; }
+            td:nth-of-type(3):before { content: "Data dodania"; }
+            td:nth-of-type(4):before { content: "Data zmiany"; }
+            td:nth-of-type(5):before { content: "Data adopcji"; }
+            td:nth-of-type(6):before { content: "Status"; }
+        }
+    </style>
+{% endblock %}

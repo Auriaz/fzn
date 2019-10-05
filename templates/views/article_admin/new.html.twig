@@ -1,8 +1,15 @@
-{% extends 'article_admin/_base.html.twig' %}
+{% extends "article_admin/_base.html.twig" %}
+
+{% block dashboard_title %}Dodaj nowy Artykuł{% endblock %}
+
+{% block dashboard_adding_btn %}
+<a href="{{ path('admin_article_list')}}" class="dashboard-section__adding-btn btn btn-outline-secondary"
+    title="Cofnij do listy artykułów">
+    <i class="fas fa-share"></i>
+</a>
+{% endblock %}
 
 {% block dashboard_body %}
-    <h1>Dodaj nowy Artykuł!</h1>
-
     {{ include('article_admin/_form.html.twig', {
             button_text: 'Utwórz'
         }) }}

@@ -4,42 +4,44 @@
     <div class="grid grid-article wrapper">
 
         {% for article in articles %}
-            <div class="article__card zoom">
-                <a href="{{ path('article_show', {slug: article.slug }) }}">
-                    <img class="article__card--img" src="{{ article.imagePath | imagine_filter('squared_thumbnail_small') }}">
-                    
-                    <div class="article__card--info">
-                        <span class="article__card--details"><strong>Autora:</strong>
-                            {# <img class="article__card--author-img rounded-circle"
-                            src="{{ asset('build/images/alien-profile.png') }}"> #}
-                            {{ article.author.firstName }} {{ article.author.lastName }}
-                        </span>
-                        <br>
-                        <span class="article__card--details"><strong>Opublikowane: </strong>
-                            {{ article.publishedAt ? article.publishedAt|ago }}
-                        </span>
-                        <br>
+            {% if article.isDelete == false %}
+                <div class="article__card zoom">
+                    <a href="{{ path('article_show', {slug: article.slug }) }}">
+                        <img class="article__card--img" src="{{ article.imagePath | imagine_filter('squared_thumbnail_small') }}">
                         
-                        <span class="article__card--details"><strong>Ilość coment: </strong>
-                            <small>({{ article.nonDeletedComments|length }} )</small>
-                        </span>
-                        <br>
+                        <div class="article__card--info">
+                            <span class="article__card--details"><strong>Autora:</strong>
+                                {# <img class="article__card--author-img rounded-circle"
+                                src="{{ asset('build/images/alien-profile.png') }}"> #}
+                                {{ article.author.firstName }} {{ article.author.lastName }}
+                            </span>
+                            <br>
+                            <span class="article__card--details"><strong>Opublikowane: </strong>
+                                {{ article.publishedAt ? article.publishedAt|ago }}
+                            </span>
+                            <br>
+                            
+                            <span class="article__card--details"><strong>Ilość coment: </strong>
+                                <small>({{ article.nonDeletedComments|length }} )</small>
+                            </span>
+                            <br>
 
-                        {% for tag in article.tags %}
-                        <small>
-                            <span class="article__card--tag">{{ tag.name }}</span>
-                        </small>
-                        <br>
+                            {% for tag in article.tags %}
+                            <small>
+                                <span class="article__card--tag">{{ tag.name }}</span>
+                            </small>
+                            <br>
+                            
+                            {% endfor %}
+                            
+                        </div> 
                         
-                        {% endfor %}
-                        
-                    </div> 
-                    
-                    <div class="article__card--title">
-                        <span>{{ article.title }}</span>
-                    </div>
-                </a>
-            </div>
+                        <div class="article__card--title">
+                            <span>{{ article.title }}</span>
+                        </div>
+                    </a>
+                </div>
+            {% endif %}
         {% endfor %}
     </div>
 {% endblock %}

@@ -9,12 +9,13 @@
                 <ul class="dropdown-menu-sidebar">
                     {% if articles %}
                         {% for article in articles %}
-                            
-                            <li class="sidebar__list--secend-li">
-                                <a href="{{ path('article_show', {slug: article.slug }) }}" class="sidebar-link">
-                                    <span class="sidebar__list--article-text-title"><i class="book-open"></i> {{ article.title }}</span>
-                                </a>
-                            </li>  
+                            {% if article.isDelete == false %}
+                                <li class="sidebar__list--secend-li">
+                                    <a href="{{ path('article_show', {slug: article.slug }) }}" class="sidebar-link">
+                                        <span class="sidebar__list--article-text-title"><i class="book-open"></i> {{ article.title }}</span>
+                                    </a>
+                                </li>  
+                            {% endif %}
                         {% endfor %}                    
                     {% endif %}
                 </ul>

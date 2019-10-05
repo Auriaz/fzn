@@ -1,82 +1,180 @@
-.table {
-    position: relative;
-    width: 100%;
-    height: auto;
-    
-    &-dark {
+.table {   
+    &-main {
         & thead {
-            background-color: $mainDark;
-
+            background-color: $mainWhite;
+            
             & th {
-                padding: 10px;
-                color: $mainLithBlue;
+                table-layout: fixed;
+                color: $mainDarkCyan;
+                border: 2px solid $mainDarkCyan;
+                
+                @include atSmall {
+                    box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.4);
+                }
             }
         }
 
         & tbody {
-            background-color: $mainGray;
-
-            & tr {
+            background-color: $mainWhite;
+            
+            & tr:hover {
+                background-color: lighten($color: $mainLithCyan, $amount: 30%);
                 
-                &:hover {
-                    background-color: $mainDarkCyan;
-                    color: $mainWhite;
-
-                    & td {
-                        border: 2px solid $mainLithCyan;
-                    }
+                & td {
+                    color: $mainDark;
+                    border: 2px solid $mainLithCyan;
                 }
             } 
-
+            
             & td {
-                padding: 5px;
-                color: $mainDark;
+                vertical-align: middle; 
+                color: darken($color: $mainGray, $amount: 40%);
+                table-layout: fixed;    
+            }
+
+            & td:first-child {
+                color: $mainDarkCyan;
+                font-weight: bold;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            & thead, tbody, th, td, tr {
+                width: 100vw;
+                display: block;
+                text-align: center;
+            }
+    
+            & thead tr {
+                display: none;
+            }
+    
+            & td {
+                border: none;
+            }
+            
+             & tbody tr:hover {
+                & td {
+                    border: none;
+                }
+            }
+
+            & td:before {
+                color: #00bdea;
+                font-weight: bold;
+                margin-right: 20px;
+                display: inline-block;
+            }
+        }
+
+        & .add-sticky {
+            @include atMedium {
+                width: 89.6%;
+                border-collapse: separate;
+                display: table;
+                margin: 0;
+                padding: 0;
+                top: 160px;
+                z-index: 10;
+            }
+
+            @include atLarge {
+                width: 91%;
+            }
+
+            @include atExtraLarge {
+                width: 93.6%;
             }
         }
     }
 
     & .color-blue {
-        background-color: $mainWhite;
         color: $mainCyan;
     }
-
+    
     & .icon-blue {
         color: $mainCyan;
-
+        
         &:hover {
             color: $mainWhite;
         }
     }
-
+    
     & .text-center {
         text-align: center;
     }
-
-    & .text-left {
-        text-align: justify;
+    
+    & .center {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
     }
     
-    & .col-1 {
-       width: 10%; 
+    & .text-left {
+        text-align: justify;
+    }  
+    
+    & .col-tab-1 {
+        width: auto;
+
+        @include atMedium {
+            width: 4%;
+        }
     }
 
-    & .col-2 {
-       width: 20%; 
+     & .col-tab-2 {
+        width: auto;
+
+        @include atMedium {
+            width: 8%;
+        }
+    }     
+    
+    & .col-tab-3 {
+        width: auto;
+
+        @include atMedium {
+            width: 12%;
+        }
     }
 
-    & .col-4 {
-       width: 40%; 
+    & .col-tab-4 {
+        width: auto;
+
+        @include atMedium {
+            width: 16%;
+        }
+    }    
+    
+    & .col-tab-5 {
+        width: auto;
+
+        @include atMedium {
+            width: 20%;
+        }
+    }
+    
+    & .col-tab-6 {
+        width: auto;
+
+        @include atMedium {
+            width: 24%;
+        }
     }
 
-    & .col-6 {
-       width: 60%; 
+    & .col-tab-7 {
+        width: auto;
+
+        @include atMedium {
+            width: 28%;
+        }
     }
 
-    & .col-8 {
-       width: 80%; 
-    }
+    & .col-tab-8 {
+        width: auto;
 
-    & .col-10 {
-       width: 100%; 
+        @include atMedium {
+            width: 32%;
+        }
     }
 }

@@ -124,12 +124,12 @@ class ReferenceList {
         const itemsHtml = this.references.map(reference => {
             return `
                 <li class="list-group-item d-flex justify-content-between align-items-center mb-2" data-id="${reference.id}">
-                    <span class="drag-handle fa fa-reorder mr-3"></span>
+                    <span class="drag-handle fas fa-bars mr-3"></span>
 
                     <input type="text" value="${reference.originalFilename}" class="form-control col-sm-8 reference-edit-filename" ">
 
                     <span class="col-sm-4">
-                        <a href="/admin/article/references/${reference.id}/download" class="btn btn-link btn-sm" /><i class="fa fa-download"></i></a>
+                        <a href="/admin/article/references/${reference.id}/download" class="btn btn-link btn-sm" /><i class="fas fa-download"></i></a>
                         <button class="reference-delete btn btn-link btn-sm"><i class="fa fa-trash"></i></button>
                     </span>
                 </li>

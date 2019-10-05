@@ -24,6 +24,8 @@ class AnimalAddFormType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $animal = $options['data'] ?? null;
+        $isEdit = $animal && $animal->getId();
 
         $builder
             ->add('name', TextType::class, [
@@ -31,9 +33,6 @@ class AnimalAddFormType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Podaj imię',
                 ]
-            ])
-            ->add('adoptionAt', null, [
-                'label' => 'Tekst',
             ])
             ->add('category', ChoiceType::class, [
                 'label' => 'Wybierz kategorie',
@@ -47,31 +46,39 @@ class AnimalAddFormType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'Opis',
             'attr' => [
-                'class' => 'my-editor'
+                'class' => 'editor'
             ],
+            ])
+            ->add('adoptionAt', null, [
+                'label' => 'Data',
+                'widget' => 'single_text',
             ]);
 
-        // $imageConstraints = [
-        //     new Image([
-        //         'maxSize' => '5M'
-        //     ]),
-        // ];
+        $imageConstraints = [
+            new Image([
+                'maxSize' => '5M'
+            ]),
+        ];
 
-        // if (!$isEdit || !$animal->getImage()) {
-        //     $imageConstraints[] = new NotNull([
-        //         'message' => 'Dodaj zdjęcię!',
-        //     ]);
-        // }
+        if (!$isEdit || !$animal->getImageFilename()) {
+            $imageConstraints[] = new NotNull([
+                'message' => 'Dodaj zdjęcię!',
+            ]);
+        }
 
-        $builder->add('image', FileType::class, [
+        if ($isEdit) {
+            $filename = $animal->getImageFilename();
+        } else {
+            $filename = 'Podaj tytuł';
+        };
+
+        $builder->add('imageFile', FileType::class, [
             'mapped' => false,
             'required' => false,
-            // 'constraints' => new NotNull([
-            //     'message' => 'Dodaj zdjęcię!',
-            // ]),
-            // 'attr' => [
-            //     'placeholder' => 'Podaj tytuł',
-            // ],
+            'constraints' => $imageConstraints,
+            'attr' => [
+                'placeholder' => $filename,
+            ],
         ]);
 
 

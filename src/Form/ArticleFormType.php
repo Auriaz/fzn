@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\NotNull;
@@ -36,89 +37,114 @@ class ArticleFormType extends AbstractType
         $article = $options['data'] ?? null;
         $isEdit = $article && $article->getId();
 
-        $builder
-            ->add('title', TextType::class, [
-                // 'help' => 'Wybierz coś chwytliwego!',
-                'label' => 'Tytuł', 
-                'attr' => [
-                    'placeholder' => 'Podaj tytuł',
-                ]
-            ])
-            ->add('content', null, [
-                'label' => 'Tekst',          
-            ])
-            ->add('author', UserSelectTextType::class, [
-                'label' => 'Autor', 
-                'disabled' => $isEdit
-            ])
-            ->add('location', ChoiceType::class, [
-                'label' => 'Wybierz miejsce',
-                'placeholder' => 'Wybierz lokacje',
-                'choices' => [
-                    'The Solar system' => 'solar_system',
-                    'Near a star' => 'star',
-                    'Interstellar Space' => 'interstellar_space',
-                ],
-                'attr' => [
-                    'data-specific-location-url'=>$this->router->generate('admin_article_location_select'),
-                    'class' => 'article-form-location'
-                ],
+        if($article) {
+            if($article->getIsDelete() == true) {
+                $isDelete = true;    
+            } else {
+                $isDelete = false;
+            }
+        } else {
+            $isDelete = false;
+        }
+
+        if(!$isDelete) {
+            $builder
+                ->add('title', TextType::class, [
+                    // 'help' => 'Wybierz coś chwytliwego!',
+                    'label' => 'Tytuł',
+                    'attr' => [
+                        'placeholder' => 'Podaj tytuł',
+                    ]
+                ])
+                ->add('content', null, [
+                    'label' => 'Tekst',
+                    'attr' => [
+                        'class' => 'editor'
+                    ],
+                ])
+                ->add('author', UserSelectTextType::class, [
+                    'label' => 'Autor',
+                    'disabled' => $isEdit
+                ]);
+            // ->add('location', ChoiceType::class, [
+            //     'label' => 'Wybierz miejsce',
+            //     'placeholder' => 'Wybierz lokacje',
+            //     'choices' => [
+            //         'The Solar system' => 'solar_system',
+            //         'Near a star' => 'star',
+            //         'Interstellar Space' => 'interstellar_space',
+            //     ],
+            //     'attr' => [
+            //         'data-specific-location-url'=>$this->router->generate('admin_article_location_select'),
+            //         'class' => 'article-form-location'
+            //     ],
+            //     'required' => false,
+            // ]);
+
+            $imageConstraints = [
+                new Image([
+                    'maxSize' => '5M'
+                ]),
+            ];
+
+            if (!$isEdit || !$article->getImageFilename()) {
+                $imageConstraints[] = new NotNull([
+                    'message' => 'Dodaj zdjęcię!',
+                ]);
+            }
+
+            if ($isEdit) {
+                $filename = $article->getImageFilename();
+            } else {
+                $filename = 'Podaj tytuł';
+            };
+
+            $builder->add('imageFile', FileType::class, [
+                'mapped' => false,
                 'required' => false,
+                'constraints' => $imageConstraints,
+                'attr' => [
+                    'placeholder' => $filename,
+                ],
             ]);
 
-        $imageConstraints = [
-            new Image([
-                'maxSize' => '5M'
-            ]),
-        ];
-
-        if (!$isEdit || !$article->getImageFilename()) {
-            $imageConstraints[] = new NotNull([
-                'message' => 'Dodaj zdjęcię!',
-            ]);
-        }
-
-        $builder->add('imageFile', FileType::class, [
-            'mapped' => false,
-            'required' => false,
-            'constraints' => $imageConstraints, 
-            'attr' => [
-                'placeholder' => 'Podaj tytuł',
-            ],
-        ]);
+            if ($options['include_published_at']) {
+                $builder->add('publishedAt', null, [
+                    'label' => 'Data',
+                    'widget' => 'single_text',
+                ]);
+            }
     
-        if($options['include_published_at']) {
-            $builder->add('publishedAt', null, [
-                'label' => 'Data',
-                'widget' => 'single_text',
-            ]);    
+            // $builder->addEventListener(
+            //     FormEvents::PRE_SET_DATA,
+            //     function (FormEvent $event) {
+            //         /** @var Article|null $data */
+            //         $data = $event->getData();
+            //         if (!$data) {
+            //             return;
+            //         }
+            //         $this->setupSpecificLocationNameField(
+            //             $event->getForm(),
+            //             $data->getLocation()
+            //         );
+            //     }
+            // );
+    
+            // $builder->get('location')->addEventListener(
+            //     FormEvents::POST_SUBMIT,
+            //     function (FormEvent $event) {
+            //         $form = $event->getForm();
+            //         $this->setupSpecificLocationNameField(
+            //             $form->getParent(),
+            //             $form->getData()
+            //         );
+            //     }
+            // );
+        } else {
+            $message = 'object not found';
+
+            throw new NotFoundHttpException($message);
         }
-
-        $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) {
-                /** @var Article|null $data */
-                $data = $event->getData();
-                if (!$data) {
-                    return;
-                }
-                $this->setupSpecificLocationNameField(
-                    $event->getForm(),
-                    $data->getLocation()
-                );
-            }
-        );
-
-        $builder->get('location')->addEventListener(
-            FormEvents::POST_SUBMIT,
-            function (FormEvent $event) {
-                $form = $event->getForm();
-                $this->setupSpecificLocationNameField(
-                    $form->getParent(),
-                    $form->getData()
-                );
-            }
-        );
     }
 
 
@@ -130,53 +156,53 @@ class ArticleFormType extends AbstractType
         ]);
     }
 
-    private function getLocationNameChoices(string $location)
-    {
-        $planets = [
-            'Mercury',
-            'Venus',
-            'Earth',
-            'Mars',
-            'Jupiter',
-            'Saturn',
-            'Uranus',
-            'Neptune',
-        ];
+    // private function getLocationNameChoices(string $location)
+    // {
+    //     $planets = [
+    //         'Mercury',
+    //         'Venus',
+    //         'Earth',
+    //         'Mars',
+    //         'Jupiter',
+    //         'Saturn',
+    //         'Uranus',
+    //         'Neptune',
+    //     ];
 
-        $stars = [
-            'Polaris',
-            'Sirius',
-            'Alpha Centauari A',
-            'Alpha Centauari B',
-            'Betelgeuse',
-            'Rigel',
-            'Other'
-        ];
+    //     $stars = [
+    //         'Polaris',
+    //         'Sirius',
+    //         'Alpha Centauari A',
+    //         'Alpha Centauari B',
+    //         'Betelgeuse',
+    //         'Rigel',
+    //         'Other'
+    //     ];
 
-        $locationNameChoices = [
-            'solar_system' => array_combine($planets, $planets),
-            'star' => array_combine($stars, $stars),
-            'interstellar_space' => null,
-        ];
+    //     $locationNameChoices = [
+    //         'solar_system' => array_combine($planets, $planets),
+    //         'star' => array_combine($stars, $stars),
+    //         'interstellar_space' => null,
+    //     ];
 
-        return $locationNameChoices[$location] ?? null;
-    }
+    //     return $locationNameChoices[$location] ?? null;
+    // }
 
-    private function setupSpecificLocationNameField(FormInterface $form, ?string $location)
-    {
-        if (null === $location) {
-            $form->remove('specificLocationName');
-            return;
-        }
-        $choices = $this->getLocationNameChoices($location);
-        if (null === $choices) {
-            $form->remove('specificLocationName');
-            return;
-        }
-        $form->add('specificLocationName', ChoiceType::class, [
-            'placeholder' => 'Where exactly?',
-            'choices' => $choices,
-            'required' => false,
-        ]);
-    }
+    // private function setupSpecificLocationNameField(FormInterface $form, ?string $location)
+    // {
+    //     if (null === $location) {
+    //         $form->remove('specificLocationName');
+    //         return;
+    //     }
+    //     $choices = $this->getLocationNameChoices($location);
+    //     if (null === $choices) {
+    //         $form->remove('specificLocationName');
+    //         return;
+    //     }
+    //     $form->add('specificLocationName', ChoiceType::class, [
+    //         'placeholder' => 'Where exactly?',
+    //         'choices' => $choices,
+    //         'required' => false,
+    //     ]);
+    // }
 }

@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Animal;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\DBAL\Query\QueryBuilder;
+use Doctrine\ORM\QueryBuilder as DoctrineQueryBuilder;
 
 /**
  * @method Animal|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,9 +21,24 @@ class AnimalRepository extends ServiceEntityRepository
         parent::__construct($registry, Animal::class);
     }
 
-    // /**
-    //  * @return Animal[] Returns an array of Animal objects
-    //  */
+    /**
+     * @return Animal[] Returns an array of Animal objects
+     */
+
+    public function getWithSearchQueryBuilder(?string $term): DoctrineQueryBuilder
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->innerJoin('a.user', 'u')
+            ->addSelect('u')
+            ;
+
+        if ($term) {
+            $qb->andWhere('a.name LIKE :term OR a.category LIKE :term OR u.firstName LIKE :term OR u.lastName LIKE :term')
+                ->setParameter('term', '%' . $term . '%');
+        }
+
+        return $qb->orderBy('a.createdAt', 'DESC');
+    }
     /*
     public function findByExampleField($value)
     {

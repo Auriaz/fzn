@@ -13,7 +13,7 @@
 <div class="row">
     <div class="col-sm-8">
         <h3>Dane edycji</h3>
-
+        <hr>
         {{ include('article_admin/_form.html.twig', {
             button_text: 'Aktualizuj'
         }) }}
@@ -21,7 +21,7 @@
 
     <div class="col-sm-4">
         <h3>Dodaj zdjecie</h3>
-
+<hr>
         <ul class="list-group small reference-list" data-url="{{ path('admin_article_list_references', { id: article.id }) }}"></ul>
 
         <hr>

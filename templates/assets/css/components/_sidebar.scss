@@ -14,7 +14,7 @@
     &-article {
 		width: 100%;
 		position: sticky;
-		top: 110px;
+		top: 150px;
 		
         @include atMedium {
 			display: block;
@@ -25,10 +25,10 @@
     
     &-dashboard {
 		position: fixed;
-		display: flex;
 		top: 1px;
 		
 		@include atMedium {
+			display: flex;
 			width: 50px;
 			padding-top: 120px; 
 		}  
@@ -177,11 +177,12 @@
 		&-icon {
 			width: 20px;
 			height: 20px;
-		
+			display: none;
+			
 			&--dashboard {
 				top: 20px;
 				left: 20px;
-
+				
 				@include atMedium {
 					position: relative;
 					top: 5px;
@@ -189,7 +190,7 @@
 					display: inline-block;
 				}
 			}
-
+			
 			&--text-content {
 				width: 20px;
 				height: 20px;
@@ -230,6 +231,7 @@
 				background-color: $mainLithBlue;
 				transition: all .3s ease-out;
 				transform-origin: 0 50%;
+				cursor: pointer;
 			}
 
 			&::after {

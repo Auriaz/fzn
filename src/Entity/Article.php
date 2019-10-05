@@ -92,6 +92,16 @@ class Article
      */
     private $articleReferences;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isDelete = false;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isPublished;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -321,6 +331,30 @@ class Article
     public function getArticleReferences(): Collection
     {
         return $this->articleReferences;
+    }
+
+    public function getIsDelete(): ?bool
+    {
+        return $this->isDelete;
+    }
+
+    public function setIsDelete(bool $isDelete): self
+    {
+        $this->isDelete = $isDelete;
+
+        return $this;
+    }
+
+    public function getIsPublished(): ?bool
+    {
+        return $this->isPublished;
+    }
+
+    public function setIsPublished(?bool $isPublished): self
+    {
+        $this->isPublished = $isPublished;
+
+        return $this;
     }
     
     // public function addArticleReference(ArticleReference $articleReference): self

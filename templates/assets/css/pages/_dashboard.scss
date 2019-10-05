@@ -22,6 +22,7 @@
         color: $mainDarkBlue;
         transition: all 0.3s linear;
         display: flex;
+        flex-wrap: wrap;
 
         @include atMedium {
             width: calc(99% - 50px);
@@ -43,19 +44,19 @@
 
 
         &__menu-icon {
-            width: 100%;
+            width: 90vw;
             height: auto;
-            position: relative;
+            // position: relative;
             background-color: $mainWhite;
-        }
 
-        .add-sticky {
+        }
+        
+        & .add-sticky {
             position: fixed;
             top:0;
-            padding: 40px 20px 20px 0;
 
             @include atMedium {
-                padding: 70px 20px 20px 0;
+                padding: 70px 0 20px 0;
             }
         }
 
@@ -66,12 +67,39 @@
             margin-top: 10px;
             display: block;
         }
+
+        &__search {
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 7px;
+            right: 18px;
+            transform: translateY(10px);
+            z-index: 3;
+            display: none;
+            
+            @include atMedium {
+                display: block;
+            }
+            
+            &--btn-undo {
+                right: 328px;
+                transform: translateY(30px);
+                display: inline-block;
+            }
+
+            &--form {
+                width: 300px;
+                display: inline-block;
+            }
+        }
         
         &__title {
             text-transform: uppercase;
             text-align: center;
             font-size: 1.8rem;
             color: $mainDark;
+            margin: 5px;
         }
 
         &__adding-btn {
@@ -88,3 +116,4 @@
         }
     }
 }
+
