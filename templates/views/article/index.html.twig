@@ -1,13 +1,16 @@
-{% extends 'base.html.twig' %}
+{% extends 'article/_base.html.twig' %}
 
-{% block body %}
-    <div class="grid grid-article wrapper">
+{% block articles_title %}{{ title }} ({{ pagination.getTotalItemCount }}){% endblock %}
 
-        {% for article in articles %}
+{% block articles_body %}
+    {% if pagination|default %}
+    <div class="grid grid-article">
+
+        {% for article in pagination %}
             {% if article.isDelete == false %}
                 <div class="article__card zoom">
                     <a href="{{ path('article_show', {slug: article.slug }) }}">
-                        <img class="article__card--img" src="{{ article.imagePath | imagine_filter('squared_thumbnail_small') }}">
+                        <img class="article__card--img" src="{{ article.imagePath | imagine_filter('aricle_main_image') }}">
                         
                         <div class="article__card--info">
                             <span class="article__card--details"><strong>Autora:</strong>
@@ -44,10 +47,9 @@
             {% endif %}
         {% endfor %}
     </div>
+    {% else %}
+    <p>NIe ma artykułów do wyświetlenia</p>
+    {% endif %}
 {% endblock %}
 
-{% block stylesheets %}
-{{ parent() }}
-
-{{ encore_entry_link_tags('article') }}
-{% endblock %}
+{% block articles_pagination %}{{ knp_pagination_render(pagination) }}{% endblock %}

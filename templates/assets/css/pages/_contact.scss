@@ -1,0 +1,29 @@
+.contact {
+    font-size: 0.8rem;
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+
+    @include atSmaller {
+        font-size: 1rem;
+    }
+    
+    &-tel {
+        display: inline-block;
+    }
+
+    &-adoption {
+        text-align: center;
+        margin: 10px 50px;
+        display: inline-block; 
+
+        & p:first-child {
+            text-transform: uppercase;
+            
+        }
+
+        & p {
+            margin: 0;
+        }
+    }
+}

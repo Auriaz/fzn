@@ -5,19 +5,18 @@ namespace App\DataFixtures;
 use App\Entity\Article;
 use App\Entity\Comment;
 use App\Entity\Tag;
+use App\FileManager\PhotoFileManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\HttpFoundation\File\File;
-use App\Service\UploaderHelper;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ArticleFixtures extends BaseFixture implements DependentFixtureInterface
 {
     private static $articleTitles = [
-        'Why Asteroids Taste Like Bacon',
-        'Life on Planet Mercury: Tan, Relaxing and Fabulous',
-        'Light Speed Travel: Fountain of Youth or Fallacy',
+        'Dlaczego koty lubią miałczeć',
+        'Czy psy szczekaja',
+        'Życie domowe zwierząt',
     ];
 
     private static $articleImages = [
@@ -26,11 +25,11 @@ class ArticleFixtures extends BaseFixture implements DependentFixtureInterface
         'zbinek.jpeg',
     ];
 
-    private $uploaderHelper;
+    private $photoFileManager;
 
-    public function __construct(UploaderHelper $uploaderHelper)
+    public function __construct(PhotoFileManager $photoFileManager)
     {
-        $this->uploaderHelper = $uploaderHelper;
+        $this->photoFileManager = $photoFileManager;
     }
 
     protected function loadData(ObjectManager $manager)
@@ -68,7 +67,9 @@ EOF
 
             $article->setAuthor($this->getRandomReference('main_users'))
                 ->setHeartCount($this->faker->numberBetween(5, 100))
-                ->setImageFilename( $imageFilename);
+                ->setImageFilename( $imageFilename)
+                // ->setArticleReferences($imageFilename, $this->faker->numberBetween(0, 5))
+                ;
 
             $tags = $this->getRandomReferences('main_tags', $this->faker->numberBetween(0, 5));
             foreach ($tags as $tag) {
@@ -96,7 +97,7 @@ EOF
         $targetPath = sys_get_temp_dir() . '/' . $randomImage;
         $fs->copy(__DIR__ . '/images/' . $randomImage, $targetPath, true);
 
-        return $this->uploaderHelper
+        return $this->photoFileManager
             ->uploadArticleImage(new UploadedFile($targetPath, $randomImage), null);
     }
 }

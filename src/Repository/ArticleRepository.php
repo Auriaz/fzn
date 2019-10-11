@@ -29,6 +29,7 @@ class ArticleRepository extends ServiceEntityRepository
     public function getWithSearchQueryBuilder(?string $term): DoctrineQueryBuilder
     {
         $qb = $this->createQueryBuilder('a')
+            ->andWhere('a.isDelete = false')
             ->innerJoin('a.author', 'u')
             ->addSelect('u');
 
@@ -36,6 +37,7 @@ class ArticleRepository extends ServiceEntityRepository
             $qb->andWhere('a.content LIKE :term OR a.title LIKE :term OR u.firstName LIKE :term OR u.lastName LIKE :term')
                 ->setParameter('term', '%' . $term . '%');
         }
+
 
         return $qb->orderBy('a.createdAt', 'DESC');
     }

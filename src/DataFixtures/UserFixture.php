@@ -19,11 +19,12 @@ class UserFixture extends BaseFixture
     {
         $this->createMany(10, 'main_users', function($i) use ($manager) {
             $user = new User();
-            $user->setEmail(sprintf('spacebar%d@example.com', $i));
+            $user->setEmail(sprintf('fzn%d@e.com', $i));
             $user->setFirstName($this->faker->firstName);
             $user-> setLastName($this->faker->lastName);
             $user->agreeToTerms();
             $user->setIsActive($this->faker->boolean($i));
+            $user->setIsDelete($this->faker->boolean($i));
             if($this->faker->boolean) {
                 $user-> setNick($this->faker->name);
                 $user->setTwitterUsername($this->faker->userName);
@@ -47,11 +48,31 @@ class UserFixture extends BaseFixture
 
         $this->createMany(3, 'admin_users', function ($i) {
             $user = new User();
-            $user->setEmail(sprintf('admin%d@example.com', $i));
+            $user->setEmail(sprintf('admin%d@e.com', $i));
             $user->setFirstName($this->faker->firstName);
             $user->setLastName($this->faker->lastName);
             $user->setNick($this->faker->name);
             $user->setRoles(['ROLE_ADMIN']);
+            $user->setIsActive($this->faker->boolean($i));
+            $user->agreeToTerms();
+
+            $user->setPassword(
+                $this->passwordEncoder->encodePassword(
+                    $user,
+                    'foo'
+                )
+            );
+
+            return $user;
+        });
+
+        $this->createMany(3, 'editor_users', function ($i) {
+            $user = new User();
+            $user->setEmail(sprintf('edytor%d@e.com', $i));
+            $user->setFirstName($this->faker->firstName);
+            $user->setLastName($this->faker->lastName);
+            $user->setNick($this->faker->name);
+            $user->setRoles(['ROLE_EDITOR']);
             $user->setIsActive($this->faker->boolean($i));
             $user->agreeToTerms();
 

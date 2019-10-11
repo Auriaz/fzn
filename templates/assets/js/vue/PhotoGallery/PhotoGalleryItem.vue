@@ -3,7 +3,7 @@
         <div :class="{ deleting: isDeleting }" class="text-white pt-3">
             <img 
                 @click="modelOpen(item, index)"
-                :src="item.url" 
+                :src="item.urlSmall" 
                 :alt="item.originalFilename"
             />
             

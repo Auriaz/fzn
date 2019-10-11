@@ -5,12 +5,13 @@ use App\Entity\Article;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Psr\Log\LoggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ArticleRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 
-class ArticleController extends AbstractController
+class ArticleController extends BaseController
 {
     /**
      * Currently unused: just showing a controller with a constructor!
@@ -33,6 +34,7 @@ class ArticleController extends AbstractController
             'articles'=> $articles,
             'article' => $article,
             'title' => $article->getTitle()
+            
         ]);
     }
 
@@ -52,12 +54,24 @@ class ArticleController extends AbstractController
     /**
      * @Route("/article", name="articles_show")
      */
-    public function showArticles(ArticleRepository $repository)
+    public function showArticles(ArticleRepository $articleRepository, PaginatorInterface $paginator, Request $request)
     {
-        $articles = $repository->findAllPublishedOrderedByArticles();
+        // dd($request->query);
+        if(isset($request->query)) {
+            $query = $request->query->get('query');
+            $queryBuilder = $articleRepository->getWithSearchQueryBuilder($query);
+        } else {
+            $queryBuilder = $articleRepository->findAll();
+        }
+ 
+        $pagination = $paginator->paginate(
+            $queryBuilder, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            8/*limit per page*/
+        );
 
-        return $this->render('article/showArticles.html.twig', [
-            'articles' => $articles,
+        return $this->render('article/index.html.twig', [
+            'pagination' => $pagination,
             'title' => 'Artykuły'
         ]);
     }

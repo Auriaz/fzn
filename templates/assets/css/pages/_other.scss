@@ -1,0 +1,74 @@
+.other {
+    width: 100%;
+    min-height: 70vh;
+    display: flex;
+    justify-content: center;
+
+    &-section {
+        max-width: 1000px;
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        padding: 20px;
+    
+        &__header {
+            width: 100%;
+            height: auto;
+            position: relative;
+            display: flex;
+            flex-direction: column-reverse;
+            margin-bottom: 20px;
+
+            
+            @include atSmall {
+                flex-direction: row;
+                margin: 30px;
+            }
+            
+            &--houses {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            &--img {
+                width: 300px;
+                max-height: 300px;
+            }
+        
+            &--title {
+                margin-bottom: 10px;
+                text-align: center;
+    
+                @include atSmall {
+                    margin-left: 20px;
+                }
+            }
+        }
+
+        &--text {
+            color: $mainDark;
+
+            &-p {
+                text-indent: 40px;
+                text-align: justify;
+                letter-spacing: 1px;
+            }
+
+            &-bold {
+
+                &-400 {
+                    font-weight: 400;
+                }
+
+                &-600 {
+                    font-weight: 600;
+                }
+            }            
+        }
+
+        &__body {
+        }
+    }
+}

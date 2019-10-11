@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\FileManager\PhotoFileManager;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +12,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\Common\Collections\Criteria;
 use App\Repository\ArticleRepository;
-use App\Service\UploaderHelper;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
@@ -193,7 +193,7 @@ class Article
 
     public function getImagePath()
     {
-        return UploaderHelper::ARTICLE_IMAGE . '/' . $this->getImageFilename();
+        return PhotoFileManager::IMAGE . '/' . PhotoFileManager::ARTICLE_IMAGE . '/' . $this->getImageFilename();
     }
 
     public function incrementHeartCount(): self

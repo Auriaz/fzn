@@ -1,29 +1,40 @@
-{% extends 'base.html.twig' %}
+{% extends 'animal/_base.html.twig' %}
 
 {% block title %}{{ category }}{% endblock %}
 
-{% block body %}
-    <article class='content'>
-        {% if animals|default %}
+{% block articles_title %}{{ category }} ({{ pagination.getTotalItemCount }}){% endblock %}
+
+{% block articles_body %}
+    {% if pagination|default %}
         <div class="grid grid-article">
-            {% for animal in animals %}
-            <div class="postcard zoom">
-                <div class="postcard-overlay">
-                    <a href="">
-                        {% if animal.image %}
-                        <img class="postcard-img" src="{{ animal.image }}" alt="{{ animal.name }}" />
-                        {% else %}
-                        <div class="postcard-icon"><i class="paw"></i></div>
-                        {% endif %}
+            {% for animal in pagination %}
+                {% if animal.isDelete == false %}
+                <div class="article__card zoom">
+                    <a href="{{ path('animal_show', {id: animal.id }) }}">
+                        <img class="article__card--img" src="{{ animal.imagePath | imagine_filter('aricle_main_image') }}">
+
+                        <div class="article__card--info">
+                            <span class="article__card--details"><strong>Imie:</strong>
+                                {{ animal.name }}
+                            </span>
+                            <br>
+                            <span class="article__card--details"><strong>Opublikowane: </strong>
+                                {{ animal.createdAt ? animal.createdAt|ago }}
+                            </span>
+                            <br>
+                        </div>
+
+                        <div class="article__card--title">
+                            <span>{{ animal.name }}</span>
+                        </div>
                     </a>
                 </div>
-
-                <h3 class="postcard-title">{{ animal.name }}</h3>
-            </div>
+                {% endif %}
             {% endfor %}
         </div>
-        {% else %}
-        <p>No animals to display</p>
-        {% endif %}
-    </article>
+    {% else %}
+        <p>NIe ma zwierząt do wyświetlenia</p>
+    {% endif %}
 {% endblock %}
+
+{% block articles_pagination %}{{ knp_pagination_render(pagination) }}{% endblock %}

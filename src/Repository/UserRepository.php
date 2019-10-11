@@ -5,6 +5,9 @@ namespace App\Repository;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\DBAL\Query\QueryBuilder;
+use Doctrine\ORM\QueryBuilder as DoctrineQueryBuilder;
+
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -22,6 +25,23 @@ class UserRepository extends ServiceEntityRepository
     /**
      * @return User[]
      */
+
+    public function getWithSearchQueryBuilder(?string $term): DoctrineQueryBuilder
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->andWhere('u.isDelete = false')
+            // ->innerJoin('a.author', 'u')
+            // ->addSelect('u')
+            ;
+
+        if ($term) {
+            $qb->andWhere('u.email LIKE :term OR u.firstName LIKE :term OR u.lastName LIKE :term OR u.nick LIKE :term')
+                ->setParameter('term', '%' . $term . '%');
+        }
+
+        return $qb->orderBy('u.createdAt', 'DESC');
+    }
+
     public function findAllEmailAlphabetical()
     {
         return $this->createQueryBuilder('u')

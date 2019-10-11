@@ -24,11 +24,20 @@ class DashboardAdminController extends BaseController
 {
 
     /**
-     * @Route("/admin/dashboard", name="admin_dashboard")
+     * @Route("/admin/dashboard", name="admin_dashboard_list")
      */
-    public function index(UserRepository $userRepository, Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $formAuthenticator, MessageBusInterface $messageBus)
+    public function list(UserRepository $userRepository, Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $formAuthenticator, MessageBusInterface $messageBus, PaginatorInterface
+     $paginator)
     {
-        $users = $userRepository->findAll();
+        $query = $this->request->query->get('query');
+
+        $queryBuilder = $userRepository->getWithSearchQueryBuilder($query);
+
+        $pagination = $paginator->paginate(
+            $queryBuilder, /* query NOT result */
+            $this->request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
         // $articleContent = $markdownHelper->parse($articleContent);
         $form = $this->createForm(UserRegistrationFormType::class);
 
@@ -63,10 +72,11 @@ class DashboardAdminController extends BaseController
             );
         }
 
-        return $this->render('dashboard_admin/index.html.twig', [
-            'users' => $users,
+        return $this->render('dashboard_admin/list.html.twig', [
+            'pagination' => $pagination,
             'title' => 'Użytkownicy',
             'registrationForm' => $form->createView(),
+            'user' => $this->getUser()
         ]);
     }
 
@@ -95,7 +105,7 @@ class DashboardAdminController extends BaseController
         }
 
         $this->addFlash('success', 'Rola użytkownika została zmieniona na "'.$roles.'" !');
-        return $this->redirectToRoute('admin_dashboard', [
+        return $this->redirectToRoute('admin_dashboard_list', [
             'id' => $user->getId(),
         ]);
     }
@@ -117,7 +127,7 @@ class DashboardAdminController extends BaseController
         $this->em->persist($user);
         $this->em->flush();
 
-        return $this->redirectToRoute('admin_dashboard', [
+        return $this->redirectToRoute('admin_dashboard_list', [
             'id' => $user->getId(),
         ]);
     }
@@ -140,7 +150,7 @@ class DashboardAdminController extends BaseController
             $this->addFlash('warning', 'Administratora nie można usunąć!');
         }
 
-        return $this->redirectToRoute('admin_dashboard');
+        return $this->redirectToRoute('admin_dashboard_list');
     }
 
     /**

@@ -5,7 +5,6 @@ import '../css/file_manager.scss';
 import $ from 'jquery';
 import 'bootstrap';
 // import './components/Editor';
-require("summernote/dist/summernote-bs4");
 // import PhotoManagerApp from './vue/file_manager/PhotoManagerApp.vue';
 
 // Vue.component('file-manager-app', PhotoManagerApp);
@@ -26,10 +25,3 @@ var stickyHeader = new StickyHeader('.content-section__article--control');
 // $(document).ready(function () {
 //     $('#article_form_content').summernote();
 // });
-
-$('#article_form_content').summernote({
-    height: 300,                 // set editor height
-    minHeight: null,             // set minimum height of editor
-    maxHeight: null,             // set maximum height of editor
-    focus: true                  // set focus to editable area after initializing summernote
-});

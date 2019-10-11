@@ -17,15 +17,15 @@
                 <i class="fa fa-caret-right"></i>
             </div>
             <ul class="nav-subsection dropdown-menu"> 
-               {#} <li class="nav-item">
-                    <a class="nav-link" href="{{ path('animal_show', {category: 1}) }}">Koty</a>
+               <li class="nav-item">
+                    <a class="nav-link" href="{{ path('animal_show_category', {category: 'koty'}) }}">Koty</a>
                 </li>
                 <li class="nav-item"> 
-                    <a class="nav-link" href="{{ path('animal_show', {category: 2}) }}">Psy</a>
+                    <a class="nav-link" href="{{ path('animal_show_category', {category: 'psy'}) }}">Psy</a>
                 </li>
                 <li class="nav-item"> 
-                    <a class="nav-link" href="{{ path('animal_show', {category: 3}) }}">Inne zwierzęta</a>
-                </li>  {#}
+                    <a class="nav-link" href="{{ path('animal_show_category', {category: 'inne'}) }}">Inne zwierzęta</a>
+                </li>
             </ul>   
         </li>
         
@@ -49,10 +49,10 @@
                     </div>
                     <ul class="nav-subsection nav-toggle ">
                         <li class="nav-item">
-                            <a class="nav-link" href="/s-wizyta-przedadopcyjna">Wizyta przedadopcyjna</a>
+                            <a class="nav-link" href="{{ path('app_other_visit')}}">Wizyta przedadopcyjna</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/s-umowa-adopcyjna">Umowa adopcyjna</a>
+                            <a class="nav-link" href="{{ path('app_other_contract')}}">Umowa adopcyjna</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/s-ankieta-kot">Ankieta kot</a>
@@ -74,7 +74,7 @@
                     <a class="nav-link" href="/#volunteering" id="volunteering-link">Wolontariat</a>
                 </li>
                 <li class="nav-item"> 
-                    <a class="nav-link" href="/s-domy-tymczasowe">Domy Tymczasowe</a>
+                    <a class="nav-link" href="{{ path('app_other_houses') }}">Domy Tymczasowe</a>
                 </li>
                 <li class="nav-item"> 
                     <a class="nav-link" href="/#transfer" id="transfer-link">Przelewy na Fundację</a>
@@ -82,7 +82,7 @@
             </ul> 
         </li>
         <li class="nav-section">
-            <a class="nav-link nav-bind" href="/contact">Kontakt</a>
+            <a class="nav-link nav-bind" href="{{ path('app_other_contact') }}">Kontakt</a>
         </li>
 
         {% if is_granted('ROLE_USER') %}
@@ -149,7 +149,7 @@
 
                         {% if is_granted('ROLE_ADMIN') %}
                             <li class="nav-user__link">
-                                <a href="{{ path("admin_dashboard") }}" class="btn btn-blue btn-block">
+                                <a href="{{ path("admin_dashboard_list") }}" class="btn btn-blue btn-block">
                                     <i class="fas fa-users-cog float-left" title="Użytkownicy"></i>
                                     Użytkownicy
                                 </a>

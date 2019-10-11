@@ -33,7 +33,9 @@ class FileManagerPostNormalizer implements NormalizerInterface, CacheableSupport
         $data['@id'] = $this->router->generate('get_file_post_item', [
             'id' => $fileManager->getId()
         ]);
+
         $data['url'] = $this->photo_manager->getPublicPathPhoto($fileManager);
+        $data['urlSmall'] = $this->photo_manager->getPublicPathPhoto($fileManager);
      
         return $data;
     }

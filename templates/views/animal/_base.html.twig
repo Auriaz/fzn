@@ -1,0 +1,54 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+<article class="content content-articles">
+    <div class="content-articles__menu-icon">
+        <h2 class="content-articles__title">{% block articles_title %}{% endblock %}</h2>
+
+        {% block articles_adding_btn %}{% endblock %}
+        {% block articles_search %}
+            <div class="content-articles__search">
+                <div class="content-articles__search content-articles__search--btn-undo">
+                    <a href="{{path('animal_show_category')}}" class="btn btn-outline-secondary">
+                        <i class="fas fa-undo"></i>
+                    </a>
+                </div>
+                <form class="content-articles__search content-articles__search--form">
+                    <div class="form-group form-other">
+                        <input type="text" name="query" class="form-control" value="{{ app.request.query.get('query') }}" required>
+            
+                        <label for="query">
+                            <button type="submit" class="btn-search">
+                                <i class="fas fa-search"></i> Szukaj
+                            </button>
+                        </label>
+                    </div>
+                </form>
+            </div>
+        {% endblock %}
+        <!-- #### Alert message #### -->
+    </div>
+    {% include "inc/alert.html.twig" %}
+
+    <div class="content-articles__wrapper">
+        {% block articles_body %}{% endblock %}
+    </div>
+
+    {% block articles_pagination %}{% endblock %}
+</article>
+{% endblock body %}
+
+
+{% block stylesheets %}
+{{ parent() }}
+
+{{ encore_entry_link_tags('article') }}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+
+{{ encore_entry_script_tags('article') }}
+{% endblock %}

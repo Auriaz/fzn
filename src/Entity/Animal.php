@@ -2,9 +2,11 @@
 
 namespace App\Entity;
 
-use App\Service\UploaderHelper;
+use App\FileManager\PhotoFileManager;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AnimalRepository")
@@ -57,12 +59,12 @@ class Animal
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isDelete;
+    private $isDelete = false;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $slug;
+    private $slug = '';
 
     public function getId(): ?int
     {
@@ -179,6 +181,6 @@ class Animal
 
     public function getImagePath()
     {
-        return UploaderHelper::ARTICLE_IMAGE . '/' . $this->getImageFilename();
+        return PhotoFileManager::IMAGE .'/'. PhotoFileManager::ANIMAL_IMAGE.'/'. $this->getImageFilename();
     }
 }

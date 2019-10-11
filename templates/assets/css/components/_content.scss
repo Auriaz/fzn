@@ -14,6 +14,67 @@
         color: $mainDark;
     }
 
+    &-articles {
+        width: 100vw;
+        min-height: 70vh;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        align-content: space-around;
+        
+        &__wrapper {
+            position: relative;
+
+            @include atLarge {
+                width: 1200px;
+            }
+
+            & p {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        &__title {
+            position: relative;
+            margin: 20px 0;
+        }
+
+        & p {
+            width: 100%;
+            
+        }
+
+        &__search {
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 0;
+            right: 18px;
+            transform: translateY(10px);
+            z-index: 3;
+            display: none;
+            
+            @include atMedium {
+                display: block;
+            }
+            
+            &--btn-undo {
+                right: 328px;
+                transform: translateY(30px);
+                display: inline-block;
+            }
+
+            &--form {
+                width: 300px;
+                display: inline-block;
+            }
+        }
+    }
+
     &-section {	
         width: 100%;
         height: auto;

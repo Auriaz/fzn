@@ -101,9 +101,9 @@ class User implements UserInterface
     private $isActive = false;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean")
      */
-    private $isDelete;
+    private $isDelete = false;
 
     public function __construct()
     {
@@ -393,5 +393,10 @@ class User implements UserInterface
         $this->isDelete = $isDelete;
 
         return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->firstName . ' '. $this->lastName;
     }
 }

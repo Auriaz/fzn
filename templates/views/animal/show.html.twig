@@ -1,5 +1,7 @@
 {% extends 'content_base.html.twig' %}
-{% block title %}Read: {{ article.title }}{% endblock %}
+
+{% block title %}Read: {{ animal.name }}{% endblock %}
+
 {% block content_body %}
     <article class='content-section content-section__article'>
         <div class="content-section__article--control">
@@ -8,34 +10,29 @@
             </span>
         </div>
 
-        <a href="{{ path('articles_show')}}" class="btn btn-outline-secondary content-section__article--btn"
+        <a href="{{ path('animal_show_category')}}" class="btn btn-outline-secondary content-section__article--btn"
             title="Cofnij do listy artykułów">
             <i class="fas fa-share"></i>
         </a>
         
-        {% if is_granted('ROLE_ADMIN_ARTICLE') %}
-            <a href="{{ path('admin_article_edit', { id: article.id }) }}" class="btn-edit"><b>Edytuj <i class="fas fa-pencil-alt"></i></b></a>
+        {% if is_granted('ROLE_ADMIN_ANIMAL') %}
+            <a href="{{ path('admin_animal_edit', { id: animal.id }) }}" class="btn-edit"><b>Edytuj <i class="fas fa-pencil-alt"></i></b></a>
         {% endif %}
 
         <div class='content-section__article--content'>
-            {% if article.isDelete == true|default %}
+            {% if animal.isDelete == true|default %}
                 <p>Artykuł nie istnieje</p>
             {% else %}
                 
                 <div class="row">
                     <div class="col-sm-12">
-                        <img class="content-section__article--image" src="{{ article.imagePath|imagine_filter('aricle_main_image') }}">
+                        <img class="content-section__article--image" src="{{ animal.imagePath|imagine_filter('aricle_main_image') }}">
                         <div class="align-middle">
-                            <span class="content-section__article--title">{{ article.title }}</span>
+                            <span class="content-section__article--title">{{ animal.name }}</span>
                             <br>
-                            <span class="align-left article-details">{{ article.author }}</span>
+                            <span class="align-left article-details"></span>
                             <span class="pl-2 article-details">
-                                {{ article.publishedAt ? article.publishedAt|ago : 'unpublished' }}
-                            </span>
-                            <span class="pl-2 article-details">
-                                {% for tag in article.tags %}
-                                <span class="badge badge-secendery">{{ tag.name }}</span>
-                                {% endfor %}
+                                {{ animal.createdAt ? animal.createdAt|ago : 'unpublished' }}
                             </span>
                         </div>
                     </div>
@@ -44,12 +41,12 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="article-text">
-                           <p>{{ article.content|cached_markdown }}</p>
+                           <p>{{ animal.description|cached_markdown }}</p>
                         </div>
                     </div>
                 </div>
-                <span class="content-section__article--author"><i>autor: {{ article.author|raw }} </i></span>
-                <span class="content-section__article--date"><i>dodano: {{ article.publishedAt ? article.publishedAt|ago : 'unpublished' }} </i></span>
+                {#<span class="content-section__article--author"><i>autor: {{ animal.author|raw }} </i></span>#}
+                <span class="content-section__article--date"><i>dodano: {{ animal.createdAt ? animal.createdAt|ago : 'unpublished' }}</i></span>
                 
                 {#}   <div class="row">
                     

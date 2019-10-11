@@ -6,11 +6,11 @@
             {% for animal in animals %}
             <div class="postcard zoom">
                 <div class="postcard-overlay">
-                    <a href="/animal-{{ animal.id }}">
-                        {% if animal.image %}
-                        <img class="postcard-img" src="{{ animal.image }}" alt="{{ animal.name }}" />
+                    <a href="{{ path('animal_show', {id: animal.id }) }}">
+                        {% if animal.imagePath %}
+                            <img class="postcard-img" src="{{ animal.imagePath | imagine_filter('squared_thumbnail_small') }}">
                         {% else %}
-                        <div class="postcard-icon"><i class="paw"></i></div>
+                            <div class="postcard-icon"><i class="fas fa-paw"></i></div>
                         {% endif %}
                     </a>
                 </div>

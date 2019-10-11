@@ -2,12 +2,12 @@
     <div class="sidebar__list">
         <div class="sidebar__header">{{ title }}</div>
         <ul class="sidebar__list--ul"> 
-            <li class="sidebar__list--first-li dropdown">
-                <a href="#" class="sidebar__name-section">
-                    <span class="icon"><i class="far fa-newspaper fa-lg"></i> O kotach <i class="fas fa-caret-right active"></i></span>
-                </a>
-                <ul class="dropdown-menu-sidebar">
-                    {% if articles %}
+            {% if articles|default %}
+                <li class="sidebar__list--first-li dropdown">
+                    <a href="#" class="sidebar__name-section">
+                        <span class="icon"><i class="far fa-newspaper fa-lg"></i> O kotach <i class="fas fa-caret-right active"></i></span>
+                    </a>
+                    <ul class="dropdown-menu-sidebar">
                         {% for article in articles %}
                             {% if article.isDelete == false %}
                                 <li class="sidebar__list--secend-li">
@@ -16,10 +16,71 @@
                                     </a>
                                 </li>  
                             {% endif %}
-                        {% endfor %}                    
-                    {% endif %}
-                </ul>
-            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% elseif animals %}
+            
+                <li class="sidebar__list--first-li dropdown">
+                    <a href="#" class="sidebar__name-section">
+                        <span class="icon"><i class="far fa-newspaper fa-lg"></i> Koty <i
+                                class="fas fa-caret-right active {% if category == 1 %}fa-rotate-90{% endif %}"></i></span>
+                    </a>
+                    <ul class="dropdown-menu-sidebar {% if category == 1 %}dropdown-is-visible-sidebar{% endif %}" >
+                        {% for animal in animals %}
+                            {% if animal.isDelete == false %}
+                                {% if animal.category == 1 %}
+                                    <li class="sidebar__list--secend-li">
+                                        <a href="{{ path('animal_show', {id: animal.id }) }}" class="sidebar-link">
+                                            <span class="sidebar__list--article-text-title"><i class="book-open"></i> {{ animal.name }}</span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </li>
+
+                <li class="sidebar__list--first-li dropdown">
+                    <a href="#" class="sidebar__name-section">
+                        <span class="icon"><i class="far fa-newspaper fa-lg"></i> Psy <i class="fas fa-caret-right active {% if category == 2 %}fa-rotate-90{% endif %}"></i></span>
+                    </a>
+                    <ul class="dropdown-menu-sidebar {% if category == 2 %}dropdown-is-visible-sidebar{% endif %}">
+                        {% for animal in animals %}
+                            {% if animal.isDelete == false %}
+                                {% if animal.category == 2 %}
+                                <li class="sidebar__list--secend-li {% if animal.id == id %}
+                                    
+                                {% endif %}" >
+                                    <a href="{{ path('animal_show', {id: animal.id }) }}" class="sidebar-link">
+                                        <span class="sidebar__list--article-text-title" ><i class="book-open"></i> {{ animal.name }}</span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </li>
+
+                <li class="sidebar__list--first-li dropdown">
+                    <a href="#" class="sidebar__name-section">
+                        <span class="icon"><i class="far fa-newspaper fa-lg"></i> Inne zwierzęta <i class="fas fa-caret-right active {% if category == 3 %}fa-rotate-90{% endif %}"></i></span>
+                    </a>
+                    <ul class="dropdown-menu-sidebar {% if category == 2 %}dropdown-is-visible-sidebar{% endif %}">
+                        {% for animal in animals %}
+                            {% if animal.isDelete == false %}
+                                {% if animal.category == 3 %}
+                                <li class="sidebar__list--secend-li">
+                                    <a href="{{ path('animal_show', {id: animal.id }) }}" class="sidebar-link">
+                                        <span class="sidebar__list--article-text-title"><i class="book-open"></i> {{ animal.name }}</span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endif %}
         </ul>
     </div>
 </nav>
