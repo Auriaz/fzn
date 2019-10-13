@@ -25,6 +25,7 @@
         "jquery": "^3.4.1",
         "lodash.debounce": "^4.0.8",
         "moment": "^2.24.0",
+        "pdfmake": "^0.1.60",
         "popper.js": "^1.15.0",
         "sortablejs": "^1.10.0-rc2",
         "trumbowyg": "^2.18.0",

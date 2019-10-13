@@ -55,9 +55,9 @@
                 text-align: justify;
                 letter-spacing: 1px;
             }
-
+            
             &-bold {
-
+                
                 &-400 {
                     font-weight: 400;
                 }
@@ -65,7 +65,19 @@
                 &-600 {
                     font-weight: 600;
                 }
-            }            
+            }
+            
+        }
+
+        &--list-li {
+            
+
+        }
+
+        &--a {
+            &-block {
+                display: block;
+            }
         }
 
         &__body {
