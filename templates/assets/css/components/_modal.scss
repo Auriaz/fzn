@@ -1,11 +1,183 @@
 .modal {
-	p {
-        color: $mainDarkBlue;
-    }
+	& p {
+		color: $mainDarkBlue;
+	}
+	// Slide in from bottom
+	&-bottom {
+		@include modal-slide-in($direction: bottom);
+	}
 
-    &-title {
-        color: $mainDarkBlue;
-        font-weight: bold;
-        font-size: 2rem;
+	// Fade In
+	&-fade {
+		@include modal-fade-in($duration-in: .6s, $duration-out: .3s);
+	}
+
+	// Slide in from left
+	&-left {
+		@include modal-slide-in($direction: left);
+	}
+
+	// Slide in from right
+	&-right {
+		@include modal-slide-in($direction: right);
     }
+    
+    &-title {
+            color: $mainDarkBlue;
+            font-weight: bold;
+            font-size: 2rem;
+        }   
+	// Slide in from top
+	&-top {
+		@include modal-slide-in($direction: top);
+	}
+
+	&-login {
+		text-align: center;
+		@include modal-slide-in($direction: right, $width: 100%, $height: 100vh, $top: 0, $left:0);
+
+		@include atSmaller {
+			@include modal-slide-in($direction: right, $width: 60%, $height: auto,  $left:40%);
+		}
+
+		@include atSmall {
+			@include modal-slide-in($direction: right, $width: 40%, $height: auto,  $left:60%);
+		}
+
+		@include atMedium {
+			@include modal-slide-in($direction: right, $width: 35%, $height: auto,  $left:65%);
+		}
+
+		@include atLarge {
+			@include modal-slide-in($direction: right, $width: 30%, $height: auto, $left:70%);
+		}	
+
+		&.modal-link {
+			color: $mainOrange;
+		}
+	}
+
+	&-close {
+		color: inherit;
+		font-size: 10px;
+		letter-spacing: 2px;
+		position: absolute;
+		right: 15px;
+		text-decoration: none;
+		text-transform: uppercase;
+		top: 15px;
+		
+		&:hover {
+			transform: scale(1.1);
+			color: $mainOrange;
+		}
+
+		&__panel {
+			display: block;
+
+			@include atSmall {
+				display: none;
+			}
+		}
+	}
+
+	&-head {
+		position: absolute;
+		width: 100%;
+		right: 0;
+		top: 0;
+	}
+
+	&-body {
+		width: 90%;
+		height: auto;
+		text-align: center;
+		margin-top: 20px;
+	}
+
+	&-link {
+		color: tomato;
+		display: inline-block;
+		margin: 0 1em .75em 0;
+		transition: color .15s ease-in;
+	}
+
+	&-subtitle {
+		margin: 20px 0 5px 0;
+	}
+
+	&-title {
+		text-transform: uppercase;
+		letter-spacing: 2px;
+		font-size: 1.2rem;
+		margin-left: 10px;
+	}
+
+	&-dark {
+		background-color: rgba($mainDark, 0.8);
+		color: $mainLithCyan;
+	}
+
+	&-lith {
+		background-color: rgba($mainWhite, 0.9);
+		color: $mainLithBlue;
+	}
+
+	&-overlay {
+		padding: 40px 10px 10px 10px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		align-content: center;
+		
+		h2 {
+			@include crispy-text;
+		}
+		
+		@include atSmall {
+			z-index: -1;
+			padding: 120px 10px 10px 10px;
+
+		}
+	}
+
+	&-active-panel {
+		top: 0;
+		left: 0;
+		opacity: 1;
+		visibility: visible;
+
+		@include atSmaller {
+			left:40%;
+		}
+
+		@include atSmall {
+			left:60%;
+		}
+
+		@include atMedium {
+			left:65%;
+		}
+
+		@include atLarge {
+			left:70%;
+		}	
+
+	}
 }
+
+dialog, menu, section {
+	display: block;
+}
+
+code {
+	display: block;
+	letter-spacing: 0;
+	line-height: 1.3;
+
+	+ code {
+
+	}
+}
+
+

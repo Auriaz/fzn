@@ -91,7 +91,7 @@ class ReferenceList {
     handleReferenceDelete(event) {
         const $li = $(event.currentTarget).closest('.list-group-item');
         const id = $li.data('id');
-
+        alert(id);
         $li.addClass('disabled');
         $.ajax({
             url: '/admin/article/references/' + id,
@@ -126,11 +126,16 @@ class ReferenceList {
                 <li class="list-group-item d-flex justify-content-between align-items-center mb-2" data-id="${reference.id}">
                     <span class="drag-handle fas fa-bars mr-3"></span>
 
-                    <input type="text" value="${reference.originalFilename}" class="form-control col-sm-8 reference-edit-filename" ">
+                    <span class="d-flex flex-column justify-content-center align-items-center">
+                        <input type="text" value="${reference.originalFilename}" class="form-control reference-edit-filename">
 
-                    <span class="col-sm-4">
-                        <a href="/admin/article/references/${reference.id}/download" class="btn btn-link btn-sm" /><i class="fas fa-download"></i></a>
-                        <button class="reference-delete btn btn-link btn-sm"><i class="fa fa-trash"></i></button>
+                        <img class="img-thumbnail" src="/uploads/images/article_reference/${reference.filename}" alt="${reference.originalFilename}">
+
+                        <span class="d-flex justify-content-around align-items-center mb-2">
+                            <a href="/admin/article/references/${reference.id}/download" class="btn btn-link btn-sm" title="Pobierz"/><i class="fas fa-download fa-lg"></i></a>
+                   
+                            <button class="reference-delete btn btn-link btn-sm" title="Usuń"><i class="fas fa-trash fa-lg" data-id="${reference.id}"></i></button>
+                        </span>
                     </span>
                 </li>
             `

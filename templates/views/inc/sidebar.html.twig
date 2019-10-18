@@ -3,11 +3,7 @@
         <div class="sidebar__header">{{ title }}</div>
         <ul class="sidebar__list--ul"> 
             {% if articles|default %}
-                <li class="sidebar__list--first-li dropdown">
-                    <a href="#" class="sidebar__name-section">
-                        <span class="icon"><i class="far fa-newspaper fa-lg"></i> O kotach <i class="fas fa-caret-right active"></i></span>
-                    </a>
-                    <ul class="dropdown-menu-sidebar">
+            
                         {% for article in articles %}
                             {% if article.isDelete == false %}
                                 <li class="sidebar__list--secend-li">
@@ -17,8 +13,7 @@
                                 </li>  
                             {% endif %}
                         {% endfor %}
-                    </ul>
-                </li>
+                  
             {% elseif animals %}
             
                 <li class="sidebar__list--first-li dropdown">

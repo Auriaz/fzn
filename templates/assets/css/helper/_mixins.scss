@@ -83,12 +83,12 @@
 	width: $width;
 	z-index: 11;
 
-	@at-root #{$id}:target {
-		top: $top;
-		left: $left;
-		opacity: 1;
-		visibility: visible;
-	}
+	// @at-root #{$id}:target {
+	// 	top: $top;
+	// 	left: $left;
+	// 	opacity: 1;
+	// 	visibility: visible;
+	// }
 }
 
 @mixin transition($transition...) {
@@ -139,7 +139,7 @@
 @mixin modal-slide-in($direction: top, $duration-in: .85s, $duration-out: .4s, $timing: cubic-bezier(.215, .61, .355, 1), $width:100%, $height:100%, $top: 0, $left:0) {
 	$id: '##{$direction}';  //<==
 
-	@include modal($id, $width, $height, $top, $left);
+	@include modal($direction, $width, $height, $top, $left);
 
 	// Slide left or right
 	@if ($direction == left) or ($direction == right) {

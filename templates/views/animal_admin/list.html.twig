@@ -58,15 +58,14 @@
                                 class="sorted"{% endif %}{{ knp_pagination_sortable(pagination, 'Data adopcji', 'a.adoptionAt') }}
                             </th>
                             <th class="col-tab-2">
-                                {% if pagination.isSorted('a.IsActive') %}
-                                class="sorted"{% endif %}{{ knp_pagination_sortable(pagination, 'Status', 'a.isActive') }}
+                                Status
                             </th>
                             <th class="col-tab-4">Akcja </th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for animal in pagination %}
-                            {% if animal.isDelete == false %}
+                            {# {% if animal.isDelete == false %} #}
                                 <tr {% if loop.index is odd %} class="color" {% endif %}>
                                     {#<th scope="row">{{ loop.index }}</th>#}
                                     <td class="col-tab-4">{{ animal.name }} <br> <img class="article__card--img" src="{{ animal.imagePath | imagine_filter('squared_thumbnail_smaller') }}"
@@ -133,7 +132,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                            {% endif %}
+                            {# {% endif %} #}
                         {% endfor %}
                     </tbody>
                 </table>

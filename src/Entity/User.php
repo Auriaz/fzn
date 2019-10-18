@@ -399,4 +399,25 @@ class User implements UserInterface
     {
         return $this->firstName . ' '. $this->lastName;
     }
+
+    public function getRole()
+    {
+        $roles = $this->roles;
+
+        switch ($roles[0]) {
+            case 'ROLE_ADMIN':
+                $role = 'Admin';
+                break;
+            
+            case 'ROLE_EDITOR':
+                $role = 'Editor';
+                break;
+            
+            default:
+                $role = 'User';
+                break;
+        }
+
+        return $role;
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\ArticleReference;
+use App\FileManager\PhotoFileManager;
 use App\Service\UploaderHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -25,7 +26,7 @@ class ArticleReferenceAdminController extends BaseController
      * @Route("/admin/article/{id}/references", name="admin_article_add_reference", methods={"POST"})
      * @IsGranted("MANAGE", subject="article")
      */
-    public function uploadArticleReference(Article $article, Request $request, UploaderHelper $uploaderHelper,  EntityManagerInterface $entityManager, ValidatorInterface $validator)
+    public function uploadArticleReference(Article $article, Request $request, PhotoFileManager $uploaderHelper,  EntityManagerInterface $entityManager, ValidatorInterface $validator)
     {
         $uploadedFile = $request->files->get('reference');
         
@@ -130,10 +131,10 @@ class ArticleReferenceAdminController extends BaseController
     {
         $article = $reference->getArticle();
         $this->denyAccessUnlessGranted('MANAGE', $article);
-       
+    //    dd($reference->getFilePath());
         $response = new StreamedResponse(function() use ($reference, $uploaderHelper) {
             $outputStream = fopen('php://output', 'wb');
-            $fileStream = $uploaderHelper->readStream($reference->getFilePath(), false);
+            $fileStream = $uploaderHelper->readStream($reference->getFilePath(), true);
 
             stream_copy_to_stream($fileStream, $outputStream);
         });
@@ -152,15 +153,15 @@ class ArticleReferenceAdminController extends BaseController
     /**
      * @Route("/admin/article/references/{id}", name="admin_article_delete_reference", methods={"DELETE"})
      */
-    public function deleteArticleReference(ArticleReference $reference, UploaderHelper $uploaderHelper, EntityManagerInterface $entityManager)
+    public function deleteArticleReference(ArticleReference $reference, PhotoFileManager $uploaderHelper, EntityManagerInterface $entityManager)
     {
         $article = $reference->getArticle();
         $this->denyAccessUnlessGranted('MANAGE', $article);
-
+        
+        $uploaderHelper->deletePhoto($reference->getFilePath(), true);
         $entityManager->remove($reference);
         $entityManager->flush();
 
-        $uploaderHelper->deleteFile($reference->getFilePath(), false);
 
         return new Response(null, 204);
     }

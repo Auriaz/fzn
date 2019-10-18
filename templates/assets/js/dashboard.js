@@ -1,8 +1,7 @@
 import '../css/themes/dashboard.scss';
-import $ from 'jquery';
+// import $ from 'jquery';
+import './vendors/trumbowyg/Trumbowyg';
 import 'bootstrap';
-// import "summernote";
-// import './components/Editor';
 
 import Sidebar from './components/Sidebar';
 import StickyHeader from './components/StickyHeader';

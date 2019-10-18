@@ -42,7 +42,7 @@ class AnimalRepository extends ServiceEntityRepository
     public function getWithSearchQueryBuilder(?string $term): DoctrineQueryBuilder
     {
         $qb = $this->createQueryBuilder('a')
-            ->andWhere('a.isDelete = false')
+            // ->andWhere('a.isDelete = false')
             ->innerJoin('a.user', 'u')
             ->addSelect('u')
             ;
@@ -102,8 +102,8 @@ class AnimalRepository extends ServiceEntityRepository
 
     private function addIsPublishedQueryBuilder(QueryBuilder $qb = null)
     {
-        return $this->getOrCreateQueryBuilder($qb)
-            ->andWhere('a.isActive IS NOT NULL');
+        return $this->getOrCreateQueryBuilder($qb);
+            // ->andWhere('a.isActive = false');
     }
 
     private function getOrCreateQueryBuilder(QueryBuilder $qb = null)

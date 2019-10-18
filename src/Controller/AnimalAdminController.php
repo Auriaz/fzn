@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Animal;
+use App\FileManager\PhotoFileManager;
 use App\Form\AnimalAddFormType;
 use App\Repository\AnimalRepository;
 use App\Service\UploaderHelper;
@@ -37,7 +38,7 @@ class AnimalAdminController extends BaseController
      * @Route("/admin/animal/new", name="admin_animal_new")
      * @IsGranted("ROLE_ADMIN_ANIMAL")
      */
-    public function new(UploaderHelper $uploaderHelper)
+    public function new(PhotoFileManager $uploaderHelper)
     {
         $form = $this->createForm(AnimalAddFormType::class);
         $form->handleRequest($this->request);

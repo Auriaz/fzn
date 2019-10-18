@@ -65,6 +65,8 @@ abstract class BaseController extends AbstractController
             if ($this->user->getAvatar()) {
                 $param['avatar'] = $this->user->getAvatarUrl();
             }
+
+            $param['role'] = $this->user->getRole();
         }
         if(!$param['title']) {
             $param['title'] = "Fundacja Zwierząt Niczyich";

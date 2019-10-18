@@ -86,103 +86,10 @@
         </li>
 
         {% if is_granted('ROLE_USER') %}
-            <li class="nav-section nav-user__section dropdown">
-                <div class="nav-avatar">
-                    <i class="fa fa-users-cog icon-avatar"></i>
-                </div>
-                <ul class="nav-subsection nav-user__subsection">
-                    <div class="nav-user__subsection--content">
-
-                        <div class="nav-user__profile row">
-                            <div class="nav-user__profile-avatar col-3 left">
-                                {% if avatar|default %}
-                                    <img src="" alt="Avatar" class="icon-avatar">
-                                {% else %}
-                                    <i class="fa fa-users-cog icon-avatar"></i>
-                                {% endif %}
-                            </div>
-                            <div class="nav-user__profile-account col-8 right">
-                                <div class="nav-user__profile-email">
-                                    {% if email|default %}
-                                        {{ email }}
-                                    {% endif %}
-                                </div>
-                                <div class="nav-user__profile-name">
-                                    {% if firstname|default and lastname|default %}
-                                        {{ firstname }} {{ lastname }}
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
-    
-                        {% if is_granted('ROLE_ADMIN_ARTICLE') %}
-                            <li class="nav-user__link">
-                                <a href="{{ path('admin_article_list') }}" class="btn btn-blue btn-block">
-                                    <i class="fa fa-book float-left" title="Artykuły"></i>
-                                     Artkuły
-                                </a>
-                            </li>
-                        {% endif %}
-
-                       {#} {% if is_granted('ROLE_ADMIN') %}
-                            <li class="nav-user__link">
-                                <a href="{{ path("admin_dashboard") }}" class="btn btn-blue btn-block">
-                                    <i class="fa fa-tools" title="Panel administratora"></i>
-                                    Panel administratora
-                                </a>
-                            </li>
-                        {% endif %} {#}
-
-                        <li class="nav-user__link">
-                            <a href="{{ path('app_account') }}" class="btn btn-blue btn-block">
-                                <i class="fa fa-street-view float-left" title="Panel użytkownika"></i>
-                                Panel użytkownika
-                            </a>
-                        </li>
-
-                        <li class="nav-user__link">
-                            <a href="{{ path('file_manager') }}" class="btn btn-blue btn-block">
-                                <i class="fas fa-photo-video float-left" title="Manager zdjęć"></i>
-                                Manager zdjęć
-                            </a>
-                        </li>
-
-                        {% if is_granted('ROLE_ADMIN') %}
-                            <li class="nav-user__link">
-                                <a href="{{ path("admin_dashboard_list") }}" class="btn btn-blue btn-block">
-                                    <i class="fas fa-users-cog float-left" title="Użytkownicy"></i>
-                                    Użytkownicy
-                                </a>
-                            </li>
-                        {% endif %}
-
-                        <li class="nav-user__link">
-                            <a href="{{ path('admin_animal_list') }}" class="btn btn-blue btn-block">
-                                <i class="fas fa-frog float-left" title="Zwierzęta"></i>
-                                Zwierzęta
-                            </a>
-                        </li>
-    
-                        <li class="nav-user__link">
-                            <a href="{{ path('app_logout') }}" class="btn btn-orange btn-block">
-                                <i class="fas fa-sign-out-alt float-left" title="Wyloguj się"></i>
-                                Wyloguj się
-                            </a>
-                        </li>
-    
-                        <li class="nav-user__link nav-user__social">
-                            <a href="https://facebook.com/FundacjaZwierzetaNiczyje/?ref=m_notif&notif_t=group_highlights" class="social-icon"
-                                target="_blank">
-                                <i class="fab fa-facebook-square icon-facebook icon-link fa-lg"></i>
-                            </a>
-    
-                            <a href="https://instagram.com/fundacja_zwierzeta_niczyje?utm_source=ig_profile_share&igshid=1joz9gcb9eiem"
-                                class="social-icon" target="_blank">
-                                <i class="fab fa-instagram icon-instagram icon-link fa-lg"></i>
-                            </a>
-                        </li>
-                    </div>
-                </ul>
+            <li class="nav-section nav-user__section">
+                <button class="btn btn-link nav-user__profile-avatar" id="open_panel">
+                    <img class="icon-avatar icon-avatar-small" src="{{ app.user.avatarUrl }}" alt="Avatar">
+                </button>
             </li>
         {% else %}
             <div class="icon icon-nav nav-right">        
@@ -206,6 +113,8 @@
         {% endif %}
     </ol>	     
 </nav>	
+
+{% include "inc/panel.html.twig" %}
 
 
 

@@ -15,6 +15,7 @@ import Dropdown from "./components/Dropdown";
 import StickyHeader from './components/StickyHeader';
 import RevealOnSroll from './components/RevealOnSroll';
 import MobileMenu from "./components/MobileMenu";
+import OpenModal from "./components/OpenPanel";
 
 require('@fortawesome/fontawesome-free/css/all.min.css');
 require('@fortawesome/fontawesome-free/js/all.js');
@@ -22,6 +23,7 @@ require('@fortawesome/fontawesome-free/js/all.js');
 const dropdown = new Dropdown();
 const mobileMenu = new MobileMenu();
 const sticky = new StickyHeader();
+const openModal = new OpenModal('open_panel', 'panel');
 
 
 new RevealOnSroll("100%");

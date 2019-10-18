@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\FileManager\PhotoFileManager;
 use App\Service\UploaderHelper;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -104,7 +105,7 @@ class ArticleReference
 
     public function getFilePath(): string
     {
-        return UploaderHelper::ARTICLE_REFERENCE . '/' . $this->getFilename();
+        return PhotoFileManager::ARTICLE_REFERENCE . '/' . $this->getFilename();
     }
 
     public function getPosition(): ?int

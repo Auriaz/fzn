@@ -172,23 +172,24 @@
     }
 
     &-avatar {
-        position: relative;
         border: 2px solid $mainLithCyan;
         border-radius: 50%;
-        font-size: 3rem;
-        padding: 0.5rem;
-        background-color: $mainDarkBlue;
-        top: 0; 
-        transform: translateX(10px) translateY(10px);
+        overflow:hidden;
+
+        &-small {
+            max-width: 50px;
+            height: 50px;
+        }
+
+        &-medium {
+            max-width: 60px;
+            height: 60px;
+        }
         
         &:hover {
             background-color: $mainLithCyan;
             color: $mainDarkBlue;
             border: 2px solid $mainDarkBlue;
-        }
-
-        @include atSmall {
-            top: -10px;
         }
     }
 }

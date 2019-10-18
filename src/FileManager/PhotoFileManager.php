@@ -64,7 +64,7 @@ class PhotoFileManager
 
     public function uploadArticleReference(File $file): string
     {
-        return $this->uploadImage($file, self::ARTICLE_REFERENCE, false);
+        return $this->uploadImage($file, self::ARTICLE_REFERENCE, true);
     }
 
     public function uploadImage(File $file, string $directory = null, bool $isPublic = true)
@@ -83,11 +83,8 @@ class PhotoFileManager
         return $this->uploaderHelper->getPublicPath(self::IMAGE.'/'.$file->getFilename());
     }
 
-    public function deletePhoto(string $filename): void
+    public function deletePhoto(string $filename, bool $isPublic = true): void
     {
-        // make it a bit slow
-        sleep(1);
-
-        $this->uploaderHelper->deleteFile(self::IMAGE . '/' . $filename, true);
+        $this->uploaderHelper->deleteFile(self::IMAGE . '/' . $filename, $isPublic);
     }
 }

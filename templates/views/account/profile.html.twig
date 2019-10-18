@@ -1,0 +1,39 @@
+{% extends 'account/index.html.twig' %}
+
+{% block profile_body %}
+    <b>Dane profilowe:</b>
+    <a href="{{ path('app_account_change', {slug: 'imie'})}}" class="account-section__menu--profile-change" >
+        <span class="account-section__menu--profile-change-p-uppercase">Imie</span>
+        <span class="account-section__menu--profile-change-p">
+            {{ app.user.firstName }}
+            <i class="fas fa-chevron-right"></i>
+        </span>
+
+    </a>
+
+    <a href="{{ path('app_account_change', {slug: 'nazwisko'})}}" class="account-section__menu--profile-change">
+        <span class="account-section__menu--profile-change-p-uppercase">Nazwisko</span>
+        <span class="account-section__menu--profile-change-p">
+            {{ app.user.lastName }}
+            <i class="fas fa-chevron-right"></i>
+        </span>
+
+    </a>
+
+    <a href="{{ path('app_account_change', {slug: 'nick'})}}" class="account-section__menu--profile-change">
+        <span class="account-section__menu--profile-change-p-uppercase">Nick</span>
+        <span class="account-section__menu--profile-change-p">
+            {{ app.user.nick }}
+            <i class="fas fa-chevron-right"></i>
+        </span>
+    </a>
+
+    <a href="{{ path('app_account_change', {slug: 'haslo'})}}" class="account-section__menu--profile-change">
+        <span class="account-section__menu--profile-change-p-uppercase">Hasło</span>
+        <span class="account-section__menu--profile-change-p">
+            *********
+            <i class="fas fa-chevron-right"></i>
+        </span>
+
+    </a>
+{% endblock %}

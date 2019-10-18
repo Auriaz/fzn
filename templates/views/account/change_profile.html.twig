@@ -1,0 +1,22 @@
+{% extends 'account/index.html.twig' %}
+
+{% block dashboard_adding_btn %}
+<a href="{{ path('app_account')}}" class="dashboard-section__adding-btn btn btn-outline-secondary" title="Cofnij">
+    <i class="fas fa-share"></i>
+</a>
+{% endblock %}
+
+{% block profile_body %}
+<div class="account-section__form">
+    <form class="form"  method="POST">
+        <div class="form-group row">
+            <label for="change_profile" class="account-section__form--title col-sm-12"><b>zmień {{ slug }}:</b></label>
+            <input {% if slug == 'haslo' %}type="password"{% else %}type="text"{% endif %}  name="change_profile" class="form-control col-sm-11 " id="change_profile" placeholder="{{ change }}" required>
+            
+            <button type="submit" class="btn btn-outline-success col-sm-1"> 
+                <i class="fas fa-redo-alt"></i>
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}
