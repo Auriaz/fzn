@@ -2,19 +2,13 @@
 namespace App\Controller;
 
 use App\Entity\Article;
-use App\Entity\FileManager;
 use App\FileManager\PhotoFileManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Form\ArticleFormType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\ArticleRepository;
-use App\Repository\FileManagerRepository;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Gedmo\Sluggable\Util\Urlizer;
-use App\Service\UploaderHelper;
 use Knp\Component\Pager\PaginatorInterface;
 
 class ArticleAdminController extends BaseController
@@ -89,6 +83,7 @@ class ArticleAdminController extends BaseController
 
     /**
      * @Route("/admin/article", name="admin_article_list")
+     * @IsGranted("ROLE_ADMIN_ARTICLE")
      */
     public function list(ArticleRepository $articleRepository, PaginatorInterface $paginator)
     {
@@ -122,44 +117,5 @@ class ArticleAdminController extends BaseController
 
         $this->addFlash('success', 'Artykuł został usuniety!');
         return $this->redirectToRoute('admin_article_list');
-    }
-
-    /**
-     * @Route("/admin/article/{id}/attachment", name="admin_article_attachment")
-     */
-    public function uploadAttachment(Article $article,  FileManagerRepository $fileManagerRepository, PhotoFileManager $uploader)
-    {
-        $uploadedFile = $this->request->files->get('file');
-        if($uploadedFile) {
-            $file = $fileManagerRepository->findBy(['originalFilename' => $uploadedFile->getClientOriginalName()]);
-
-            if (!empty($file)) {
-                $errors = 'Odmowa! Już istnieje plik o tej nazwie!';
-
-                return $this->json($errors, 400);
-            }
-
-            $filename = $uploader->uploadArticleReference($uploadedFile);
-            $fileManager = new FileManager();
-            $fileManager->setFilename($filename);
-            $fileManager->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $filename);
-            $fileManager->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');
-            $fileManager->setIsPublished(true);
-            $fileManager->getArticles($article);
-
-            $this->em->persist($fileManager);
-            $this->em->flush();
-
-            return $this->json(
-                $article,
-                201,
-                [],
-                [
-                    'groups' => ['main']
-                ]
-            );
-        }
-
-        return $this->redirectToRoute('admin_article_edit');
     }
 }

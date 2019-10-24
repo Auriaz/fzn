@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Article;
-use App\Entity\ArticleReference;
 use App\Entity\FileManager;
 use App\FileManager\PhotoFileManager;
 use App\Repository\ArticleRepository;
@@ -14,13 +13,10 @@ use App\Repository\FileManagerRepository;
 use App\Service\UploaderHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class ArticleReferenceAdminController extends BaseController
@@ -55,7 +51,6 @@ class ArticleReferenceAdminController extends BaseController
         }
 
         $errors = $validator->validate($uploadedFile, [
-            // new File(),
             new Image(),
             new NotBlank()
         ]);
@@ -143,6 +138,7 @@ class ArticleReferenceAdminController extends BaseController
 
     /**
      * @Route("/admin/article/references/{id}/download", name="admin_article_download_reference", methods={"GET"})
+     * @IsGranted("MANAGE", subject="article")
      */
     public function downloadArticleReference(FileManager $fileManager, UploaderHelper $uploaderHelper)
     {
@@ -162,6 +158,7 @@ class ArticleReferenceAdminController extends BaseController
 
     /**
      * @Route("/admin/article/{idArticle}/references/{idImage}", name="admin_article_delete_reference", methods={"DELETE"})
+     * @IsGranted("MANAGE", subject="article")
      */
     public function deleteArticleReference($idArticle, $idImage, ArticleRepository $articleRepository, FileManagerRepository $fileManagerRepository)
     {
@@ -183,6 +180,7 @@ class ArticleReferenceAdminController extends BaseController
 
     /**
      * @Route("/admin/article/references/{id}", name="admin_article_update_reference", methods={"PUT"})
+     * @IsGranted("MANAGE", subject="article")
      */
     public function updateArticleReference(Article $article, FileManager $fileManager, SerializerInterface $serializer,  ValidatorInterface $validator)
     {

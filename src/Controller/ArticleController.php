@@ -3,10 +3,6 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Psr\Log\LoggerInterface;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ArticleRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,24 +35,10 @@ class ArticleController extends BaseController
     }
 
     /**
-     * @Route("/article/{slug}/heart", name="article_toggle_heart", methods={"POST"})
-     */
-    public function toggleArticleHeart(Article $article, LoggerInterface $logger, EntityManagerInterface $em)
-    {
-        $article->incrementHeartCount();
-        $em->flush();
-        // TODO - actually heart/unheart the article!
-
-        $logger->info('Article is being hearted');
-        return new JsonResponse(['hearts' => $article->getHeartCount()]);
-    }
-
-    /**
      * @Route("/article", name="articles_show")
      */
     public function showArticles(ArticleRepository $articleRepository, PaginatorInterface $paginator, Request $request)
     {
-        // dd($request->query);
         if(isset($request->query)) {
             $query = $request->query->get('query');
             $queryBuilder = $articleRepository->getWithSearchQueryBuilder($query);
