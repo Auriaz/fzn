@@ -1,6 +1,9 @@
 import '../css/themes/dashboard.scss';
 // import $ from 'jquery';
-import './vendors/trumbowyg/Trumbowyg';
+// import './vendors/trumbowyg/Trumbowyg';
+import './components/ReferenceList';
+import './vendors/TinyMCE';
+
 import 'bootstrap';
 
 import Sidebar from './components/Sidebar';

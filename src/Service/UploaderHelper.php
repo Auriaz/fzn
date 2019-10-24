@@ -90,4 +90,9 @@ class UploaderHelper
 
         return $newFilename;
     }
+
+    public function getPath(File $file, bool $isPublic)
+    {
+        # code...
+    }
 }

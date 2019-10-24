@@ -27,6 +27,23 @@ class FileManagerRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findReferenceToRemove(array $filenames, int $article_id)
+    {
+       $qb = $this->createQueryBuilder('m');
+
+        $qb ->select()
+            ->where(
+                $qb->expr()->andX(
+                    $qb->expr()->eq('m.articles', $article_id),
+                    $qb->expr()->notIn('m.filename', $filenames)
+                )
+            )
+        ;
+
+
+        return $qb->getQuery()->getResult();
+    }
     // /**
     //  * @return FileManager[] Returns an array of FileManager objects
     //  */

@@ -1,0 +1,57 @@
+<?php
+
+namespace App\Listeners;
+
+use App\Entity\Article;
+use App\Repository\FileManagerRepository;
+use App\Service\UploaderHelper;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
+
+class ArticleListener
+{
+    private $fileManagerRepository;
+    private $em;
+    private $uploader;
+
+    public function __construct(FileManagerRepository $fileManagerRepository, EntityManagerInterface $entityManager, UploaderHelper $uploader)
+    {
+        $this->fileManagerRepository = $fileManagerRepository;
+        $this->em = $entityManager;
+        $this->uploader = $uploader;
+    }
+
+    public function preUpdate(Article $article, PreUpdateEventArgs $args)
+    {
+
+        if($args->hasChangedField('content')) {
+            $regex = '~/uploads/images/[a-zA-Z0-9]+\.\w+~';
+            $matches = [];
+
+            if(preg_match_all($regex, $args->getNewValue('content'), $matches)) {
+
+                $filenames = array_map(function ($match){
+                    return basename($match);
+                }, $matches[0]);
+    
+                $recordsToRemove = $this->fileManagerRepository->findReferenceToRemove($filenames, $article->getId());
+
+                foreach ($recordsToRemove as $record) {
+                    $this->em->remove($record);
+                    $this->uploader->deleteFile($record->getFilename(), true);
+                }
+
+            } else if ($article->getImages()->count() && $matches) {
+
+                foreach ($article->getImages() as $record) {
+                    $entity = $this->em->merge($record);
+                    $this->em->remove($entity);
+                    $this->uploader->deleteFile($record->getFilename(), true);
+                }
+            }
+            $this->em->flush();
+        }
+
+
+    }
+}

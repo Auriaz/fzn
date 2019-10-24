@@ -25,6 +25,8 @@ class AddPhotoToFileManagerHandler implements MessageHandlerInterface
 
         $file_manager->setFilename($this->photo_manager->uploadImage($addPhotoToFileManager->getFile()));
         $file_manager->setOriginalFilename($addPhotoToFileManager->getOriginalFilename());
+        $file_manager->setMimeType($addPhotoToFileManager->getMimeType());
+        $file_manager->setIsPublished(true);
 
         $this->em->persist($file_manager);
         $this->em->flush();

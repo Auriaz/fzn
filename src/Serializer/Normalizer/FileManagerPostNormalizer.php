@@ -8,19 +8,23 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use App\Service\UploaderHelper;
+use Symfony\Component\DependencyInjection\Argument\ServiceLocator;
+use Psr\Container\ContainerInterface;
+
 
 class FileManagerPostNormalizer implements NormalizerInterface, CacheableSupportsMethodInterface
 {
     private $normalizer;
     private $photo_manager;
     private $router;
+    private $containerInterface;
 
-    public function __construct(ObjectNormalizer $normalizer, PhotoFileManager $photo_manager, UrlGeneratorInterface $router)
+    public function __construct(ObjectNormalizer $normalizer, PhotoFileManager $photo_manager, UrlGeneratorInterface $router, ContainerInterface $containerInterface)
     {
         $this->normalizer = $normalizer;
         $this->photo_manager = $photo_manager;
         $this->router = $router;
+        $this->containerInterface = $containerInterface;
     }
 
     public function normalize($fileManager, $format = null, array $context = array()): array
@@ -36,6 +40,8 @@ class FileManagerPostNormalizer implements NormalizerInterface, CacheableSupport
 
         $data['url'] = $this->photo_manager->getPublicPathPhoto($fileManager);
         $data['urlSmall'] = $this->photo_manager->getPublicPathPhoto($fileManager);
+        $data['location'] = '/'.$this->containerInterface->getParameter('uploads_dir_name').'/'. PhotoFileManager::IMAGE.'/'. $fileManager->getFilename();
+
      
         return $data;
     }

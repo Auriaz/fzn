@@ -47,9 +47,12 @@ class FileManagerController extends BaseController
     /**
      * @Route("/api/files", methods="POST")
      */
-    public function create( ValidatorInterface $validator, FileManagerRepository $file_manager_repository, MessageBusInterface $messageBusInterface)
+    public function create($file = null, ValidatorInterface $validator, FileManagerRepository $file_manager_repository, MessageBusInterface $messageBusInterface)
     {
-        $file = $this->request->files->get('file');
+        if(empty($file)) {
+            $file = $this->request->files->get('file');
+        }
+
         $errors = $validator->validate($file, [
             // new File(),
             new Image(),

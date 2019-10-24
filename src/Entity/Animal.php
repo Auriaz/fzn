@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\FileManager\PhotoFileManager;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
@@ -65,6 +67,16 @@ class Animal
      * @ORM\Column(type="string", length=255)
      */
     private $slug = '';
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\FileManager", mappedBy="animals")
+     */
+    private $images;
+
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -182,5 +194,33 @@ class Animal
     public function getImagePath()
     {
         return PhotoFileManager::IMAGE .'/'. PhotoFileManager::ANIMAL_IMAGE.'/'. $this->getImageFilename();
+    }
+
+    /**
+     * @return Collection|FileManager[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(FileManager $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->addAnimal($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(FileManager $image): self
+    {
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
+            $image->removeAnimal($this);
+        }
+
+        return $this;
     }
 }

@@ -4,9 +4,12 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use App\FileManager\PhotoFileManager;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
@@ -36,7 +39,7 @@ class FileManager
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"files:output", "files:input", "article_reference:input",})
+     * @Groups({"files:output", "files:input", "article_reference:get", "article_reference:put",})
      */
     private $id;
 
@@ -47,19 +50,19 @@ class FileManager
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"files:output", "files:input", "article_reference:output", "article_reference:input",})
+     * @Groups({"files:output", "files:input", "article_reference:get", "article_reference:put",})
      */
     private $originalFilename;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"files:output", "files:input", "article_reference:output"})
+     * @Groups({"files:output", "files:input", "article_reference:get"})
      */
     private $isPublished = false;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"files:output", "files:input", "article_reference:output", "article_reference:input",})
+     * @Groups({"files:output", "files:input", "article_reference:get", "article_reference:put",})
      */
     private $description;
 
@@ -72,6 +75,24 @@ class FileManager
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $directory;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Article", inversedBy="images")
+     * @ORM\JoinTable(name="images_articles")
+     */
+    private $articles;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Animal", inversedBy="images")
+     * @ORM\JoinTable(name="images_animals")
+     */
+    private $animals;
+
+    public function __construct()
+    {
+        $this->articles = new ArrayCollection();
+        $this->animals = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -138,28 +159,10 @@ class FileManager
         return $this;
     }
 
-    public function getFilePath(): string
+    public function getImagePath(): string
     {
-        return UploaderHelper::ARTICLE_REFERENCE . '/' . $this->getFilename();
+        return PhotoFileManager::IMAGE . '/' . $this->getFilename();
     }
-
-    // public function getArticleReference(): ?ArticleReference
-    // {
-    //     return $this->articleReference;
-    // }
-
-    // public function setArticleReference(?ArticleReference $articleReference): self
-    // {
-    //     $this->articleReference = $articleReference;
-
-    //     // set (or unset) the owning side of the relation if necessary
-    //     $newFileManager = $articleReference === null ? null : $this;
-    //     if ($newFileManager !== $articleReference->getFileManager()) {
-    //         $articleReference->setFileManager($newFileManager);
-    //     }
-
-    //     return $this;
-    // }
 
     public function getDirectory(): ?string
     {
@@ -169,6 +172,58 @@ class FileManager
     public function setDirectory(?string $directory): self
     {
         $this->directory = $directory;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Article[]
+     */
+    public function getArticles(): Collection
+    {
+        return $this->articles;
+    }
+
+    public function addArticle(Article $article): self
+    {
+        if (!$this->articles->contains($article)) {
+            $this->articles[] = $article;
+        }
+
+        return $this;
+    }
+
+    public function removeArticle(Article $article): self
+    {
+        if ($this->articles->contains($article)) {
+            $this->articles->removeElement($article);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Animal[]
+     */
+    public function getAnimals(): Collection
+    {
+        return $this->animals;
+    }
+
+    public function addAnimal(Animal $animal): self
+    {
+        if (!$this->animals->contains($animal)) {
+            $this->animals[] = $animal;
+        }
+
+        return $this;
+    }
+
+    public function removeAnimal(Animal $animal): self
+    {
+        if ($this->animals->contains($animal)) {
+            $this->animals->removeElement($animal);
+        }
 
         return $this;
     }

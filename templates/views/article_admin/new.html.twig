@@ -10,7 +10,11 @@
 {% endblock %}
 
 {% block dashboard_body %}
+    {{ form_start(articleForm)}}
+
     {{ include('article_admin/_form.html.twig', {
             button_text: 'Utwórz'
         }) }}
+        
+    {{ form_end(articleForm) }}
 {% endblock %}

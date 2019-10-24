@@ -28,6 +28,7 @@
         "pdfmake": "^0.1.60",
         "popper.js": "^1.15.0",
         "sortablejs": "^1.10.0-rc2",
+        "tinymce": "^4.9.6",
         "trumbowyg": "^2.18.0",
         "vue": "^2.6.10",
         "vue-loader": "^15.7.1",

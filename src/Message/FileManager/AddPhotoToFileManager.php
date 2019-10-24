@@ -34,4 +34,9 @@ class AddPhotoToFileManager
     {
         return $this->file->getClientOriginalName();
     }
+
+    public function getMimeType()
+    {
+        return $this->file->getMimeType() ?? 'application/octet-stream';
+    }
 }

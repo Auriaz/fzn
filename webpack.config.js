@@ -29,7 +29,6 @@ Encore
     .addEntry('file_uploader', './templates/assets/js/file_uploader.js')
     .addEntry('dashboard', './templates/assets/js/dashboard.js')
     .addEntry('home', './templates/assets/js/home.js')
-    .addEntry('admin_article_form', './templates/assets/js/admin_article_form.js')
     .addEntry('regrister', './templates/assets/js/regrister.js')
     .addEntry('article', './templates/assets/js/article.js')
     .addStyleEntry('account', './templates/assets/css/themes/account.scss')

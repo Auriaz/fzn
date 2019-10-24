@@ -87,12 +87,6 @@ class Article
     private $specificLocationName;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ArticleReference", mappedBy="article")
-     * @ORM\OrderBy({"position"="ASC"})
-     */
-    private $articleReferences;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     private $isDelete = false;
@@ -102,11 +96,16 @@ class Article
      */
     private $isPublished;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\FileManager", mappedBy="articles")
+     */
+    private $images;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->tags = new ArrayCollection();
-        $this->articleReferences = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -187,6 +186,19 @@ class Article
     public function setImageFilename(?string $imageFilename): self
     {
         $this->imageFilename = $imageFilename;
+
+        return $this;
+    }
+
+
+    public function getIsDelete(): bool
+    {
+        return $this->isDelete;
+    }
+
+    public function setIsDelete(bool $isDelete): self
+    {
+        $this->isDelete = $isDelete;
 
         return $this;
     }
@@ -281,20 +293,6 @@ class Article
         return $this;
     }
 
-    /**
-     * @Assert\Callback
-     */
-    public function validate(ExecutionContextInterface $context, $payload)
-    {
-        //TODO -validate to work
-
-        if (stripos($this->getTitle(), 'Edyta jest Fantastyczna') !== false) {
-            $context->buildViolation('Tytuł wymaga, żeby były podane słowa: Edyta jest Fantastyczna')
-                ->atPath('title')
-                ->addViolation();
-        }
-    }
-
     public function getLocation(): ?string
     {
         return $this->location;
@@ -326,57 +324,30 @@ class Article
     }
 
     /**
-     * @return Collection|ArticleReference[]
+     * @return Collection|FileManager[]
      */
-    public function getArticleReferences(): Collection
+    public function getImages(): Collection
     {
-        return $this->articleReferences;
+        return $this->images;
     }
 
-    public function getIsDelete(): ?bool
+    public function addImage(FileManager $image): self
     {
-        return $this->isDelete;
-    }
-
-    public function setIsDelete(bool $isDelete): self
-    {
-        $this->isDelete = $isDelete;
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->addArticle($this);
+        }
 
         return $this;
     }
 
-    public function getIsPublished(): ?bool
+    public function removeImage(FileManager $image): self
     {
-        return $this->isPublished;
-    }
-
-    public function setIsPublished(?bool $isPublished): self
-    {
-        $this->isPublished = $isPublished;
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
+            $image->removeArticle($this);
+        }
 
         return $this;
     }
-    
-    // public function addArticleReference(ArticleReference $articleReference): self
-    // {
-    //     if (!$this->articleReferences->contains($articleReference)) {
-    //         $this->articleReferences[] = $articleReference;
-    //         $articleReference->setArticle($this);
-    //     }
-
-    //     return $this;
-    // }
-
-    // public function removeArticleReference(ArticleReference $articleReference): self
-    // {
-    //     if ($this->articleReferences->contains($articleReference)) {
-    //         $this->articleReferences->removeElement($articleReference);
-    //         // set the owning side to null (unless already changed)
-    //         if ($articleReference->getArticle() === $this) {
-    //             $articleReference->setArticle(null);
-    //         }
-    //     }
-
-    //     return $this;
-    // }
 }

@@ -1,8 +1,8 @@
 import $ from 'jquery';
 import Dropzone from 'dropzone';
-import 'dropzone/dist/dropzone.css';
 import Sortable from 'sortablejs';
 
+import 'dropzone/dist/dropzone.css';
 
 
 Dropzone.autoDiscover = false;
@@ -12,11 +12,12 @@ $(document).ready(function () {
     const $autoComplete = $('.article-form_algolia-autocomplete');
     if (!$autoComplete.is(':disabled')) {
         // Start loading animation
-        import('./components/algoliaAutocomplete').then((autocomplete) => {
+        import('./algoliaAutocomplete').then((autocomplete) => {
             // Stop loading animation
             autocomplete.default($autoComplete, 'users', 'email');
         });
     }
+    
     const $referenceList = $('.reference-list');
     if ($referenceList[0]) {
         var referenceList = new ReferenceList($('.reference-list'));
@@ -62,7 +63,9 @@ class ReferenceList {
                 });
             }
         });
-        
+
+        this.idArticle = this.$element.data('id');
+
         this.references = [];
 
         this.render();
@@ -91,10 +94,11 @@ class ReferenceList {
     handleReferenceDelete(event) {
         const $li = $(event.currentTarget).closest('.list-group-item');
         const id = $li.data('id');
-        alert(id);
+   
         $li.addClass('disabled');
+
         $.ajax({
-            url: '/admin/article/references/' + id,
+            url: `/admin/article/${this.idArticle}/references/${id}`,
             method: 'DELETE'
         }).then(() => {
             this.references = this.references.filter(reference => {
@@ -129,7 +133,7 @@ class ReferenceList {
                     <span class="d-flex flex-column justify-content-center align-items-center">
                         <input type="text" value="${reference.originalFilename}" class="form-control reference-edit-filename">
 
-                        <img class="img-thumbnail" src="/uploads/images/article_reference/${reference.filename}" alt="${reference.originalFilename}">
+                        <img class="img-thumbnail handle-image" src="${reference.url}" alt="${reference.originalFilename}" data-src="${reference.location}">
 
                         <span class="d-flex justify-content-around align-items-center mb-2">
                             <a href="/admin/article/references/${reference.id}/download" class="btn btn-link btn-sm" title="Pobierz"/><i class="fas fa-download fa-lg"></i></a>
@@ -155,7 +159,7 @@ function initializeDropzone(referenceList) {
     }
 
     var dropzone = new Dropzone(formElement, {
-        paramName: 'reference',
+        paramName: 'file',
         init: function() {
             this.on('success', function (file, data) {
                 referenceList.addReference(data);
