@@ -20,11 +20,14 @@
         <div class="photo-manager__list">
             <PhotoGalleryList
                 :items="filteredItems"
+                :isOpenReferance="isOpenReferance"
                 @active-image="onActiveImage"
                 @delete-image="onDeleteImage"
+                @checked-image="onCheckedImage"
                 @put-description="setDescription"
             ></PhotoGalleryList> 
         </div>  
+        
         <div class="loader" v-if="loader == false"><div></div><div></div></div>    
     </div>
 </template>
@@ -33,23 +36,28 @@
     import axios from 'axios';
     import qs from "qs";
     import PhotoGalleryList from '../PhotoGallery/PhotoGalleryList';
+    // import PhotoReferenceApp from '../PhotoReference/PhotoReferenceApp';
     import PhotoManagerUploader from './PhotoManagerUploader';
     import PhotoManagerSearch from './PhotoManagerSearch';
     import debounce from 'lodash.debounce';
 
     const path = '/api/files';
+    const referenceModle = $('#file_feference_modal');
 
+    // console.log(referenceModle)
     export default {
         components: {
             PhotoGalleryList,
             PhotoManagerUploader, 
             PhotoManagerSearch
         },
+        props: ['path'],
         data() {
             return {
                 images: [],
                 search: '',
-                loader: false
+                loader: false,
+                isOpenReferance: false
             }
         },
         methods: {
@@ -83,17 +91,18 @@
                         if(!modal) {
                             this.images = this.fetchImagesData();
                         }
-                        // console.log(this.images[0].isPublished );
-                        // this.images[0].isPublished = false;
                     })
                     .catch(err => console.log(err));
             },
             fetchImagesData() {
                 axios
-                    .get(path)
+                    .get(this.path)
                     .then(res => {
                         this.images = res.data.items;
                         this.loader = true;
+                        if(referenceModle.length) {
+                            this.isOpenReferance = true;
+                        }
                     })
                     .catch(err => console.log(err));
             },
@@ -113,7 +122,23 @@
                     })
                     .catch(err => console.log(err));
             },
+            onCheckedImage(item) {
+                const form = $('#tinymce_editor');
+                let namePost  = form.attr('data-name');
+                let idPost = form.attr('data-post-id');
+                let data = [];
+                data.item = item;
 
+                axios({
+                        method: 'PUT',
+                        data: qs.stringify(data),
+                        url: `${item['@id']}/${namePost}/${idPost}`,
+                    })
+                    .then( (res) => {
+                        console.log(res.data)
+                    })
+                    .catch(err => console.log(err));
+            }
         },
         computed: {
             filteredItems() {
@@ -145,7 +170,7 @@
 }
 .loader div {
   position: absolute;
-  border: 4px solid #dfc;
+  border: 4px solid rgb(204, 235, 255);
   opacity: 1;
   border-radius: 50%;
   animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;

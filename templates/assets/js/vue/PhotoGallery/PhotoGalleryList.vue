@@ -6,8 +6,10 @@
             :item="item"
             :index="index"
             :quantity="items.length"
+            :isOpenReferance="isOpenReferance"
             @delete-item="onDeleteImage"
             @active-item="onActiveImage"
+            @checked-item="onCheckedImage"
             @modal-open="handleModalOpen"
             @view-description="viewDescription($event)"
         />
@@ -89,7 +91,7 @@
                 description: '',
             }
         },
-        props: ['items'],
+        props: ['items', 'isOpenReferance'],
         methods: {
             onDeleteImage(item, index = null) {
                 this.isDeleting = true;
@@ -175,6 +177,9 @@
             changeDescription() {
                 this.write = !this.write;
                 this.description = this.item.description
+            },
+            onCheckedImage(item) {
+                this.$emit('checked-image', item);
             }
         },
         computed: {

@@ -158,7 +158,6 @@ class ArticleReferenceAdminController extends BaseController
 
     /**
      * @Route("/admin/article/{idArticle}/references/{idImage}", name="admin_article_delete_reference", methods={"DELETE"})
-     * @IsGranted("MANAGE", subject="article")
      */
     public function deleteArticleReference($idArticle, $idImage, ArticleRepository $articleRepository, FileManagerRepository $fileManagerRepository)
     {

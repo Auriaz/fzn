@@ -10,7 +10,10 @@
 
 {% block dashboard_body %}
     <div id="file_manager">
-        <file-manager-app></file-manager-app>
+       <file-manager-app path="{{ path('api_file_manager_get') }}"></file-manager-app>
     </div>
+
 {% endblock %}
+
+
 

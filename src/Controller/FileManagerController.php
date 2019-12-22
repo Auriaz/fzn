@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Animal;
+use App\Entity\Article;
 use App\Entity\FileManager;
 use App\FileManager\PhotoFileManager;
 use App\Message\FileManager\AddPhotoToFileManager;
@@ -25,10 +27,10 @@ class FileManagerController extends BaseController
     /**
      * @Route("/file-manager",  name="file_manager")
      */
-    public function Index()
+    public function Index(FileManagerRepository $file_manager_repository)
     {
         return $this->_render('file_manager/index.html.twig', [
-            'title' => 'Menager Zdjęć'
+            'title' => 'Menager Zdjęć',
         ]);
     }
 
@@ -150,5 +152,28 @@ class FileManagerController extends BaseController
         }
 
         return $this->json($data, $status, $headers, $context);
+    }
+
+    /**
+     * @Route("/api/files/{id}/{product}/{idProduct}", methods="PUT")
+     */
+    public function setPost(FileManager $file_manager, $product, $idProduct)
+    {
+        // $file = $this->request->request->get('item');
+    
+        if($product == 'article') {
+            $product = $this->getDoctrine()
+                ->getRepository(Article::class)
+                ->find($idProduct);
+        } else {
+            $product = $this->getDoctrine()
+                ->getRepository(Animal::class)
+                ->find($idProduct);
+        }
+
+        $file_manager->addArticle($product);
+        $this->em->flush();
+
+        return $this->toJson($file_manager, 201);
     }
 }

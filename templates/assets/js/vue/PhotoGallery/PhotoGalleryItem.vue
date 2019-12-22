@@ -9,8 +9,11 @@
             
 
             <div class="photo-gallery__item--panel photo-gallery__item--panel-top">
+                <span id="photo_gallery_checkbox" @click="isCheck(item)">
+                    <input v-show="isOpenReferance" type="checkbox" v-model="isChecked">
+                </span>
 
-                <span class="icon icon-album">
+                <span>
                     <span 
                         @click="viewDescription(item)" 
                         data-toggle="modal" 
@@ -32,8 +35,6 @@
             <div class="photo-gallery__item--panel photo-gallery__item--panel-bottom">
                 <h3 class="photo-gallery__item--title">
                     <span>{{ item.originalFilename }}</span>
-                    <span>{{ numberImage }}</span>
-                    
                 </h3>
             </div>
         </div> 
@@ -47,9 +48,11 @@
             return {
                 isDeleting: false,
                 isPublished: '',
+                isChecked: false,
+                isReference: false,
             }
         },
-        props: ['item', 'index', 'quantity'],
+        props: ['item', 'index', 'quantity', 'isOpenReferance'],
         methods: {
             modelOpen(item, index) {
                 this.$emit('modal-open', item, index)
@@ -64,6 +67,10 @@
             },
             viewDescription(item) {
                 this.$emit('view-description', item)
+            }, 
+            isCheck(item) {
+                this.isChecked = !this.isChecked;
+                this.$emit('checked-item', item);
             }
         },
         computed: {
@@ -73,6 +80,9 @@
         },
         mounted() {
             this.isPublished = this.item.isPublished;
+            if(this.item.articles.length) {
+                this.isChecked = true;
+            };
         },
     }
 </script>

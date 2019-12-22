@@ -79,6 +79,7 @@ class FileManager
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Article", inversedBy="images")
      * @ORM\JoinTable(name="images_articles")
+     * @Groups({"files:output", "files:input", "article_reference:get", "article_reference:put",})
      */
     private $articles;
 

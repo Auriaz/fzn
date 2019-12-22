@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\Common\Collections\Criteria;
 use App\Repository\ArticleRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
@@ -23,6 +24,7 @@ class Article
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"files:output", "files:input", "article_reference:get", "article_reference:put",})
      */
     private $id;
 

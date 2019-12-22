@@ -1,0 +1,54 @@
+<div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
+    aria-hidden="true" id="file_feference_modal">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">File manager</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row modal-body__header">
+                    <button type="button" class="dashboard-section__adding-btn btn btn-outline-secondary" id="uploader_show">
+                        <i class="fas fa-plus-circle"></i>
+                    </button>
+                    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalScrollableTitle">Dodaj zdjęcie</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <file-uploader-app></file-uploader-app>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+      
+                <div >
+                    <div class="row modal-body__content">
+                        <div class="col-sm-3 modal-body__content--reference">
+                            <photo-reference-app path="{{ path('admin_article_list_references', {id: article.id}) }}" id="photo_reference_template">
+                            </photo-reference-app>
+                        </div>
+                        <div class="col-sm-9">
+                            <file-manager-app path="{{ path('api_file_manager_get') }}"></file-manager-app>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="add_image_to_reference_btn">Wykonaj</button>
+            </div>
+        </div>
+    </div>
+</div>

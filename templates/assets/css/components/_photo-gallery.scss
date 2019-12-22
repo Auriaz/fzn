@@ -30,19 +30,16 @@
         }
     
         &--title {
-            position: absolute;
-            text-align: left;
-            top: 5px;
-            margin: 0;
-            left: 5px;
-            padding: 5px;
             font-size: 0.9rem;
+            padding-left: 5px;
         }
     
         &--panel {   
-            position: absolute;
             width: 100%;
-            height: 40px;
+            position: absolute;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
             right: 0;
             background-color: rgba($mainDark, 0.3);
 
@@ -68,11 +65,19 @@
 
             &-top  {
                 top: 15px;
+                justify-content: space-between;
+                align-items: center;
+                align-content: center;
+                padding: 10px;
                 border-radius: 5px 5px 0 0;
             }
 
             &-bottom {
+                height: 50px;
                 bottom: 0;
+                justify-content: flex-start;
+                align-items: center;
+                align-content: center;
                 border-radius: 0 0 5px 5px;
             }
         }

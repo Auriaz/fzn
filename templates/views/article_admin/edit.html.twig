@@ -6,6 +6,7 @@
     <a href="{{ path('admin_article_list')}}" class="dashboard-section__adding-btn btn btn-outline-secondary" title="Cofnij do listy artykułów">
         <i class="fas fa-share"></i>
     </a>
+<button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target=".bd-example-modal-xl"><i class="fas fa-images"></i></button>
 {% endblock %}
 
 {% block dashboard_body %}
@@ -23,19 +24,56 @@
             {{ form_end(articleForm) }}
         </div>
 
-        <div class="col-sm-3">
+        <div class="col-sm-3" id="file_manager">
             <h3>Zdjecia powiązane</h3>
-
             <hr>
 
-            <ul class="list-group small reference-list" data-url="{{ path('admin_article_list_references', { id: article.id }) }}" data-id="{{ article.id }}"></ul>
-
-            <hr>
-
-            <form action="{{ path('admin_article_add_reference', { id: article.id })}}" 
-                method="POST" 
-                enctype="multipart/form-data"
-                class="dropzone reference-dropzone"></form> 
+            <photo-reference-app path="{{ path('admin_article_list_references', {id: article.id}) }}" id="photo_reference_template"></photo-reference-app>
+            
+            {% include "file_manager/_modal_file_manager.html.twig" %}
         </div>
     </div>
+{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+
+{{ encore_entry_link_tags('file_manager') }}
+
+    <style>
+        .modal-header {
+            background-color: #999;
+            border: 1px solid #666;
+        }
+
+        .modal-title {
+           
+        }
+
+        .modal-body {
+            width: 100%;
+            margin: 0;
+        }
+
+        .modal-body__header {
+            border-bottom: 1px solid #666;
+            padding-bottom: 20px;
+        }
+        
+        .modal-body__content--reference {
+            border-right: 1px solid #666;
+        }
+
+        .photo-manager__search-field {
+            width: 250px;
+            transform:  translateY(-80px);
+        }
+
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+
+{{ encore_entry_script_tags('file_manager') }}
 {% endblock %}

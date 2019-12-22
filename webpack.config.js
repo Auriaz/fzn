@@ -26,7 +26,6 @@ Encore
      */
     .addEntry('app', './templates/assets/js/app.js')
     .addEntry('file_manager', './templates/assets/js/file_manager.js')
-    .addEntry('file_uploader', './templates/assets/js/file_uploader.js')
     .addEntry('dashboard', './templates/assets/js/dashboard.js')
     .addEntry('home', './templates/assets/js/home.js')
     .addEntry('regrister', './templates/assets/js/regrister.js')
@@ -64,7 +63,7 @@ Encore
     })
 
     // enables Sass/SCSS support
-    .enableSassLoader()
+    // .enableSassLoader()
     .enablePostCssLoader()
 
     .copyFiles({
@@ -84,7 +83,12 @@ Encore
 
     // uncomment if you use API Platform Admin (composer req api-admin)
     //.enableReactPreset()
-    .enableVueLoader()
+    // .enableVueLoader()
+   .enableVueLoader()
+    .enableSassLoader(options => {
+        options.implementation = require('sass')
+        options.fiber = require('fibers')
+    })
  
     // .addPlugin(new VueLoaderPlugin())
     //.addEntry('admin', './assets/js/admin.js')
