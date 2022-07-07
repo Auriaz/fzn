@@ -28,7 +28,7 @@
         "codemirror": "^5.49.2",
         "jquery": "^3.4.1",
         "lodash.debounce": "^4.0.8",
-        "moment": "^2.24.0",
+        "moment": "^2.29.4",
         "pdfmake": "^0.1.62",
         "popper.js": "^1.16.0",
         "sortablejs": "^1.10.1",
